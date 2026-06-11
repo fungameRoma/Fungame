@@ -2,446 +2,379 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ROMABUX | V.40 LUXURY ULTRA STRICT</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROMABUX V.40 | Premium Roblox Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #00ff73;
-            --primary-glow: rgba(0, 255, 115, 0.25);
-            --danger: #ff3b3b;
-            --bg: #070707;
-            --card: rgba(255, 255, 255, 0.04);
-            --border: rgba(255, 255, 255, 0.08);
-            --text: #ffffff;
+            --bg-dark: #0f1015;
+            --bg-card: #161922;
+            --accent-green: #00ffaa;
+            --accent-purple: #7a22ff;
+            --text-light: #f5f6fa;
+            --text-muted: #8a8f9d;
         }
 
-        * { 
-            margin: 0; padding: 0; box-sizing: border-box; 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            -webkit-tap-highlight-color: transparent; 
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-light); padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        /* Top Bar & Live Stock */
+        .top-navbar { display: flex; justify-content: space-between; align-items: center; background: var(--bg-card); padding: 15px 25px; border-radius: 12px; border: 1px solid #232838; margin-bottom: 25px; }
+        .logo { font-size: 22px; font-weight: 800; background: linear-gradient(45deg, var(--accent-green), #00aaff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .live-stock { font-size: 14px; font-weight: 600; background: rgba(0, 255, 170, 0.1); padding: 8px 16px; border-radius: 20px; border: 1px solid var(--accent-green); color: var(--accent-green); }
+
+        /* Hero Welcome & Promo */
+        .hero-section { display: grid; grid-template-columns: 1.5fr 1fr; gap: 20px; margin-bottom: 30px; }
+        @media (max-width: 768px) { .hero-section { grid-template-columns: 1fr; } }
+
+        .promo-banner { background: linear-gradient(135deg, #1e1135 0%, var(--bg-card) 100%); padding: 30px; border-radius: 16px; border: 1px solid #3b1f73; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: center; }
+        .promo-banner::before { content: ''; position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: var(--accent-purple); filter: blur(80px); opacity: 0.5; }
+        .promo-tag { background: #ff3838; color: white; font-size: 12px; font-weight: bold; padding: 4px 10px; border-radius: 5px; width: fit-content; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        .promo-banner h1 { font-size: 28px; margin-bottom: 10px; font-weight: 800; }
+        .promo-banner p { color: var(--text-muted); font-size: 15px; margin-bottom: 15px; }
+
+        /* Smart Feature: Tax Calculator Box */
+        .smart-box { background: var(--bg-card); padding: 25px; border-radius: 16px; border: 1px solid #232838; }
+        .smart-box h3 { font-size: 18px; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; color: #00aaff; }
+        .calc-group { margin-bottom: 12px; }
+        .calc-group label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 5px; font-weight: 600; }
+        .calc-input-wrapper { position: relative; }
+        .calc-input-wrapper input { width: 100%; padding: 12px; background: #0b0c10; border: 1px solid #2d3345; color: white; border-radius: 8px; font-weight: bold; font-size: 16px; }
+        .calc-input-wrapper span { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 12px; font-weight: bold; }
+
+        /* Dashboard Grid: Resi, Member, Stalker */
+        .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
+        @media (max-width: 768px) { .dashboard-grid { grid-template-columns: 1fr; } }
+        .dash-card { background: var(--bg-card); padding: 20px; border-radius: 14px; border: 1px solid #232838; }
+        .dash-card h4 { font-size: 16px; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .dash-input-row { display: flex; gap: 10px; }
+        .dash-input-row input { flex: 1; padding: 10px 15px; background: #0b0c10; border: 1px solid #2d3345; color: white; border-radius: 8px; }
+        .dash-input-row button { background: linear-gradient(45deg, var(--accent-purple), #9046ff); color: white; border: none; padding: 0 20px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+        .dash-input-row button:hover { opacity: 0.9; }
+        .display-result { margin-top: 15px; background: #0b0c10; padding: 12px; border-radius: 8px; border-left: 4px solid var(--accent-purple); }
         
-        body { 
-            background: var(--bg); color: var(--text); min-height: 100vh;
-            background-image: radial-gradient(circle at 50% 0%, #121212 0%, #070707 100%);
-            display: flex; flex-direction: column; align-items: center;
-        }
-
-        #welcome {
-            position: fixed; inset: 0; z-index: 9999;
-            background: #000; display: flex; align-items: center; justify-content: center;
-            transition: 1s cubic-bezier(0.85, 0, 0.15, 1);
-        }
-        .welcome-box { text-align: center; padding: 20px; }
-        .welcome-box h1 { font-size: 3.5rem; font-weight: 800; letter-spacing: -2px; margin-bottom: 5px; }
-        .welcome-box span { color: var(--primary); text-shadow: 0 0 20px var(--primary-glow); }
-        .btn-start { 
-            margin-top: 25px; padding: 18px 50px; border-radius: 50px; border: none;
-            background: #fff; color: #000; font-weight: 700; cursor: pointer; 
-            transition: 0.3s ease; font-size: 1rem; letter-spacing: 0.5px;
-        }
-        .btn-start:hover { transform: scale(1.05); box-shadow: 0 10px 25px rgba(255,255,255,0.2); }
-
-        #progress { position: fixed; top: 0; left: 0; height: 4px; background: var(--primary); width: 0%; z-index: 2001; transition: 0.4s ease; box-shadow: 0 0 10px var(--primary); }
-
-        header { width: 100%; max-width: 450px; padding: 30px 20px; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-weight: 800; font-size: 1.5rem; letter-spacing: -1px; }
-        .status { font-size: 0.65rem; background: rgba(0,255,115,0.08); color: var(--primary); padding: 6px 14px; border-radius: 50px; font-weight: 700; border: 1px solid rgba(0,255,115,0.3); }
-
-        .container { width: 100%; max-width: 450px; padding: 0 20px 150px 20px; flex: 1; }
-
-        .help-card { background: var(--card); border: 1px solid var(--border); border-radius: 22px; padding: 20px; margin-bottom: 25px; }
-        .help-card summary { list-style: none; font-size: 0.85rem; font-weight: 700; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
-        .help-card summary span { transition: transform 0.3s; }
-        .help-card[open] summary span { transform: rotate(180deg); color: var(--primary); }
-
-        .card { background: var(--card); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border: 1px solid var(--border); border-radius: 32px; padding: 30px; box-shadow: 0 25px 50px rgba(0,0,0,0.4); }
-
-        label { font-size: 0.75rem; font-weight: 700; color: #777; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; display: block; }
+        /* Roblox Stalker Styles */
+        .stalker-result-box { margin-top: 20px; background: #0b0c10; padding: 20px; border-radius: 12px; border: 1px solid #2d3345; }
+        .stalker-profile-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; border-bottom: 1px solid #2d3345; padding-bottom: 15px; position: relative; }
+        .stalker-profile-header img { width: 65px; height: 65px; background: #161922; border-radius: 50%; border: 2px solid #ff007c; }
+        .stalker-names h5 { font-size: 18px; font-weight: 700; color: #fff; }
+        .stalker-names span { font-size: 13px; color: var(--text-muted); }
+        .badge-status { position: absolute; right: 0; top: 15px; font-size: 11px; font-weight: bold; padding: 4px 10px; border-radius: 20px; }
+        .status-active { background: rgba(0, 255, 170, 0.1); color: #00ffaa; border: 1px solid #00ffaa; }
+        .status-banned { background: rgba(255, 56, 56, 0.1); color: #ff3838; border: 1px solid #ff3838; }
+        .stalker-info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        @media (max-width: 480px) { .stalker-info-grid { grid-template-columns: 1fr; } }
+        .info-item { background: #161922; padding: 12px; border-radius: 8px; border: 1px solid #232838; display: flex; flex-direction: column; gap: 4px; }
+        .info-label { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .info-value { font-size: 14px; font-weight: 700; color: #fff; }
         
-        .input-wrapper { position: relative; margin-bottom: 15px; }
-        input { 
-            width: 100%; padding: 20px; border-radius: 20px; border: 1px solid var(--border);
-            background: rgba(255,255,255,0.02); color: white; font-size: 1rem; font-weight: 600; outline: none; transition: 0.3s;
-        }
-        input:focus { border-color: var(--primary); background: rgba(255,255,255,0.04); box-shadow: 0 0 15px rgba(0,255,115,0.1); }
-        
-        .btn-verify {
-            width: 100%; padding: 15px; background: #fff; color: #000; border: none; border-radius: 16px;
-            font-weight: 800; font-size: 0.85rem; cursor: pointer; transition: 0.3s; margin-bottom: 20px;
-        }
-        .btn-verify:hover { background: var(--primary); transform: translateY(-1px); }
+        .hidden { display: none !important; }
 
-        .profile-box-live {
-            display: none; align-items: center; background: rgba(255,255,255,0.03); 
-            border: 1px solid var(--border); padding: 15px; border-radius: 20px; margin-bottom: 25px;
-            animation: fadeIn 0.4s ease forwards;
-        }
-        .profile-box-live.success { border-color: var(--primary); background: rgba(0,255,115,0.03); }
-        .profile-box-live.error { border-color: var(--danger); background: rgba(255,59,59,0.03); }
-        
-        .avatar-img { width: 52px; height: 52px; border-radius: 50%; background: #222; border: 2px solid transparent; object-fit: cover; }
-        .profile-box-live.success .avatar-img { border-color: var(--primary); box-shadow: 0 0 10px var(--primary-glow); }
-
-        .pkg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
-        .pkg-item { 
-            background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 20px; 
-            border-radius: 24px; text-align: center; cursor: pointer; transition: 0.3s;
-        }
-        .pkg-item.active { border-color: var(--primary); background: rgba(0,255,115,0.08); transform: scale(1.02); }
-
-        .price-box { 
-            background: #fff; color: #000; border-radius: 24px; padding: 25px; 
-            display: flex; justify-content: space-between; align-items: center; margin-top: 15px;
-        }
-
-        .gp-box { 
-            background: rgba(0,0,0,0.4); border: 1px solid var(--border); border-radius: 25px; 
-            padding: 35px 20px; text-align: center; margin: 25px 0;
-        }
-        .gp-val { font-size: 4.5rem; font-weight: 800; color: var(--primary); line-height: 1; text-shadow: 0 0 20px var(--primary-glow); }
-
-        .footer { 
-            position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 450px; padding: 30px 20px; 
-            background: linear-gradient(to top, #070707 70%, transparent); display: flex; gap: 15px; z-index: 1000;
-        }
-        .btn { padding: 22px; border-radius: 22px; border: none; font-weight: 800; font-size: 1rem; cursor: pointer; transition: 0.3s; }
-        .btn-back { background: #1a1a1a; color: #fff; flex: 1; display: none; border: 1px solid var(--border); }
-        
-        .btn-next { background: var(--primary); color: #000; flex: 2; box-shadow: 0 10px 30px rgba(0,255,115,0.25); opacity: 0.3; pointer-events: none; transition: 0.4s ease; }
-        .btn-next.enabled { opacity: 1; pointer-events: auto; }
-
-        .step { display: none; }
-        .step.active { display: block; animation: slideUp 0.4s ease forwards; }
-
-        .spinner { width: 20px; height: 20px; border: 3px solid rgba(255,255,255,0.1); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 12px; }
-
-        @keyframes spin { to { transform: rotate(360deg); } }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        /* Catalog / Jualan Section */
+        .catalog-title { font-size: 22px; font-weight: 700; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+        .product-card { background: var(--bg-card); border-radius: 14px; border: 1px solid #232838; padding: 20px; text-align: center; transition: 0.3s; position: relative; }
+        .product-card:hover { transform: translateY(-5px); border-color: var(--accent-green); box-shadow: 0 10px 20px rgba(0, 255, 170, 0.1); }
+        .hot-badge { position: absolute; top: 10px; left: 10px; background: #ffaa00; color: black; font-size: 10px; font-weight: bold; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; }
+        .product-card img { width: 70px; margin-bottom: 15px; }
+        .product-card h5 { font-size: 18px; margin-bottom: 5px; }
+        .product-card .price { color: var(--accent-green); font-size: 16px; font-weight: 700; margin-bottom: 15px; }
+        .btn-buy { width: 100%; background: transparent; border: 2px solid var(--accent-green); color: var(--accent-green); padding: 10px; font-weight: 700; border-radius: 8px; cursor: pointer; transition: 0.2s; }
+        .btn-buy:hover { background: var(--accent-green); color: black; }
     </style>
 </head>
 <body>
 
-<div id="welcome">
-    <div class="welcome-box">
-        <h1>ROMA<span>BUX</span></h1>
-        <p style="opacity: 0.6; font-weight: 500; letter-spacing: 1px; font-size: 0.9rem;">V.40 LUXURY PRO SYSTEM</p>
-        <button class="btn-start" onclick="closeWelcome()">Mulai Order</button>
-    </div>
-</div>
-
-<div id="progress"></div>
-
-<header>
-    <div class="logo">ROMA<span style="color:var(--primary)">BUX</span></div>
-    <div class="status">🛡️ MULTI-PROXY API ULTRA</div>
-</header>
-
 <div class="container">
-    <details class="help-card">
-        <summary>BANTUAN ORDER 💡 <span>▼</span></summary>
-        <div style="margin-top: 15px; font-size: 0.85rem; color: #aaa; line-height: 1.7;">
-            1. Ketik Username Roblox Anda.<br>
-            2. Klik **VALIDASI AKUN**.<br>
-            3. Pilih nominal paket atau kustom.<br>
-            4. Atur harga Gamepass sesuai nominal di Step 2.
-        </div>
-    </details>
-
-    <div class="card">
-        <div id="step1" class="step active">
-            <label>Username Roblox</label>
-            <div class="input-wrapper">
-                <input type="text" id="usn" placeholder="Contoh: Titan_Gamer" oninput="handleUsnInput()">
-            </div>
-            <button id="btn-verify-act" class="btn-verify" onclick="validateRobloxProfile()">🔍 VALIDASI AKUN</button>
-
-            <div id="api-profile-box" class="profile-box-live"></div>
-
-            <label>Pilih Paket Robux</label>
-            <div class="pkg-grid">
-                <div class="pkg-item" onclick="selectPkg(80, 11000, this)">
-                    <p style="font-weight:800; font-size:1.1rem;">80 RBX</p>
-                    <p style="font-size:0.75rem; opacity:0.6; margin-top:4px;">Rp 11.000</p>
-                </div>
-                <div class="pkg-item" onclick="selectPkg(1000, 137000, this)">
-                    <p style="font-weight:800; font-size:1.1rem;">1000 RBX</p>
-                    <p style="font-size:0.75rem; opacity:0.6; margin-top:4px;">Rp 137.000</p>
-                </div>
-            </div>
-
-            <label>Nominal Kustom (Min 50 RBX)</label>
-            <input type="number" id="custom-rbx" placeholder="Masukkan nominal sendiri..." oninput="calculateCustom(this)">
-
-            <div class="price-box">
-                <div>
-                    <p style="font-size:0.65rem; font-weight:800; opacity:0.6;">TOTAL BAYAR</p>
-                    <h2 id="price-ui" style="font-weight:800; font-size:1.5rem;">Rp 0</h2>
-                </div>
-                <div style="text-align:right;">
-                    <p style="font-size:0.65rem; color:var(--primary); font-weight:800;">LUXURY SYSTEM</p>
-                </div>
-            </div>
-        </div>
-
-        <div id="step2" class="step">
-            <h3 style="text-align:center; font-weight:800; margin-bottom:20px;">Konfigurasi Gamepass</h3>
-            <button onclick="window.open('https://www.roblox.com/create', '_blank')" style="width:100%; background:#0084ff; padding:20px; border-radius:20px; border:none; color:white; font-weight:800; cursor:pointer;">🔗 BUKA ROBLOX CREATE</button>
-            
-            <div class="gp-box">
-                <p style="font-size:0.75rem; font-weight:700; opacity:0.6; margin-bottom:12px;">SET HARGA GAMEPASS KAMU:</p>
-                <div class="gp-val" id="gp-price">0</div>
-                <button onclick="copyGP()" style="margin-top:20px; padding:12px 30px; background:var(--primary); color:#000; border:none; font-weight:800; border-radius:14px; cursor:pointer; font-size:0.85rem;">📋 SALIN ANGKA</button>
-            </div>
-            <p style="font-size:0.75rem; color:#777; text-align:center; line-height:1.5;">Pastikan nominal diatur sama persis agar pengiriman otomatis sukses.</p>
-        </div>
-
-        <div id="step3" class="step" style="text-align:center;">
-            <div style="font-size:5.5rem; margin-bottom:15px;">⚡</div>
-            <h2 style="font-weight:800;">PESANAN DIKUNCI</h2>
-            <p style="opacity:0.6; font-size:0.9rem; margin-top:10px; line-height:1.6;">Klik tombol di bawah untuk mengirim invoice instan ke WhatsApp Admin.</p>
+    <div class="top-navbar">
+        <div class="logo"><i class="fa-solid fa-gem"></i> ROMABUX</div>
+        <div id="stock-indicator" class="live-stock">
+            <i class="fa-solid fa-circle-dot"></i> Stok Real-time: <span id="current-stock">Mengecek...</span> RBX
         </div>
     </div>
-</div>
 
-<div class="footer">
-    <button class="btn btn-back" id="btnBack" onclick="prevStep()">KEMBALI</button>
-    <button class="btn btn-next" id="btnNext" onclick="nextStep()">LANJUTKAN</button>
+    <div class="hero-section">
+        <div class="promo-banner">
+            <div class="promo-tag">⚡ HOT PROMO WEEKEND</div>
+            <h1>Beli Robux via Gamepass, Bonus Poin Melimpah!</h1>
+            <p>Dapatkan rate termurah bulan ini. Naikkan level member tokomu ke Gold Buyer untuk menikmati diskon permanen di setiap transaksi selanjutnya.</p>
+            <div style="font-size: 13px; color: var(--accent-green); font-weight: bold;">
+                <i class="fa-solid fa-shield-halved"></i> Proses Legal, Aman, & Bergaransi 100%
+            </div>
+        </div>
+
+        <div class="smart-box">
+            <h3><i class="fa-solid fa-calculator"></i> Roblox Tax Calculator</h3>
+            <div class="calc-group">
+                <label>Robux yang Ingin Masuk Akun (Bersih / Clean)</label>
+                <div class="calc-input-wrapper">
+                    <input type="number" id="clean-rbx" value="1000" oninput="hitungPajak('clean')">
+                    <span>RBX</span>
+                </div>
+            </div>
+            <div class="calc-group" style="margin-bottom: 0;">
+                <label>Harga yang Harus Kamu Set di Gamepass (Kotor / Gross)</label>
+                <div class="calc-input-wrapper">
+                    <input type="number" id="gross-rbx" oninput="hitungPajak('gross')">
+                    <span>RBX (Tax 30%)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="stalker-section" style="margin-bottom: 30px;">
+        <div class="dash-card" style="border-left: 4px solid #ff007c;">
+            <h4><i class="fa-solid fa-eye" style="color: #ff007c;"></i> Roblox Account Stalker</h4>
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">Masukkan username untuk melihat statistik detail akun secara real-time.</p>
+            
+            <div class="dash-input-row">
+                <input type="text" id="input-stalk-user" placeholder="Ketik Username Roblox (Contoh: Builderman)">
+                <button onclick="stalkRobloxUser()" style="background: linear-gradient(45deg, #ff007c, #ff4500);">Stalk Akun</button>
+            </div>
+
+            <div id="result-stalker" class="stalker-result-box hidden">
+                <div class="stalker-profile-header">
+                    <img id="stalk-avatar" src="" alt="Avatar">
+                    <div class="stalker-names">
+                        <h5 id="stalk-display">-</h5>
+                        <span id="stalk-username">@-</span>
+                    </div>
+                    <div id="stalk-status-badge" class="badge-status">Status</div>
+                </div>
+                
+                <div class="stalker-info-grid">
+                    <div class="info-item">
+                        <span class="info-label">ID Akun</span>
+                        <span id="stalk-id" class="info-value">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Tanggal Join</span>
+                        <span id="stalk-join" class="info-value">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Followers</span>
+                        <span id="stalk-followers" class="info-value">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Following</span>
+                        <span id="stalk-following" class="info-value">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="dash-card">
+            <h4><i class="fa-solid fa-receipt" style="color: #ffaa00;"></i> Cek Status Pesanan (Resi)</h4>
+            <div class="dash-input-row">
+                <input type="text" id="input-resi" placeholder="Masukkan ID Invoice (Misal: RBX-101)">
+                <button onclick="cekStatusResi()">Periksa</button>
+            </div>
+            <div id="result-resi" class="display-result hidden">
+                <p style="font-size: 13px;">Status: <span id="status-text" style="font-weight:bold;">-</span></p>
+                <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Detail: <span id="detail-text">-</span></p>
+            </div>
+        </div>
+
+        <div class="dash-card">
+            <h4><i class="fa-solid fa-user-gear" style="color: #00aaff;"></i> Cek Level & Poin Member</h4>
+            <div class="dash-input-row">
+                <input type="text" id="input-member-user" placeholder="Ketik Username Roblox-mu">
+                <button onclick="cekAkunMember()">Cek Akun</button>
+            </div>
+            <div id="member-card" class="display-result hidden" style="border-left-color: #00aaff;">
+                <p style="font-size: 13px;">🏅 Level: <span id="member-level" style="font-weight:bold; color:#ffd700;">-</span></p>
+                <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">⭐ Akumulasi Poin: <span id="member-points">-</span> XP</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="catalog-title">
+        <i class="fa-solid fa-fire" style="color: #ff3838;"></i> Pilih Paket Robux Terlaris
+    </div>
+    
+    <div class="product-grid">
+        <div class="product-card">
+            <div class="hot-badge">Best Seller</div>
+            <img src="https://images.rbxcdn.com/f92029783935db050a996da605f6e804-clean_robux_75.png" alt="Robux">
+            <h5>100 RBX</h5>
+            <div class="price">Rp14.000</div>
+            <button class="btn-buy" onclick="pilihPaket('100 RBX')">Beli Sekarang</button>
+        </div>
+        <div class="product-card">
+            <div class="hot-badge" style="background:#ff3838; color:white;">⚡ Flash Sale</div>
+            <img src="https://images.rbxcdn.com/f92029783935db050a996da605f6e804-clean_robux_75.png" alt="Robux">
+            <h5>500 RBX</h5>
+            <div class="price">Rp68.000</div>
+            <button class="btn-buy" onclick="pilihPaket('500 RBX')">Beli Sekarang</button>
+        </div>
+        <div class="product-card">
+            <img src="https://images.rbxcdn.com/f92029783935db050a996da605f6e804-clean_robux_75.png" alt="Robux">
+            <h5>1000 RBX</h5>
+            <div class="price">Rp135.000</div>
+            <button class="btn-buy" onclick="pilihPaket('1000 RBX')">Beli Sekarang</button>
+        </div>
+    </div>
 </div>
 
 <script>
+    // URL GOOGLE APPS SCRIPT SPREADSHEET KAMU YANG SUDAH AKTIF:
+    const SPREADSHEET_API = "https://script.google.com/macros/s/AKfycbyFyhZ_jTEMcX1rHwJSL6hBwvc9TYjvfHvOgRA_hTsw6q7sHu9IxIGwOXf3bCiSLkt0/exec";
+
+    // LINK CLOUDFLARE WORKER PROXY KAMU:
+    const PROXY_URL = "https://autumn-sky-f02a.hrkdakwah.workers.dev/?url=";
+
     // ==========================================
-    // PASTE LINK CLOUDFLARE WORKER KAMU DI SINI:
+    // SCRIPT FITUR PINTAR: TAX CALCULATOR LOGIC
     // ==========================================
-    const PROXY_WORKER = "https://autumn-sky-f02a.hrkdakwah.workers.dev";
-
-    let currentStep = 1;
-    let isAccountVerified = false;
-    let data = { usn: "", displayName: "", rbx: 0, total: 0, gp: 0, id: "" };
-    const RATE = 137;
-
-    function closeWelcome() {
-        document.getElementById('welcome').style.transform = 'translateY(-100%)';
-        updateUI();
+    function hitungPajak(tipe) {
+        const cleanInput = document.getElementById('clean-rbx');
+        const grossInput = document.getElementById('gross-rbx');
+        
+        if (tipe === 'clean') {
+            let cleanVal = parseFloat(cleanInput.value) || 0;
+            grossInput.value = Math.ceil(cleanVal / 0.7);
+        } else {
+            let grossVal = parseFloat(grossInput.value) || 0;
+            cleanInput.value = Math.floor(grossVal * 0.7);
+        }
     }
+    hitungPajak('clean');
 
-    function handleUsnInput() {
-        isAccountVerified = false;
-        document.getElementById('btnNext').classList.remove('enabled');
-        document.getElementById('api-profile-box').style.display = 'none';
-    }
-
-    async function fetchWithTimeout(resource, options = {}) {
-        const { timeout = 3000 } = options;
-        const controller = new AbortController();
-        const id = setTimeout(() => controller.abort(), timeout);
+    // ==========================================
+    // LOGIKA INTEGRASI SPREADSHEET REAL-TIME
+    // ==========================================
+    async function muatStokRealtime() {
         try {
-            const response = await fetch(resource, { ...options, signal: controller.signal });
-            clearTimeout(id);
-            return response;
+            let response = await fetch(`${SPREADSHEET_API}?action=getStok`);
+            let data = await response.json();
+            document.getElementById("current-stock").innerText = data.stock.toLocaleString();
+        } catch (err) {
+            document.getElementById("current-stock").innerText = "Error";
+        }
+    }
+    muatStokRealtime();
+
+    async function cekStatusResi() {
+        const noResi = document.getElementById("input-resi").value.trim();
+        const resultBox = document.getElementById("result-resi");
+        if(!noResi) return alert("Ketik nomor invoicemu dahulu!");
+        
+        try {
+            let response = await fetch(`${SPREADSHEET_API}?action=cekResi&invoice=${noResi}`);
+            let data = await response.json();
+            if(data.found) {
+                resultBox.classList.remove("hidden");
+                document.getElementById("status-text").innerText = data.status;
+                document.getElementById("detail-text").innerText = data.detail;
+                
+                const st = document.getElementById("status-text");
+                if(data.status.includes("✅") || data.status.includes("Selesai")) st.style.color = "#00ffaa";
+                else st.style.color = "#ffaa00";
+            } else { 
+                alert("Nomor invoice tidak ditemukan!"); 
+                resultBox.classList.add("hidden");
+            }
+        } catch(e) { alert("Error mengambil data resi."); }
+    }
+
+    async function cekAkunMember() {
+        const username = document.getElementById("input-member-user").value.trim();
+        const card = document.getElementById("member-card");
+        if(!username) return alert("Masukkan username Roblox kamu!");
+        
+        try {
+            let response = await fetch(`${SPREADSHEET_API}?action=getBuyer&username=${username}`);
+            let data = await response.json();
+            if(data.found) {
+                card.classList.remove("hidden");
+                document.getElementById("member-level").innerText = data.level + " Buyer";
+                document.getElementById("member-points").innerText = data.poin;
+                
+                const lvl = document.getElementById("member-level");
+                if(data.level.toLowerCase() === "gold") lvl.style.color = "#ffd700";
+                else if(data.level.toLowerCase() === "silver") lvl.style.color = "#c0c0c0";
+                else lvl.style.color = "#cd7f32";
+            } else { 
+                alert("Username belum terdaftar di database. Level otomatis: Bronze Buyer!"); 
+                card.classList.add("hidden");
+            }
+        } catch(e) { alert("Error mengambil data member."); }
+    }
+
+    // ==========================================
+    // LOGIKA ROBLOX ACCOUNT STALKER (VIA WORKER)
+    // ==========================================
+    async function stalkRobloxUser() {
+        const username = document.getElementById("input-stalk-user").value.trim();
+        const resultBox = document.getElementById("result-stalker");
+        
+        if (!username) return alert("Ketik nama username Roblox yang mau di-stalk!");
+        
+        try {
+            let searchApi = `https://users.roblox.com/v1/users/search?keyword=${encodeURIComponent(username)}&limit=1`;
+            let searchResponse = await fetch(PROXY_URL + encodeURIComponent(searchApi));
+            let searchData = await searchResponse.json();
+            
+            if (!searchData.data || searchData.data.length === 0) {
+                alert("Username tidak ditemukan!");
+                resultBox.classList.add("hidden");
+                return;
+            }
+            
+            const userId = searchData.data[0].id;
+            
+            let detailApi = `https://users.roblox.com/v1/users/${userId}`;
+            let detailResponse = await fetch(PROXY_URL + encodeURIComponent(detailApi));
+            let detailData = await detailResponse.json();
+            
+            let friendsApi = `https://friends.roblox.com/v1/users/${userId}/followers/count`;
+            let friendsResponse = await fetch(PROXY_URL + encodeURIComponent(friendsApi));
+            let friendsData = await friendsResponse.json();
+            
+            let followingApi = `https://friends.roblox.com/v1/users/${userId}/followings/count`;
+            let followingResponse = await fetch(PROXY_URL + encodeURIComponent(followingApi));
+            let followingData = await followingResponse.json();
+            
+            let thumbApi = `https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${userId}&size=150x150&format=Png&isCircular=true`;
+            let thumbResponse = await fetch(PROXY_URL + encodeURIComponent(thumbApi));
+            let thumbData = await thumbResponse.json();
+            
+            resultBox.classList.remove("hidden");
+            
+            document.getElementById("stalk-display").innerText = detailData.displayName;
+            document.getElementById("stalk-username").innerText = `@${detailData.name}`;
+            document.getElementById("stalk-id").innerText = userId;
+            
+            let joinDate = new Date(detailData.created);
+            document.getElementById("stalk-join").innerText = joinDate.toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
+            
+            document.getElementById("stalk-followers").innerText = friendsData.count.toLocaleString() + " Orang";
+            document.getElementById("stalk-following").innerText = followingData.count.toLocaleString() + " Orang";
+            
+            if (thumbData.data && thumbData.data.length > 0) {
+                document.getElementById("stalk-avatar").src = thumbData.data[0].imageUrl;
+            }
+            
+            const statusBadge = document.getElementById("stalk-status-badge");
+            if (detailData.isBanned) {
+                statusBadge.innerText = "BANNED 🛑";
+                statusBadge.className = "badge-status status-banned";
+            } else {
+                statusBadge.innerText = "AKTIF ✅";
+                statusBadge.className = "badge-status status-active";
+            }
+            
         } catch (error) {
-            clearTimeout(id);
-            throw error;
+            alert("Gagal stalking akun. Pastikan Cloudflare Worker-mu aktif!");
         }
     }
 
-    async function validateRobloxProfile() {
-        let u = document.getElementById('usn').value.trim();
-        if(!u) return alert("Ketik username Roblox terlebih dahulu bos!");
-
-        vibrate(15);
-        const pBox = document.getElementById('api-profile-box');
-        pBox.style.display = 'flex';
-        pBox.className = "profile-box-live"; 
-        pBox.innerHTML = `<div class="spinner"></div><p style="font-size:0.85rem; color:#ccc;">Membuka enkripsi data server Roblox...</p>`;
-
-        isAccountVerified = false;
-        checkNextButtonGuard();
-
-        const targetSearchUrl = `https://users.roblox.com/v1/users/search?keyword=${encodeURIComponent(u)}&limit=10&_=${Date.now()}`;
-        
-        // Mempersiapkan sistem multi-routing otomatis
-        let proxies = [];
-        if (PROXY_WORKER && PROXY_WORKER !== "PASTE_LINK_WORKER_DI_SINI") {
-            proxies.push(url => `${PROXY_WORKER.replace(/\/$/, '')}/?url=${encodeURIComponent(url)}`);
-        }
-        proxies.push(
-            url => `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
-            url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-            url => `https://api.codetabs.com/v1/proxy/?quest=${encodeURIComponent(url)}`
-        );
-
-        let searchResult = null;
-        let successProxyIndex = -1;
-
-        for (let i = 0; i < proxies.length; i++) {
-            try {
-                const proxyUrl = proxies[i](targetSearchUrl);
-                const response = await fetchWithTimeout(proxyUrl, { timeout: 3000 });
-                if (!response.ok) continue;
-
-                const resData = await response.json();
-                if (resData && resData.data && Array.isArray(resData.data)) {
-                    searchResult = resData;
-                    successProxyIndex = i;
-                    break;
-                }
-            } catch (err) {
-                console.warn(`Jalur proxy ke-${i+1} dialihkan.`);
-            }
-        }
-
-        if (!searchResult) {
-            pBox.className = "profile-box-live error";
-            pBox.innerHTML = `❌ <span style="font-size:0.85rem; font-weight:700; color:var(--danger); margin-left:10px;">Jalur API sibuk / Cloudflare Blokir. Klik kembali tombol VALIDASI!</span>`;
-            return;
-        }
-
-        const exactUser = searchResult.data.find(user => user.name.toLowerCase() === u.toLowerCase());
-
-        if(!exactUser) {
-            pBox.className = "profile-box-live error";
-            pBox.innerHTML = `❌ <span style="font-size:0.85rem; font-weight:700; color:var(--danger); margin-left:10px;">Username TIDAK ADA di Roblox! Cek ejaan Anda.</span>`;
-            return;
-        }
-
-        data.id = exactUser.id;
-        data.usn = exactUser.name;
-        data.displayName = exactUser.displayName;
-
-        const targetThumbUrl = `https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${data.id}&size=150x150&format=Png&isCircular=true&_=${Date.now()}`;
-        let avatarImgUrl = "https://tr.rbxcdn.com/30d25c1c53884e4e3b15e1cb59190bbf/150/150/AvatarHeadshot/Png"; 
-
-        try {
-            const thumbProxyUrl = proxies[successProxyIndex](targetThumbUrl);
-            const thumbResponse = await fetchWithTimeout(thumbProxyUrl, { timeout: 2500 });
-            if (thumbResponse.ok) {
-                const thumbResult = await thumbResponse.json();
-                if(thumbResult.data && thumbResult.data.length > 0) {
-                    avatarImgUrl = thumbResult.data[0].imageUrl;
-                }
-            }
-        } catch (e) {
-            console.warn("Avatar menggunakan aset cadangan.");
-        }
-
-        pBox.className = "profile-box-live success";
-        pBox.innerHTML = `
-            <img class="avatar-img" src="${avatarImgUrl}" alt="Roblox Avatar">
-            <div style="text-align:left; margin-left:15px; flex: 1;">
-                <div style="font-weight:800; font-size:0.95rem; color:var(--primary); display:flex; align-items:center; gap:5px;">
-                    ${data.displayName} <span style="font-size:0.7rem; background:rgba(0,255,115,0.15); padding:2px 6px; border-radius:5px; color:var(--primary); font-weight:bold;">VALID ✅</span>
-                </div>
-                <div style="font-size:0.75rem; color:#888; margin-top:2px;">@${data.usn} | ID: ${data.id}</div>
-            </div>
-        `;
-        
-        isAccountVerified = true;
-        checkNextButtonGuard();
+    function pilihPaket(namaPaket) {
+        alert("Kamu memilih " + namaPaket + ". Proses order dilanjutkan ke WhatsApp!");
     }
-
-    function checkNextButtonGuard() {
-        const nextBtn = document.getElementById('btnNext');
-        if(isAccountVerified && data.rbx >= 50) {
-            nextBtn.classList.add('enabled');
-        } else {
-            nextBtn.classList.remove('enabled');
-        }
-    }
-
-    function selectPkg(rbx, price, el) {
-        document.querySelectorAll('.pkg-item').forEach(p => p.classList.remove('active'));
-        document.getElementById('custom-rbx').value = ""; 
-        el.classList.add('active');
-        vibrate(10);
-        
-        data.rbx = rbx; data.total = price; data.gp = Math.ceil(rbx / 0.7);
-        document.getElementById('price-ui').innerText = "Rp " + price.toLocaleString('id-ID');
-        document.getElementById('gp-price').innerText = data.gp;
-        
-        checkNextButtonGuard();
-    }
-
-    function calculateCustom(input) {
-        document.querySelectorAll('.pkg-item').forEach(p => p.classList.remove('active'));
-        let val = parseInt(input.value);
-        
-        if (!val || val < 50) {
-            data.rbx = 0; data.total = 0; data.gp = 0;
-            document.getElementById('price-ui').innerText = "Rp 0";
-            document.getElementById('gp-price').innerText = 0;
-            checkNextButtonGuard();
-            return;
-        }
-
-        data.rbx = val; data.total = val * RATE; data.gp = Math.ceil(val / 0.7);
-        document.getElementById('price-ui').innerText = "Rp " + data.total.toLocaleString('id-ID');
-        document.getElementById('gp-price').innerText = data.gp;
-        
-        checkNextButtonGuard();
-    }
-
-    function nextStep() {
-        if(!isAccountVerified) return alert("Wajib klik tombol 'VALIDASI AKUN' dan pastikan sukses!");
-        if(data.rbx < 50) return alert("Silakan pilih paket atau isi nominal kustom minimal 50 Robux!");
-
-        vibrate(15);
-        if(currentStep === 1) {
-            currentStep = 2;
-        } else if (currentStep === 2) {
-            currentStep = 3;
-            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-        } else {
-            sendWA(); return;
-        }
-        updateUI();
-    }
-
-    function prevStep() {
-        vibrate(10);
-        if(currentStep > 1) {
-            currentStep--;
-            updateUI();
-        }
-    }
-
-    function updateUI() {
-        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-        document.getElementById('step' + currentStep).classList.add('active');
-        document.getElementById('progress').style.width = (currentStep * 33.33) + "%";
-        
-        document.getElementById('btnBack').style.display = (currentStep > 1) ? "block" : "none";
-        
-        const next = document.getElementById('btnNext');
-        if(currentStep === 3) next.innerText = "KIRIM NOTA KE WA ADMIN";
-        else if(currentStep === 2) next.innerText = "SAYA SUDAH SET GAMEPASS";
-        else next.innerText = "LANJUTKAN";
-
-        if(currentStep > 1) next.classList.add('enabled');
-        else checkNextButtonGuard();
-    }
-
-    function copyGP() { 
-        const gpString = data.gp.toString();
-        if (navigator.clipboard) {
-            navigator.clipboard.writeText(gpString).then(() => alert("Angka Gamepass disalin!"));
-        } else {
-            const t = document.createElement("textarea"); document.body.appendChild(t);
-            t.value = gpString; t.select(); document.execCommand("copy");
-            document.body.removeChild(t); alert("Angka Gamepass disalin!");
-        }
-        vibrate(20);
-    }
-
-    function sendWA() {
-        const msg = `*INVOICE ORDER ROMABUX V.40 LUXURY*\n-----------------------------------------\n👤 *Display Name* : ${data.displayName}\n🆔 *Username Roblox* : @${data.usn}\n📌 *Roblox ID* : ${data.id}\n\n💎 *Jumlah Paket* : ${data.rbx} ROBUX\n⚙️ *Wajib Set Gamepass ke* : ${data.gp}\n\n💵 *TOTAL HARGA* : Rp ${data.total.toLocaleString('id-ID')}\n-----------------------------------------\n_Mohon segera diproses otomatis via gamepass, min!_`;
-        window.open(`https://wa.me/6285716075774?text=${encodeURIComponent(msg)}`, '_blank');
-    }
-
-    function vibrate(ms) { if(navigator.vibrate) navigator.vibrate(ms); }
 </script>
 </body>
 </html>
