@@ -1,674 +1,251 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="repo-name" id="repoNameMeta" content="verified-redirector">
-  <title>⚡ Nexus • verified redirect</title>
-  <meta name="description" content="Trusted secure forwarding"/>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✓</text></svg>">
-  
-  <meta http-equiv="Content-Security-Policy" content="
-    default-src 'self';
-    script-src 'self' 'unsafe-inline';
-    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-    font-src https://fonts.gstatic.com;
-    connect-src 'self' https:;
-  ">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TITANBUX | V.40 LUXURY</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        :root {
+            --primary: #00ff73;
+            --bg: #0a0a0a;
+            --card: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+            --text: #ffffff;
+        }
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-  <style>
-    /* ----- reset / base ----- */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+        
+        body { 
+            background: var(--bg); 
+            color: var(--text); 
+            min-height: 100vh;
+            background-image: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #0a0a0a 100%);
+        }
 
-    body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      background: #03050b;
-      color: #fff;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
-    }
+        /* WELCOME OVERLAY */
+        #welcome {
+            position: fixed; inset: 0; z-index: 9999;
+            background: #000; display: flex; align-items: center; justify-content: center;
+            transition: 1s cubic-bezier(0.85, 0, 0.15, 1);
+        }
+        .welcome-box { text-align: center; padding: 20px; }
+        .welcome-box h1 { font-size: 3rem; font-weight: 800; letter-spacing: -2px; margin-bottom: 10px; }
+        .welcome-box span { color: var(--primary); text-shadow: 0 0 20px rgba(0,255,115,0.4); }
+        .btn-start { 
+            margin-top: 20px; padding: 18px 45px; border-radius: 50px; border: none;
+            background: #fff; color: #000; font-weight: 700; cursor: pointer; transition: 0.3s;
+        }
 
-    .background-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      z-index: -1;
-    }
+        #progress { position: fixed; top: 0; left: 0; height: 3px; background: var(--primary); width: 0%; z-index: 2001; transition: 0.5s; }
 
-    .gradient-sphere {
-      position: absolute;
-      width: 70vmax;
-      height: 70vmax;
-      right: -20vmax;
-      top: -20vmax;
-      background: radial-gradient(circle at 30% 30%, rgba(0, 255, 255, 0.15) 0%, rgba(20, 220, 250, 0.25) 40%, transparent 70%);
-      border-radius: 50%;
-      filter: blur(90px);
-      animation: pulseSphere 12s infinite alternate;
-    }
+        header { padding: 30px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-weight: 800; font-size: 1.4rem; letter-spacing: -1px; }
+        .status { font-size: 0.6rem; background: rgba(0,255,115,0.1); color: var(--primary); padding: 5px 12px; border-radius: 50px; font-weight: 700; border: 1px solid var(--primary); }
 
-    .gradient-sphere-2 {
-      position: absolute;
-      width: 70vmax;
-      height: 70vmax;
-      left: -20vmax;
-      bottom: -20vmax;
-      background: radial-gradient(circle at 70% 70%, rgba(180, 100, 255, 0.3) 0%, rgba(120, 80, 255, 0.2) 40%, transparent 70%);
-      border-radius: 50%;
-      filter: blur(100px);
-      animation: pulseSphere2 15s infinite alternate;
-    }
+        .container { max-width: 450px; margin: 0 auto; padding: 0 20px 150px 20px; }
 
-    @keyframes pulseSphere {
-      0% { opacity: 0.5; transform: scale(1); }
-      100% { opacity: 1; transform: scale(1.2); }
-    }
-    @keyframes pulseSphere2 {
-      0% { opacity: 0.4; transform: scale(1); }
-      100% { opacity: 0.9; transform: scale(1.3); }
-    }
+        .help-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 20px; margin-bottom: 25px; cursor: pointer; }
+        .help-card summary { list-style: none; font-size: 0.85rem; font-weight: 700; display: flex; justify-content: space-between; opacity: 0.8; }
 
-    /* ----- glass effect with extra shine ----- */
-    .glass-effect {
-      background: rgba(8, 15, 28, 0.6);
-      backdrop-filter: blur(12px) saturate(200%);
-      -webkit-backdrop-filter: blur(12px) saturate(200%);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 2rem;
-      box-shadow: 0 25px 50px -10px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.02) inset;
-    }
+        .card { background: var(--card); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 30px; padding: 30px; }
 
-    /* ----- container & layout ----- */
-    .container {
-      max-width: 650px;
-      width: 90%;
-      margin: 2rem auto;
-      position: relative;
-    }
+        label { font-size: 0.7rem; font-weight: 700; color: #666; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; display: block; }
+        input { 
+            width: 100%; padding: 20px; border-radius: 20px; border: 1px solid var(--border);
+            background: rgba(255,255,255,0.03); color: white; font-size: 1rem; font-weight: 600; outline: none; margin-bottom: 20px;
+        }
+        input:focus { border-color: var(--primary); }
 
-    .top-nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.8rem 1.5rem;
-      margin-bottom: 2rem;
-      border-radius: 60px;
-      background: rgba(5, 12, 24, 0.6);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(255,255,255,0.04);
-      box-shadow: 0 10px 20px -10px rgba(0,0,0,0.5);
-    }
+        .pkg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 25px; }
+        .pkg-item { 
+            background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 20px; 
+            border-radius: 24px; text-align: center; cursor: pointer; transition: 0.3s;
+        }
+        .pkg-item.active { border-color: var(--primary); background: rgba(0,255,115,0.05); transform: scale(1.02); }
 
-    .nav-btn {
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(255,255,255,0.1);
-      color: #ccc;
-      padding: 0.4rem 1rem 0.4rem 0.8rem;
-      border-radius: 40px;
-      font-size: 0.85rem;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .nav-btn:hover {
-      background: rgba(255,255,255,0.08);
-      border-color: #22d3ee66;
-      color: white;
-    }
+        .price-box { 
+            background: #fff; color: #000; border-radius: 24px; padding: 25px; 
+            display: flex; justify-content: space-between; align-items: center;
+        }
 
-    .nav-brand {
-      font-weight: 800;
-      letter-spacing: 1px;
-      font-size: 1.3rem;
-      background: linear-gradient(135deg, #ffffff, #b3d0ff, #a67cff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
+        .gp-box { 
+            background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 25px; 
+            padding: 40px 20px; text-align: center; margin: 20px 0;
+        }
+        .gp-val { font-size: 4rem; font-weight: 800; color: var(--primary); line-height: 1; }
 
-    .security-badge {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: #b3f0ff;
-      background: rgba(34, 211, 238, 0.12);
-      padding: 0.3rem 1rem;
-      border-radius: 30px;
-      border: 1px solid #22d3ee30;
-      backdrop-filter: blur(4px);
-    }
-    .security-badge .dot {
-      color: #22ffea;
-      font-size: 1.2rem;
-      animation: blink 2s infinite;
-    }
-    @keyframes blink {
-      0%,100%{ opacity:1; } 50%{ opacity:0.4; }
-    }
+        /* FOOTER NAVIGATION */
+        .footer { 
+            position: fixed; bottom: 0; left: 0; right: 0; padding: 30px; 
+            background: linear-gradient(to top, #000, transparent);
+            display: flex; gap: 15px; z-index: 1000;
+        }
+        .btn { padding: 22px; border-radius: 22px; border: none; font-weight: 800; font-size: 1rem; cursor: pointer; transition: 0.3s; }
+        .btn-back { background: #222; color: #fff; flex: 1; display: none; }
+        .btn-next { background: var(--primary); color: #000; flex: 2; box-shadow: 0 10px 30px rgba(0,255,115,0.2); }
 
-    /* ----- main card with verified stamp ----- */
-    .card {
-      padding: 2.8rem 2rem 2rem;
-      text-align: center;
-      transition: transform 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-    .card::after {
-      content: "✓ VERIFIED SOURCE";
-      position: absolute;
-      bottom: 10px;
-      right: -25px;
-      background: rgba(20, 220, 150, 0.2);
-      color: #88ffdd;
-      font-size: 0.7rem;
-      font-weight: 600;
-      padding: 0.2rem 2.5rem;
-      transform: rotate(-45deg);
-      letter-spacing: 1px;
-      border: 1px solid #22eeaa30;
-      backdrop-filter: blur(4px);
-      border-radius: 4px;
-      box-shadow: 0 0 8px #00ffaa20;
-    }
-
-    .card-body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .icon-wrapper {
-      margin-bottom: 1.5rem;
-      position: relative;
-    }
-    .icon-wrapper::before {
-      content: "";
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle, #aaf0ff30 0%, transparent 70%);
-      border-radius: 50%;
-      z-index: -1;
-      scale: 1.8;
-      filter: blur(10px);
-    }
-
-    .icon-circle {
-      width: 80px;
-      height: 80px;
-      background: rgba(20, 50, 80, 0.5);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 2px solid rgba(100, 220, 250, 0.4);
-      box-shadow: 0 0 30px #00aaff60, 0 10px 20px #00000080;
-    }
-    .icon-circle svg {
-      stroke: #c6ebff;
-      filter: drop-shadow(0 0 4px cyan);
-      width: 36px;
-      height: 36px;
-    }
-
-    h1 {
-      font-size: 2.3rem;
-      font-weight: 700;
-      margin-bottom: 0.3rem;
-      background: linear-gradient(to bottom, #fff, #b8ddff, #b38eff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .subtitle {
-      color: #b0c8ff;
-      font-size: 1rem;
-      margin-bottom: 2.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      background: rgba(255,255,255,0.02);
-      padding: 0.3rem 1.2rem;
-      border-radius: 60px;
-      border: 1px solid #ffffff10;
-    }
-
-    .progress-section {
-      width: 100%;
-      margin-bottom: 1.5rem;
-    }
-
-    .progress-bar {
-      width: 100%;
-      height: 12px;
-      background: rgba(0, 20, 40, 0.5);
-      border-radius: 20px;
-      overflow: hidden;
-      margin-bottom: 1rem;
-      border: 1px solid rgba(255,255,255,0.1);
-      box-shadow: inset 0 2px 4px #00000060;
-    }
-
-    .progress-fill {
-      width: 0%;
-      height: 100%;
-      background: linear-gradient(90deg, #00c6ff, #8f6eff, #ff6ec4);
-      border-radius: 20px;
-      transition: width 0.25s ease;
-      box-shadow: 0 0 20px #ff6ec4, 0 0 8px cyan;
-    }
-
-    .status-text {
-      font-size: 1rem;
-      color: #ffffffcc;
-      font-weight: 400;
-      background: rgba(0, 10, 20, 0.5);
-      display: inline-block;
-      padding: 0.2rem 1.2rem;
-      border-radius: 60px;
-      border: 1px solid #3f5e8c60;
-      backdrop-filter: blur(4px);
-    }
-
-    .error-text {
-      color: #ff9999;
-      font-size: 0.9rem;
-      min-height: 1.8rem;
-    }
-
-    .features {
-      display: flex;
-      gap: 2rem;
-      justify-content: center;
-      margin: 2rem 0 1rem;
-      flex-wrap: wrap;
-    }
-
-    .feature-item {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.9rem;
-      color: #f0f4ff;
-      background: rgba(255,255,255,0.02);
-      padding: 0.4rem 1.2rem;
-      border-radius: 40px;
-      border: 1px solid #3a5278;
-      backdrop-filter: blur(4px);
-    }
-
-    .feature-item svg {
-      stroke: #9ad0ff;
-    }
-
-    .card-footer {
-      margin-top: 2rem;
-      font-size: 0.7rem;
-      color: #9aaed0;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      border-top: 1px solid #33558860;
-      padding-top: 1.5rem;
-    }
-
-    /* ----- enhanced info panel (verified source panel) ----- */
-    .info-panel {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      width: 330px;
-      max-width: calc(100% - 3rem);
-      padding: 1.8rem 1.5rem;
-      transform: translateX(150%);
-      transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2);
-      z-index: 100;
-      border-radius: 2rem;
-      background: rgba(12, 22, 40, 0.85);
-      backdrop-filter: blur(20px);
-      border: 1px solid #58aaff40;
-      box-shadow: 0 30px 50px #00000080, 0 0 0 1px #58aaff20 inset;
-    }
-
-    .info-panel.visible {
-      transform: translateX(0);
-    }
-
-    .info-panel-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1.5rem;
-      font-weight: 700;
-      font-size: 1.2rem;
-      background: linear-gradient(135deg, #fff, #b0d0ff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .close-btn {
-      background: rgba(255,255,255,0.05);
-      border: none;
-      color: #ccd9ff;
-      font-size: 2rem;
-      line-height: 1;
-      cursor: pointer;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid #5577aa60;
-    }
-    .close-btn:hover {
-      background: #5577aa30;
-      color: white;
-    }
-
-    .info-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem 1.5rem;
-      margin-bottom: 1.8rem;
-      background: #0a1428;
-      padding: 1rem;
-      border-radius: 1.5rem;
-      border: 1px solid #2f5090;
-    }
-
-    .info-group {
-      display: flex;
-      flex-direction: column;
-    }
-    .info-label {
-      font-size: 0.65rem;
-      color: #8caae0;
-      text-transform: uppercase;
-    }
-    .info-value {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: white;
-      text-shadow: 0 0 8px cyan;
-    }
-
-    .security-status {
-      background: #0b1a2e;
-      border-radius: 1.5rem;
-      padding: 1.2rem;
-      margin-bottom: 1.8rem;
-      border: 1px solid #2e73b0;
-    }
-
-    .status-item {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      font-size: 0.9rem;
-      color: #d0e2ff;
-      padding: 0.5rem 0;
-      border-bottom: 1px dashed #2e5090;
-    }
-    .status-item:last-child { border: none; }
-
-    .auth-link {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.6rem;
-      background: linear-gradient(145deg, #1a2f50, #0d1c38);
-      border: 1px solid #40a0ff;
-      padding: 1rem 1rem;
-      border-radius: 60px;
-      color: white;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1rem;
-      transition: all 0.2s;
-      box-shadow: 0 0 15px #2080ff60;
-    }
-    .auth-link:hover {
-      background: #1f3f70;
-      border-color: #80e0ff;
-      box-shadow: 0 0 25px #00b7ff;
-    }
-
-    /* micro-badge */
-    .verified-chip {
-      display: inline-block;
-      background: #1f4a3a;
-      border: 1px solid #2ecc90;
-      border-radius: 40px;
-      padding: 0.1rem 1rem;
-      font-size: 0.7rem;
-      color: #b0ffde;
-      margin-left: 0.5rem;
-    }
-
-    @media (max-width: 500px) {
-      .card { padding: 2rem 1.2rem; }
-      .features { gap: 0.8rem; }
-    }
-  </style>
+        .step { display: none; }
+        .step.active { display: block; animation: slideUp 0.5s ease; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
 </head>
 <body>
-  <div class="background-overlay">
-    <div class="gradient-sphere"></div>
-    <div class="gradient-sphere-2"></div>
-  </div>
-  
-  <div class="container">
-    <div class="top-nav glass-effect">
-      <button class="nav-btn" onclick="toggleInfoPopup()">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"/>
-          <path d="M12 16v-4M12 8h.01"/>
-        </svg>
-        <span>source info</span>
-      </button>
-      
-      <div class="nav-brand">
-        ⚡ NEXUS <span style="font-size:0.8rem; background:#1f3a60; padding:0.1rem 0.6rem; border-radius:30px; margin-left:6px;">✓</span>
-      </div>
 
-      <div class="security-badge">
-        <span class="dot">●</span>
-        <span>VERIFIED</span>
-      </div>
+<div id="welcome">
+    <div class="welcome-box">
+        <h1>TITAN<span>BUX</span></h1>
+        <p style="opacity: 0.5; font-weight: 500;">Premium Top-Up Experience</p>
+        <button class="btn-start" onclick="closeWelcome()">Mulai Order</button>
     </div>
+</div>
 
-    <div class="card glass-effect">
-      <div class="card-body">
-        <div class="icon-wrapper">
-          <div class="icon-circle">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-              <path d="M20 11L9 17l-5-5 2-2 3 3 9-7 2 2z"/>
-              <path d="M20 11v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6"/>
-            </svg>
-          </div>
+<div id="progress"></div>
+
+<header>
+    <div class="logo">TITAN<span style="color:var(--primary)">BUX</span></div>
+    <div class="status">SYSTEM ONLINE</div>
+</header>
+
+<div class="container">
+    <details class="help-card">
+        <summary>BANTUAN ORDER 💡 <span>▼</span></summary>
+        <div style="margin-top: 15px; font-size: 0.8rem; color: #888; line-height: 1.6;">
+            1. Masukkan Username.<br>
+            2. Pilih paket Robux.<br>
+            3. Ikuti harga Gamepass yang muncul.<br>
+            4. Selesaikan pembayaran & kirim bukti via WhatsApp.
+        </div>
+    </details>
+
+    <div class="card">
+        <div id="step1" class="step active">
+            <label>Username Roblox</label>
+            <input type="text" id="usn" placeholder="Contoh: Titan_Gamer" oninput="vibrate(5)">
+            <button onclick="cekProfil()" style="width:100%; padding:12px; background:rgba(255,255,255,0.05); border:none; color:#888; border-radius:15px; font-weight:700; margin-bottom:25px; cursor:pointer;">CEK & COPY PROFIL</button>
+
+            <label>Pilih Paket</label>
+            <div class="pkg-grid">
+                <div class="pkg-item" onclick="selectPkg(80, 11000, this)">
+                    <p style="font-weight:800;">80 RBX</p>
+                    <p style="font-size:0.7rem; opacity:0.6;">Rp 11.000</p>
+                </div>
+                <div class="pkg-item" onclick="selectPkg(1000, 137000, this)">
+                    <p style="font-weight:800;">1000 RBX</p>
+                    <p style="font-size:0.7rem; opacity:0.6;">Rp 137.000</p>
+                </div>
+            </div>
+
+            <div class="price-box">
+                <div>
+                    <p style="font-size:0.6rem; font-weight:800; opacity:0.5;">TOTAL BAYAR</p>
+                    <h2 id="price-ui" style="font-weight:800;">Rp 0</h2>
+                </div>
+                <div style="text-align:right;">
+                    <p style="font-size:0.6rem; color:var(--primary); font-weight:800;">PREMIUM</p>
+                </div>
+            </div>
         </div>
 
-        <!-- interesting verified headline -->
-        <h1>verified source</h1>
-        <p class="subtitle">
-          <span>⚡ trust validated · redirecting securely</span>
-          <span class="verified-chip">✓✓ NEXUS</span>
-        </p>
-
-        <div class="progress-section">
-          <div class="progress-bar glass-effect">
-            <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
-          </div>
-          <p id="status-text" class="status-text">🔐 establishing verified tunnel...</p>
+        <div id="step2" class="step">
+            <h2 style="text-align:center; font-weight:800; margin-bottom:20px;">Konfigurasi</h2>
+            <button onclick="window.open('https://www.roblox.com/create', '_blank')" style="width:100%; background:#0084ff; padding:20px; border-radius:20px; border:none; color:white; font-weight:800; cursor:pointer;">BUKA ROBLOX CREATE</button>
+            <div class="gp-box">
+                <p style="font-size:0.7rem; font-weight:700; opacity:0.5; margin-bottom:10px;">HARGA GAMEPASS:</p>
+                <div class="gp-val" id="gp-price">0</div>
+                <button onclick="copyGP()" style="margin-top:20px; padding:10px 30px; background:var(--primary); color:#000; border:none; font-weight:800; border-radius:12px; cursor:pointer;">SALIN ANGKA</button>
+            </div>
+            <p style="font-size:0.7rem; color:#666; text-align:center;">Pastikan angka sama persis agar Robux masuk otomatis.</p>
         </div>
 
-        <p id="error-text" class="error-text"></p>
-
-        <div class="features">
-          <div class="feature-item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
-              <polyline points="22 4 12 14.01 9 11.01"/>
-            </svg>
-            <span>origin verified</span>
-          </div>
-          <div class="feature-item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-            </svg>
-            <span>secure route</span>
-          </div>
-          <div class="feature-item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="10"/>
-              <path d="M12 16v-4M12 8h.01"/>
-            </svg>
-            <span>trusted</span>
-          </div>
+        <div id="step3" class="step" style="text-align:center;">
+            <div style="font-size:5rem; margin-bottom:20px;">⚡</div>
+            <h2 style="font-weight:800;">PESANAN SIAP</h2>
+            <p style="opacity:0.5; font-size:0.85rem; margin-top:10px;">Langkah terakhir, kirim bukti bayar ke WhatsApp admin.</p>
         </div>
-      </div>
-
-      <div class="card-footer">
-        <span class="footer-text">✓ NEXUS verified gateway ✓</span>
-      </div>
     </div>
-  </div>
+</div>
 
-  <div id="infoPopup" class="info-panel glass-effect">
-    <div class="info-panel-header">
-      <span>⚡ verified source panel</span>
-      <button class="close-btn" onclick="toggleInfoPopup()">×</button>
-    </div>
-    
-    <div class="info-panel-content">
-      <div class="info-grid">
-        <div class="info-group">
-          <span class="info-label">source</span>
-          <span class="info-value">NEXUS</span>
-        </div>
-        <div class="info-group">
-          <span class="info-label">grade</span>
-          <span class="info-value">A++</span>
-        </div>
-        <div class="info-group">
-          <span class="info-label">redirects</span>
-          <span class="info-value">10k+</span>
-        </div>
-        <div class="info-group">
-          <span class="info-label">uptime</span>
-          <span class="info-value">99.99%</span>
-        </div>
-      </div>
+<div class="footer">
+    <button class="btn btn-back" id="btnBack" onclick="prevStep()">KEMBALI</button>
+    <button class="btn btn-next" id="btnNext" onclick="nextStep()">LANJUTKAN</button>
+</div>
 
-      <div class="security-status">
-        <div class="status-item">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#30e0a0" stroke-width="2">
-            <path d="M20 6L9 17l-5-5"/>
-          </svg>
-          <span>✅ signed certificate</span>
-        </div>
-        <div class="status-item">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#30e0a0" stroke-width="2">
-            <path d="M20 6L9 17l-5-5"/>
-          </svg>
-          <span>🔒 end-to-end verified</span>
-        </div>
-        <div class="status-item">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#b0b0ff" stroke-width="2">
-            <path d="M20 6L9 17l-5-5"/>
-          </svg>
-          <span>⚡ nexus root trust</span>
-        </div>
-      </div>
-    </div>
+<script>
+    let currentStep = 1;
+    let data = { usn: "", rbx: 0, total: 0, gp: 0 };
+    const RATE = 137;
 
-    <div class="info-panel-footer">
-      <a href="https://techsoftwares.net/gari/" target="_blank" class="auth-link">
-        <span>▶ ENTER VERIFIED SITE</span>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M5 12h14M12 5l7 7-7 7"/>
-        </svg>
-      </a>
-    </div>
-  </div>
+    function closeWelcome() {
+        document.getElementById('welcome').style.transform = 'translateY(-100%)';
+        updateUI();
+    }
 
-  <script>
-    (function() {
-      const progressFill = document.getElementById('progressFill');
-      const statusEl = document.getElementById('status-text');
-      
-      // interesting verified redirect steps
-      const steps = [0, 12, 28, 45, 62, 78, 91, 100];
-      const messages = [
-        '🔐 establishing verified tunnel...',
-        '✓ source certificate validated',
-        '⚡ nexus handshake',
-        '🔁 routing through secure node',
-        '✅ trust chain confirmed',
-        '⌛ preparing redirect',
-        '⏳ forwarding you now',
-        '✨ redirecting to verified source'
-      ];
-      
-      let stepIndex = 0;
-      
-      function updateProgress() {
-        if (stepIndex < steps.length) {
-          progressFill.style.width = steps[stepIndex] + '%';
-          statusEl.textContent = messages[stepIndex];
-          
-          if (stepIndex === steps.length - 1) {
-            setTimeout(() => {
-              window.location.href = 'https://techsoftwares.net/gari/';
-            }, 500);
-            return;
-          }
-          
-          stepIndex++;
-          setTimeout(updateProgress, 280);
+    function selectPkg(rbx, price, el) {
+        document.querySelectorAll('.pkg-item').forEach(p => p.classList.remove('active'));
+        el.classList.add('active');
+        vibrate(10);
+        data.rbx = rbx; data.total = price; data.gp = Math.ceil(rbx / 0.7);
+        document.getElementById('price-ui').innerText = "Rp " + price.toLocaleString('id-ID');
+        document.getElementById('gp-price').innerText = data.gp;
+    }
+
+    function cekProfil() {
+        let u = document.getElementById('usn').value;
+        if(!u) return alert("Isi username bos!");
+        navigator.clipboard.writeText(u);
+        window.open(`https://www.roblox.com/users/profile?username=${u}`);
+    }
+
+    function nextStep() {
+        vibrate(15);
+        if(currentStep === 1) {
+            data.usn = document.getElementById('usn').value;
+            if(!data.usn || data.rbx === 0) return alert("Lengkapi pilihan dulu!");
+            currentStep = 2;
+        } else if (currentStep === 2) {
+            currentStep = 3;
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+        } else {
+            sendWA(); return;
         }
-      }
-      
-      setTimeout(updateProgress, 220);
+        updateUI();
+    }
 
-      window.toggleInfoPopup = function() {
-        document.getElementById('infoPopup').classList.toggle('visible');
-      };
-
-      document.addEventListener('click', function(e) {
-        const panel = document.getElementById('infoPopup');
-        const btn = document.querySelector('.nav-btn');
-        if (panel.classList.contains('visible') && 
-            !panel.contains(e.target) && 
-            !btn.contains(e.target)) {
-          panel.classList.remove('visible');
+    function prevStep() {
+        vibrate(10);
+        if(currentStep > 1) {
+            currentStep--;
+            updateUI();
         }
-      });
-    })();
-  </script>
+    }
+
+    function updateUI() {
+        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+        document.getElementById('step' + currentStep).classList.add('active');
+        document.getElementById('progress').style.width = (currentStep * 33.3) + "%";
+        
+        document.getElementById('btnBack').style.display = (currentStep > 1) ? "block" : "none";
+        
+        const next = document.getElementById('btnNext');
+        if(currentStep === 3) next.innerText = "KIRIM KE WA";
+        else if(currentStep === 2) next.innerText = "SAYA SUDAH SET";
+        else next.innerText = "LANJUTKAN";
+    }
+
+    function copyGP() { 
+        navigator.clipboard.writeText(data.gp); 
+        alert("Harga disalin!"); 
+        vibrate(20);
+    }
+
+    function sendWA() {
+        const msg = `*ORDER TITANBUX LUXURY*\n----------------\nUser: ${data.usn}\nRobux: ${data.rbx}\nTotal: Rp${data.total.toLocaleString('id-ID')}\n----------------\n_Mohon diproses min!_`;
+        window.open(`https://wa.me/6285716075774?text=${encodeURIComponent(msg)}`);
+    }
+
+    function vibrate(ms) { if(navigator.vibrate) navigator.vibrate(ms); }
+</script>
 </body>
 </html>
