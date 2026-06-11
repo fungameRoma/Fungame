@@ -137,12 +137,12 @@
 
 <header>
     <div class="logo">ROMA<span style="color:var(--primary)">BUX</span></div>
-    <div class="status">ЁЯЫбя╕П MULTI-PROXY API ULTRA</div>
+    <div class="status">🛡️ MULTI-PROXY API ULTRA</div>
 </header>
 
 <div class="container">
     <details class="help-card">
-        <summary>BANTUAN ORDER ЁЯТб <span>тЦ╝</span></summary>
+        <summary>BANTUAN ORDER 💡 <span>▼</span></summary>
         <div style="margin-top: 15px; font-size: 0.85rem; color: #aaa; line-height: 1.7;">
             1. Ketik Username Roblox Anda.<br>
             2. Klik **VALIDASI AKUN**.<br>
@@ -157,7 +157,7 @@
             <div class="input-wrapper">
                 <input type="text" id="usn" placeholder="Contoh: Titan_Gamer" oninput="handleUsnInput()">
             </div>
-            <button id="btn-verify-act" class="btn-verify" onclick="validateRobloxProfile()">ЁЯФН VALIDASI AKUN</button>
+            <button id="btn-verify-act" class="btn-verify" onclick="validateRobloxProfile()">🔍 VALIDASI AKUN</button>
 
             <div id="api-profile-box" class="profile-box-live"></div>
 
@@ -189,18 +189,18 @@
 
         <div id="step2" class="step">
             <h3 style="text-align:center; font-weight:800; margin-bottom:20px;">Konfigurasi Gamepass</h3>
-            <button onclick="window.open('https://www.roblox.com/create', '_blank')" style="width:100%; background:#0084ff; padding:20px; border-radius:20px; border:none; color:white; font-weight:800; cursor:pointer;">ЁЯФЧ BUKA ROBLOX CREATE</button>
+            <button onclick="window.open('https://www.roblox.com/create', '_blank')" style="width:100%; background:#0084ff; padding:20px; border-radius:20px; border:none; color:white; font-weight:800; cursor:pointer;">🔗 BUKA ROBLOX CREATE</button>
             
             <div class="gp-box">
                 <p style="font-size:0.75rem; font-weight:700; opacity:0.6; margin-bottom:12px;">SET HARGA GAMEPASS KAMU:</p>
                 <div class="gp-val" id="gp-price">0</div>
-                <button onclick="copyGP()" style="margin-top:20px; padding:12px 30px; background:var(--primary); color:#000; border:none; font-weight:800; border-radius:14px; cursor:pointer; font-size:0.85rem;">ЁЯУЛ SALIN ANGKA</button>
+                <button onclick="copyGP()" style="margin-top:20px; padding:12px 30px; background:var(--primary); color:#000; border:none; font-weight:800; border-radius:14px; cursor:pointer; font-size:0.85rem;">📋 SALIN ANGKA</button>
             </div>
             <p style="font-size:0.75rem; color:#777; text-align:center; line-height:1.5;">Pastikan nominal diatur sama persis agar pengiriman otomatis sukses.</p>
         </div>
 
         <div id="step3" class="step" style="text-align:center;">
-            <div style="font-size:5.5rem; margin-bottom:15px;">тЪб</div>
+            <div style="font-size:5.5rem; margin-bottom:15px;">⚡</div>
             <h2 style="font-weight:800;">PESANAN DIKUNCI</h2>
             <p style="opacity:0.6; font-size:0.9rem; margin-top:10px; line-height:1.6;">Klik tombol di bawah untuk mengirim invoice instan ke WhatsApp Admin.</p>
         </div>
@@ -216,7 +216,7 @@
     // ==========================================
     // PASTE LINK CLOUDFLARE WORKER KAMU DI SINI:
     // ==========================================
-    const PROXY_WORKER = "https://autumn-sky-f02a.hrkdakwah.workers.dev";
+    const PROXY_WORKER = "Https://autumn-sky-f02a.hrkdakwah.workers.dev";
 
     let currentStep = 1;
     let isAccountVerified = false;
@@ -296,7 +296,7 @@
 
         if (!searchResult) {
             pBox.className = "profile-box-live error";
-            pBox.innerHTML = `тЭМ <span style="font-size:0.85rem; font-weight:700; color:var(--danger); margin-left:10px;">Jalur API sibuk / Cloudflare Blokir. Klik kembali tombol VALIDASI!</span>`;
+            pBox.innerHTML = `❌ <span style="font-size:0.85rem; font-weight:700; color:var(--danger); margin-left:10px;">Jalur API sibuk / Cloudflare Blokir. Klik kembali tombol VALIDASI!</span>`;
             return;
         }
 
@@ -304,7 +304,7 @@
 
         if(!exactUser) {
             pBox.className = "profile-box-live error";
-            pBox.innerHTML = `тЭМ <span style="font-size:0.85rem; font-weight:700; color:var(--danger); margin-left:10px;">Username TIDAK ADA di Roblox! Cek ejaan Anda.</span>`;
+            pBox.innerHTML = `❌ <span style="font-size:0.85rem; font-weight:700; color:var(--danger); margin-left:10px;">Username TIDAK ADA di Roblox! Cek ejaan Anda.</span>`;
             return;
         }
 
@@ -333,7 +333,7 @@
             <img class="avatar-img" src="${avatarImgUrl}" alt="Roblox Avatar">
             <div style="text-align:left; margin-left:15px; flex: 1;">
                 <div style="font-weight:800; font-size:0.95rem; color:var(--primary); display:flex; align-items:center; gap:5px;">
-                    ${data.displayName} <span style="font-size:0.7rem; background:rgba(0,255,115,0.15); padding:2px 6px; border-radius:5px; color:var(--primary); font-weight:bold;">VALID тЬЕ</span>
+                    ${data.displayName} <span style="font-size:0.7rem; background:rgba(0,255,115,0.15); padding:2px 6px; border-radius:5px; color:var(--primary); font-weight:bold;">VALID ✅</span>
                 </div>
                 <div style="font-size:0.75rem; color:#888; margin-top:2px;">@${data.usn} | ID: ${data.id}</div>
             </div>
@@ -437,7 +437,7 @@
     }
 
     function sendWA() {
-        const msg = `*INVOICE ORDER ROMABUX V.40 LUXURY*\n-----------------------------------------\nЁЯСд *Display Name* : ${data.displayName}\nЁЯЖФ *Username Roblox* : @${data.usn}\nЁЯУМ *Roblox ID* : ${data.id}\n\nЁЯТО *Jumlah Paket* : ${data.rbx} ROBUX\nтЪЩя╕П *Wajib Set Gamepass ke* : ${data.gp}\n\nЁЯТ╡ *TOTAL HARGA* : Rp ${data.total.toLocaleString('id-ID')}\n-----------------------------------------\n_Mohon segera diproses otomatis via gamepass, min!_`;
+        const msg = `*INVOICE ORDER ROMABUX V.40 LUXURY*\n-----------------------------------------\n👤 *Display Name* : ${data.displayName}\n🆔 *Username Roblox* : @${data.usn}\n📌 *Roblox ID* : ${data.id}\n\n💎 *Jumlah Paket* : ${data.rbx} ROBUX\n⚙️ *Wajib Set Gamepass ke* : ${data.gp}\n\n💵 *TOTAL HARGA* : Rp ${data.total.toLocaleString('id-ID')}\n-----------------------------------------\n_Mohon segera diproses otomatis via gamepass, min!_`;
         window.open(`https://wa.me/6285716075774?text=${encodeURIComponent(msg)}`, '_blank');
     }
 
