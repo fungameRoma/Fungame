@@ -27,6 +27,7 @@
             background: var(--bg); color: var(--text); min-height: 100vh;
             background-image: radial-gradient(circle at 50% 0%, #121212 0%, #070707 100%);
             display: flex; flex-direction: column; align-items: center;
+            padding-bottom: 120px;
         }
 
         #welcome {
@@ -46,13 +47,47 @@
 
         #progress { position: fixed; top: 0; left: 0; height: 4px; background: var(--primary); width: 0%; z-index: 2001; transition: 0.4s ease; box-shadow: 0 0 10px var(--primary); }
 
-        header { width: 100%; max-width: 450px; padding: 30px 20px; display: flex; justify-content: space-between; align-items: center; }
+        header { width: 100%; max-width: 450px; padding: 25px 20px 15px 20px; display: flex; justify-content: space-between; align-items: center; }
         .logo { font-weight: 800; font-size: 1.5rem; letter-spacing: -1px; }
         .status { font-size: 0.65rem; background: rgba(0,255,115,0.08); color: var(--primary); padding: 6px 14px; border-radius: 50px; font-weight: 700; border: 1px solid rgba(0,255,115,0.3); }
 
-        .container { width: 100%; max-width: 450px; padding: 0 20px 150px 20px; flex: 1; }
+        /* Menu Tabs Navigation */
+        .tabs-nav {
+            display: flex; width: 100%; max-width: 450px; padding: 0 20px 15px 20px; gap: 10px;
+        }
+        .tab-btn {
+            flex: 1; padding: 14px; background: var(--card); border: 1px solid var(--border);
+            color: #888; font-weight: 700; font-size: 0.85rem; border-radius: 16px; cursor: pointer;
+            transition: 0.3s; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .tab-btn.active {
+            background: rgba(255,255,255,0.08); color: #fff; border-color: var(--primary);
+            box-shadow: inset 0 0 10px rgba(0, 255, 115, 0.05);
+        }
 
-        .help-card { background: var(--card); border: 1px solid var(--border); border-radius: 22px; padding: 20px; margin-bottom: 25px; }
+        .container { width: 100%; max-width: 450px; padding: 0 20px; flex: 1; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease forwards; }
+
+        /* Banner & Info Grid Beranda */
+        .promo-banner {
+            background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(0,255,115,0.04) 100%);
+            border: 1px solid var(--border); border-radius: 24px; padding: 22px; margin-bottom: 15px;
+        }
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .info-item { background: var(--card); border: 1px solid var(--border); padding: 15px; border-radius: 16px; }
+        .info-item p { font-size: 0.65rem; opacity: 0.5; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+        .info-item h4 { font-size: 1rem; font-weight: 800; margin-top: 4px; }
+
+        /* Real History List */
+        .history-box { background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 20px; }
+        .history-item { 
+            background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 12px; 
+            border-radius: 14px; margin-top: 10px; display: flex; justify-content: space-between; align-items: center;
+            font-size: 0.8rem;
+        }
+
+        .help-card { background: var(--card); border: 1px solid var(--border); border-radius: 22px; padding: 20px; margin-bottom: 20px; }
         .help-card summary { list-style: none; font-size: 0.85rem; font-weight: 700; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
         .help-card summary span { transition: transform 0.3s; }
         .help-card[open] summary span { transform: rotate(180deg); color: var(--primary); }
@@ -69,8 +104,8 @@
         input:focus { border-color: var(--primary); background: rgba(255,255,255,0.04); box-shadow: 0 0 15px rgba(0,255,115,0.1); }
         
         .btn-verify {
-            width: 100%; padding: 15px; background: #fff; color: #000; border: none; border-radius: 16px;
-            font-weight: 800; font-size: 0.85rem; cursor: pointer; transition: 0.3s; margin-bottom: 20px;
+            width: 100%; padding: 16px; background: #fff; color: #000; border: none; border-radius: 18px;
+            font-weight: 800; font-size: 0.85rem; cursor: pointer; transition: 0.3s; margin-bottom: 20px; letter-spacing: 0.5px;
         }
         .btn-verify:hover { background: var(--primary); transform: translateY(-1px); }
 
@@ -91,6 +126,17 @@
             border-radius: 24px; text-align: center; cursor: pointer; transition: 0.3s;
         }
         .pkg-item.active { border-color: var(--primary); background: rgba(0,255,115,0.08); transform: scale(1.02); }
+
+        /* Payment Selector */
+        .pay-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .pay-item {
+            background: rgba(255,255,255,0.01); border: 1px solid var(--border); padding: 15px;
+            border-radius: 16px; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 10px;
+        }
+        .pay-item span { font-size: 0.85rem; font-weight: 700; color: #fff; }
+        .pay-item .dot { width: 8px; height: 8px; border-radius: 50%; background: #444; transition: 0.3s; }
+        .pay-item.active { border-color: var(--primary); background: rgba(0,255,115,0.04); }
+        .pay-item.active .dot { background: var(--primary); box-shadow: 0 0 8px var(--primary); }
 
         .price-box { 
             background: #fff; color: #000; border-radius: 24px; padding: 25px; 
@@ -140,92 +186,200 @@
     <div class="status">🛡️ MULTI-PROXY API ULTRA</div>
 </header>
 
+<div class="tabs-nav">
+    <div id="btn-tab-beranda" class="tab-btn active" onclick="switchTab('beranda')">🏠 Beranda</div>
+    <div id="btn-tab-order" class="tab-btn" onclick="switchTab('order')">💎 Order Robux</div>
+</div>
+
 <div class="container">
-    <details class="help-card">
-        <summary>BANTUAN ORDER 💡 <span>▼</span></summary>
-        <div style="margin-top: 15px; font-size: 0.85rem; color: #aaa; line-height: 1.7;">
-            1. Ketik Username Roblox Anda.<br>
-            2. Klik **VALIDASI AKUN**.<br>
-            3. Pilih nominal paket atau kustom.<br>
-            4. Atur harga Gamepass sesuai nominal di Step 2.
+
+    <div id="tab-beranda" class="tab-content active">
+        <div class="promo-banner">
+            <h3 style="font-weight: 800; margin-bottom: 6px;">Secure Automations App</h3>
+            <p style="font-size: 0.8rem; opacity: 0.7; line-height: 1.5;">Sistem pemrosesan penyerapan Gamepass otomatis generasi v.40. Tanpa memerlukan kata sandi, transaksi diproses murni menggunakan API jalur aman.</p>
         </div>
-    </details>
 
-    <div class="card">
-        <div id="step1" class="step active">
-            <label>Username Roblox</label>
-            <div class="input-wrapper">
-                <input type="text" id="usn" placeholder="Contoh: Titan_Gamer" oninput="handleUsnInput()">
+        <div class="info-grid">
+            <div class="info-item">
+                <p>Status Server</p>
+                <h4 style="color: var(--primary);">🟢 Operational Normal</h4>
             </div>
-            <button id="btn-verify-act" class="btn-verify" onclick="validateRobloxProfile()">🔍 VALIDASI AKUN</button>
-
-            <div id="api-profile-box" class="profile-box-live"></div>
-
-            <label>Pilih Paket Robux</label>
-            <div class="pkg-grid">
-                <div class="pkg-item" onclick="selectPkg(80, 11000, this)">
-                    <p style="font-weight:800; font-size:1.1rem;">80 RBX</p>
-                    <p style="font-size:0.75rem; opacity:0.6; margin-top:4px;">Rp 11.000</p>
-                </div>
-                <div class="pkg-item" onclick="selectPkg(1000, 137000, this)">
-                    <p style="font-weight:800; font-size:1.1rem;">1000 RBX</p>
-                    <p style="font-size:0.75rem; opacity:0.6; margin-top:4px;">Rp 137.000</p>
-                </div>
+            <div class="info-item">
+                <p>Estimasi Proses</p>
+                <h4>5 - 15 Menit</h4>
             </div>
-
-            <label>Nominal Kustom (Min 50 RBX)</label>
-            <input type="number" id="custom-rbx" placeholder="Masukkan nominal sendiri..." oninput="calculateCustom(this)">
-
-            <div class="price-box">
-                <div>
-                    <p style="font-size:0.65rem; font-weight:800; opacity:0.6;">TOTAL BAYAR</p>
-                    <h2 id="price-ui" style="font-weight:800; font-size:1.5rem;">Rp 0</h2>
-                </div>
-                <div style="text-align:right;">
-                    <p style="font-size:0.65rem; color:var(--primary); font-weight:800;">LUXURY SYSTEM</p>
-                </div>
+            <div class="info-item">
+                <p>Enkripsi Data</p>
+                <h4>SSL Secure Active</h4>
+            </div>
+            <div class="info-item">
+                <p>Jam Operasional</p>
+                <h4>08:00 - 22:00 WIB</h4>
             </div>
         </div>
 
-        <div id="step2" class="step">
-            <h3 style="text-align:center; font-weight:800; margin-bottom:20px;">Konfigurasi Gamepass</h3>
-            <button onclick="window.open('https://www.roblox.com/create', '_blank')" style="width:100%; background:#0084ff; padding:20px; border-radius:20px; border:none; color:white; font-weight:800; cursor:pointer;">🔗 BUKA ROBLOX CREATE</button>
-            
-            <div class="gp-box">
-                <p style="font-size:0.75rem; font-weight:700; opacity:0.6; margin-bottom:12px;">SET HARGA GAMEPASS KAMU:</p>
-                <div class="gp-val" id="gp-price">0</div>
-                <button onclick="copyGP()" style="margin-top:20px; padding:12px 30px; background:var(--primary); color:#000; border:none; font-weight:800; border-radius:14px; cursor:pointer; font-size:0.85rem;">📋 SALIN ANGKA</button>
+        <div class="history-box">
+            <label style="margin-bottom: 5px;">Riwayat Transaksi Anda (Lokal)</label>
+            <div id="history-list">
+                <p style="font-size: 0.8rem; opacity: 0.4; text-align: center; padding: 15px 0;">Belum ada riwayat transaksi di perangkat ini.</p>
             </div>
-            <p style="font-size:0.75rem; color:#777; text-align:center; line-height:1.5;">Pastikan nominal diatur sama persis agar pengiriman otomatis sukses.</p>
+        </div>
+    </div>
+
+    <div id="tab-order" class="tab-content">
+        <details class="help-card">
+            <summary>BANTUAN ORDER 💡 <span>▼</span></summary>
+            <div style="margin-top: 15px; font-size: 0.85rem; color: #aaa; line-height: 1.7;">
+                1. Ketik Username Roblox Anda.<br>
+                2. Klik **VALIDASI AKUN**.<br>
+                3. Pilih paket atau ketik nominal kustom.<br>
+                4. Pilih metode pembayaran Anda.<br>
+                5. Atur harga Gamepass sesuai nominal di Step 2.
+            </div>
+        </details>
+
+        <div class="card">
+            <div id="step1" class="step active">
+                <label>Username Roblox</label>
+                <div class="input-wrapper">
+                    <input type="text" id="usn" placeholder="Contoh: Titan_Gamer" oninput="handleUsnInput()">
+                </div>
+                <button id="btn-verify-act" class="btn-verify" onclick="validateRobloxProfile()">🔍 VALIDASI AKUN</button>
+
+                <div id="api-profile-box" class="profile-box-live"></div>
+
+                <label>Pilih Paket Robux</label>
+                <div class="pkg-grid">
+                    <div class="pkg-item" onclick="selectPkg(80, 11000, this)">
+                        <p style="font-weight:800; font-size:1.1rem;">80 RBX</p>
+                        <p style="font-size:0.75rem; opacity:0.6; margin-top:4px;">Rp 11.000</p>
+                    </div>
+                    <div class="pkg-item" onclick="selectPkg(1000, 137000, this)">
+                        <p style="font-weight:800; font-size:1.1rem;">1000 RBX</p>
+                        <p style="font-size:0.75rem; opacity:0.6; margin-top:4px;">Rp 137.000</p>
+                    </div>
+                </div>
+
+                <label>Nominal Kustom (Min 50 RBX)</label>
+                <input type="number" id="custom-rbx" placeholder="Masukkan nominal sendiri..." oninput="calculateCustom(this)">
+
+                <label style="margin-top: 20px;">Metode Pembayaran</label>
+                <div class="pay-grid">
+                    <div class="pay-item active" onclick="selectPayment('QRIS / E-Wallet', this)">
+                        <div class="dot"></div>
+                        <span>QRIS / E-Wallet</span>
+                    </div>
+                    <div class="pay-item" onclick="selectPayment('Transfer Bank', this)">
+                        <div class="dot"></div>
+                        <span>Transfer Bank</span>
+                    </div>
+                </div>
+
+                <div class="price-box">
+                    <div>
+                        <p style="font-size:0.65rem; font-weight:800; opacity:0.6;">TOTAL BAYAR</p>
+                        <h2 id="price-ui" style="font-weight:800; font-size:1.5rem;">Rp 0</h2>
+                    </div>
+                    <div style="text-align:right;">
+                        <p style="font-size:0.65rem; color:var(--primary); font-weight:800;">LUXURY SYSTEM</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="step2" class="step">
+                <h3 style="text-align:center; font-weight:800; margin-bottom:20px;">Konfigurasi Gamepass</h3>
+                <button onclick="window.open('https://www.roblox.com/create', '_blank')" style="width:100%; background:#0084ff; padding:20px; border-radius:20px; border:none; color:white; font-weight:800; cursor:pointer;">🔗 BUKA ROBLOX CREATE</button>
+                
+                <div class="gp-box">
+                    <p style="font-size:0.75rem; font-weight:700; opacity:0.6; margin-bottom:12px;">SET HARGA GAMEPASS KAMU:</p>
+                    <div class="gp-val" id="gp-price">0</div>
+                    <button onclick="copyGP()" style="margin-top:20px; padding:12px 30px; background:var(--primary); color:#000; border:none; font-weight:800; border-radius:14px; cursor:pointer; font-size:0.85rem;">📋 SALIN ANGKA</button>
+                </div>
+                <p style="font-size:0.75rem; color:#777; text-align:center; line-height:1.5;">Pastikan nominal diatur sama persis agar pengiriman otomatis sukses.</p>
+            </div>
+
+            <div id="step3" class="step" style="text-align:center;">
+                <div style="font-size:5.5rem; margin-bottom:15px;">⚡</div>
+                <h2 style="font-weight:800;">PESANAN DIKUNCI</h2>
+                <p style="opacity:0.6; font-size:0.9rem; margin-top:10px; line-height:1.6;">Klik tombol di bawah untuk mengirim invoice instan ke WhatsApp Admin.</p>
+            </div>
         </div>
 
-        <div id="step3" class="step" style="text-align:center;">
-            <div style="font-size:5.5rem; margin-bottom:15px;">⚡</div>
-            <h2 style="font-weight:800;">PESANAN DIKUNCI</h2>
-            <p style="opacity:0.6; font-size:0.9rem; margin-top:10px; line-height:1.6;">Klik tombol di bawah untuk mengirim invoice instan ke WhatsApp Admin.</p>
+        <div class="footer" id="order-footer" style="display: none;">
+            <button class="btn btn-back" id="btnBack" onclick="prevStep()">KEMBALI</button>
+            <button class="btn btn-next" id="btnNext" onclick="nextStep()">LANJUTKAN</button>
         </div>
     </div>
 </div>
 
-<div class="footer">
-    <button class="btn btn-back" id="btnBack" onclick="prevStep()">KEMBALI</button>
-    <button class="btn btn-next" id="btnNext" onclick="nextStep()">LANJUTKAN</button>
-</div>
-
 <script>
-    // ==========================================
-    // PASTE LINK CLOUDFLARE WORKER KAMU DI SINI:
-    // ==========================================
     const PROXY_WORKER = "Https://autumn-sky-f02a.hrkdakwah.workers.dev";
 
     let currentStep = 1;
     let isAccountVerified = false;
-    let data = { usn: "", displayName: "", rbx: 0, total: 0, gp: 0, id: "" };
+    let data = { usn: "", displayName: "", rbx: 0, total: 0, gp: 0, id: "", payment: "QRIS / E-Wallet" };
     const RATE = 137;
 
     function closeWelcome() {
         document.getElementById('welcome').style.transform = 'translateY(-100%)';
+        loadLocalHistory();
         updateUI();
+    }
+
+    function switchTab(tabName) {
+        vibrate(10);
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+        if (tabName === 'beranda') {
+            document.getElementById('btn-tab-beranda').classList.add('active');
+            document.getElementById('tab-beranda').classList.add('active');
+            document.getElementById('order-footer').style.display = 'none';
+        } else {
+            document.getElementById('btn-tab-order').classList.add('active');
+            document.getElementById('tab-order').classList.add('active');
+            document.getElementById('order-footer').style.display = 'flex';
+            updateUI();
+        }
+    }
+
+    function selectPayment(method, el) {
+        vibrate(10);
+        document.querySelectorAll('.pay-item').forEach(p => p.classList.remove('active'));
+        el.classList.add('active');
+        data.payment = method;
+    }
+
+    function loadLocalHistory() {
+        const historyList = document.getElementById('history-list');
+        const saved = localStorage.getItem('romabux_orders');
+        if (saved) {
+            const arr = JSON.parse(saved);
+            let html = "";
+            arr.reverse().forEach(item => {
+                html += `
+                <div class="history-item">
+                    <div>
+                        <div style="font-weight: 700; color: #fff;">${item.rbx} RBX (${item.payment})</div>
+                        <div style="font-size: 0.65rem; color: #666; margin-top: 2px;">@${item.usn} • ${item.date}</div>
+                    </div>
+                    <div style="font-weight: 800; color: var(--primary);">Rp ${parseInt(item.total).toLocaleString('id-ID')}</div>
+                </div>`;
+            });
+            historyList.innerHTML = html;
+        }
+    }
+
+    function saveOrderToLocal(usn, rbx, total, payment) {
+        const saved = localStorage.getItem('romabux_orders');
+        let arr = saved ? JSON.parse(saved) : [];
+        const options = { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' };
+        const now = new Date().toLocaleDateString('id-ID', options);
+        
+        arr.push({ usn, rbx, total, payment, date: now });
+        if(arr.length > 5) arr.shift(); // Batasi maksimal 5 riwayat terakhir
+        localStorage.setItem('romabux_orders', JSON.stringify(arr));
+        loadLocalHistory();
     }
 
     function handleUsnInput() {
@@ -263,7 +417,6 @@
 
         const targetSearchUrl = `https://users.roblox.com/v1/users/search?keyword=${encodeURIComponent(u)}&limit=10&_=${Date.now()}`;
         
-        // Mempersiapkan sistem multi-routing otomatis
         let proxies = [];
         if (PROXY_WORKER && PROXY_WORKER !== "PASTE_LINK_WORKER_DI_SINI") {
             proxies.push(url => `${PROXY_WORKER.replace(/\/$/, '')}/?url=${encodeURIComponent(url)}`);
@@ -296,7 +449,7 @@
 
         if (!searchResult) {
             pBox.className = "profile-box-live error";
-            pBox.innerHTML = `❌ <span style="font-size:0.85rem; font-weight:700; color:var(--danger); margin-left:10px;">Jalur API sibuk / Cloudflare Blokir. Klik kembali tombol VALIDASI!</span>`;
+            pBox.innerHTML = `❌ <span style="font-size:0.85rem; font-weight:700; color:var(--danger); margin-left:10px;">Jalur API sibuk. Klik kembali tombol VALIDASI!</span>`;
             return;
         }
 
@@ -437,7 +590,10 @@
     }
 
     function sendWA() {
-        const msg = `*INVOICE ORDER ROMABUX V.40 LUXURY*\n-----------------------------------------\n👤 *Display Name* : ${data.displayName}\n🆔 *Username Roblox* : @${data.usn}\n📌 *Roblox ID* : ${data.id}\n\n💎 *Jumlah Paket* : ${data.rbx} ROBUX\n⚙️ *Wajib Set Gamepass ke* : ${data.gp}\n\n💵 *TOTAL HARGA* : Rp ${data.total.toLocaleString('id-ID')}\n-----------------------------------------\n_Mohon segera diproses otomatis via gamepass, min!_`;
+        // Menyimpan data pesanan asli secara lokal sebelum dialihkan ke WA
+        saveOrderToLocal(data.usn, data.rbx, data.total, data.payment);
+
+        const msg = `*INVOICE ORDER ROMABUX V.40 LUXURY*\n-----------------------------------------\n👤 *Display Name* : ${data.displayName}\n🆔 *Username Roblox* : @${data.usn}\n📌 *Roblox ID* : ${data.id}\n\n💎 *Jumlah Paket* : ${data.rbx} ROBUX\n⚙️ *Wajib Set Gamepass ke* : ${data.gp}\n💳 *Metode Bayar* : ${data.payment}\n\n💵 *TOTAL HARGA* : Rp ${data.total.toLocaleString('id-ID')}\n-----------------------------------------\n_Mohon segera diproses otomatis via gamepass, min!_`;
         window.open(`https://wa.me/6285716075774?text=${encodeURIComponent(msg)}`, '_blank');
     }
 
