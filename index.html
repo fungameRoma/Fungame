@@ -27,7 +27,7 @@
             background: var(--bg); color: var(--text); min-height: 100vh;
             background-image: radial-gradient(circle at 50% 0%, #121212 0%, #070707 100%);
             display: flex; flex-direction: column; align-items: center;
-            padding-bottom: 120px;
+            overflow-x: hidden;
         }
 
         #welcome {
@@ -79,7 +79,7 @@
         .info-item p { font-size: 0.65rem; opacity: 0.5; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
         .info-item h4 { font-size: 1rem; font-weight: 800; margin-top: 4px; }
 
-        /* Real History List */
+        /* Real Local History */
         .history-box { background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 20px; }
         .history-item { 
             background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 12px; 
@@ -149,15 +149,23 @@
         }
         .gp-val { font-size: 4.5rem; font-weight: 800; color: var(--primary); line-height: 1; text-shadow: 0 0 20px var(--primary-glow); }
 
+        /* FIXED FOOTER DENGAN PADDING YANG DIOPTIMALKAN */
         .footer { 
-            position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 450px; padding: 30px 20px; 
-            background: linear-gradient(to top, #070707 70%, transparent); display: flex; gap: 15px; z-index: 1000;
+            position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 450px; 
+            padding: 15px 20px 25px 20px; 
+            background: linear-gradient(to top, #070707 85%, transparent); display: flex; gap: 15px; z-index: 1000;
         }
-        .btn { padding: 22px; border-radius: 22px; border: none; font-weight: 800; font-size: 1rem; cursor: pointer; transition: 0.3s; }
+        .btn { padding: 20px; border-radius: 22px; border: none; font-weight: 800; font-size: 1rem; cursor: pointer; transition: 0.3s; }
         .btn-back { background: #1a1a1a; color: #fff; flex: 1; display: none; border: 1px solid var(--border); }
         
         .btn-next { background: var(--primary); color: #000; flex: 2; box-shadow: 0 10px 30px rgba(0,255,115,0.25); opacity: 0.3; pointer-events: none; transition: 0.4s ease; }
         .btn-next.enabled { opacity: 1; pointer-events: auto; }
+
+        /* SCROLL SPACER PENYELAMAT BUG OVERLAP */
+        .scroll-spacer {
+            height: 140px;
+            width: 100%;
+        }
 
         .step { display: none; }
         .step.active { display: block; animation: slideUp 0.4s ease forwards; }
@@ -224,6 +232,7 @@
                 <p style="font-size: 0.8rem; opacity: 0.4; text-align: center; padding: 15px 0;">Belum ada riwayat transaksi di perangkat ini.</p>
             </div>
         </div>
+        <div class="scroll-spacer"></div>
     </div>
 
     <div id="tab-order" class="tab-content">
@@ -305,6 +314,8 @@
             </div>
         </div>
 
+        <div class="scroll-spacer"></div>
+
         <div class="footer" id="order-footer" style="display: none;">
             <button class="btn btn-back" id="btnBack" onclick="prevStep()">KEMBALI</button>
             <button class="btn btn-next" id="btnNext" onclick="nextStep()">LANJUTKAN</button>
@@ -377,7 +388,7 @@
         const now = new Date().toLocaleDateString('id-ID', options);
         
         arr.push({ usn, rbx, total, payment, date: now });
-        if(arr.length > 5) arr.shift(); // Batasi maksimal 5 riwayat terakhir
+        if(arr.length > 5) arr.shift(); 
         localStorage.setItem('romabux_orders', JSON.stringify(arr));
         loadLocalHistory();
     }
@@ -590,7 +601,6 @@
     }
 
     function sendWA() {
-        // Menyimpan data pesanan asli secara lokal sebelum dialihkan ke WA
         saveOrderToLocal(data.usn, data.rbx, data.total, data.payment);
 
         const msg = `*INVOICE ORDER ROMABUX V.40 LUXURY*\n-----------------------------------------\n👤 *Display Name* : ${data.displayName}\n🆔 *Username Roblox* : @${data.usn}\n📌 *Roblox ID* : ${data.id}\n\n💎 *Jumlah Paket* : ${data.rbx} ROBUX\n⚙️ *Wajib Set Gamepass ke* : ${data.gp}\n💳 *Metode Bayar* : ${data.payment}\n\n💵 *TOTAL HARGA* : Rp ${data.total.toLocaleString('id-ID')}\n-----------------------------------------\n_Mohon segera diproses otomatis via gamepass, min!_`;
