@@ -1,924 +1,1248 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ROMABUX | V.40 LUXURY ULTRA STRICT</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-    <style>
-        :root {
-            --green: #00ff73;
-            --green-dim: rgba(0,255,115,0.12);
-            --green-glow: rgba(0,255,115,0.3);
-            --danger: #ff4545;
-            --warn: #ffb300;
-            --blue: #3b82f6;
-            --bg: #060606;
-            --bg2: #0d0d0d;
-            --card: rgba(255,255,255,0.035);
-            --card-hover: rgba(255,255,255,0.06);
-            --border: rgba(255,255,255,0.07);
-            --border-light: rgba(255,255,255,0.12);
-            --text: #ffffff;
-            --muted: #666;
-            --muted2: #999;
-        }
-        * { margin:0; padding:0; box-sizing:border-box; font-family:'Plus Jakarta Sans',sans-serif; -webkit-tap-highlight-color:transparent; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ROMABUX | V.40 LUXURY ULTRA STRICT</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+<style>
+:root{--green:#00ff73;--green-dim:rgba(0,255,115,.12);--green-glow:rgba(0,255,115,.3);--danger:#ff4545;--warn:#ffb300;--bg:#060606;--card:rgba(255,255,255,.035);--card-hover:rgba(255,255,255,.06);--border:rgba(255,255,255,.07);--border-light:rgba(255,255,255,.12);--muted:#666;--muted2:#999}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Plus Jakarta Sans',sans-serif;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:#fff;min-height:100vh;display:flex;flex-direction:column;align-items:center;overflow-x:hidden}
 
-        body {
-            background:var(--bg);
-            color:var(--text);
-            min-height:100vh;
-            display:flex;
-            flex-direction:column;
-            align-items:center;
-            overflow-x:hidden;
-        }
+/* WELCOME */
+#welcome{position:fixed;inset:0;z-index:9999;background:#000;display:flex;align-items:center;justify-content:center;transition:opacity .7s ease,transform .7s cubic-bezier(.85,0,.15,1)}
+#welcome.hidden{opacity:0;transform:scale(1.05);pointer-events:none}
+#welcome-canvas{position:absolute;inset:0;pointer-events:none}
+.welcome-inner{text-align:center;padding:24px;position:relative;z-index:1}
+.welcome-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(0,255,115,.08);border:1px solid rgba(0,255,115,.2);color:var(--green);font-size:.7rem;font-weight:700;letter-spacing:1.5px;padding:6px 16px;border-radius:50px;margin-bottom:24px;text-transform:uppercase}
+.welcome-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 1.5s ease infinite}
+.welcome-logo{font-size:4rem;font-weight:800;letter-spacing:-3px;line-height:1;margin-bottom:6px}
+.welcome-logo span{color:var(--green);text-shadow:0 0 30px var(--green-glow)}
+.welcome-sub{font-size:.75rem;color:var(--muted2);font-weight:500;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+.welcome-tagline{font-size:1rem;color:rgba(255,255,255,.55);margin-bottom:32px;line-height:1.6}
+.welcome-stats{display:flex;gap:24px;justify-content:center;margin-bottom:36px}
+.ws{text-align:center}.ws-val{font-size:1.4rem;font-weight:800;color:var(--green)}.ws-label{font-size:.65rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.btn-start{padding:18px 52px;border-radius:50px;border:none;background:#fff;color:#000;font-weight:800;cursor:pointer;font-size:.95rem;transition:.3s}
+.btn-start:hover{transform:scale(1.04);box-shadow:0 12px 30px rgba(255,255,255,.15)}
 
-        /* ─── WELCOME SCREEN ─── */
-        #welcome {
-            position:fixed; inset:0; z-index:9999;
-            background:#000;
-            display:flex; align-items:center; justify-content:center;
-            transition:opacity 0.7s ease, transform 0.7s cubic-bezier(0.85,0,0.15,1);
-        }
-        #welcome.hidden { opacity:0; transform:scale(1.05); pointer-events:none; }
+/* PROGRESS BAR */
+#progress-bar-wrap{position:fixed;top:0;left:0;right:0;height:3px;background:rgba(255,255,255,.05);z-index:2001}
+#progress{height:100%;background:var(--green);width:0%;transition:width .5s cubic-bezier(.4,0,.2,1);box-shadow:0 0 12px var(--green)}
 
-        #welcome-canvas { position:absolute; inset:0; pointer-events:none; }
+/* HEADER */
+header{width:100%;max-width:460px;padding:28px 20px 16px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-weight:800;font-size:1.35rem;letter-spacing:-1px}.logo span{color:var(--green)}
+.live-chip{font-size:.62rem;font-weight:700;letter-spacing:1px;background:var(--green-dim);color:var(--green);border:1px solid rgba(0,255,115,.25);padding:5px 12px;border-radius:50px;display:flex;align-items:center;gap:5px}
+.live-chip .dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 1.2s ease infinite}
 
-        .welcome-inner { text-align:center; padding:24px; position:relative; z-index:1; }
-        .welcome-badge {
-            display:inline-flex; align-items:center; gap:7px;
-            background:rgba(0,255,115,0.08); border:1px solid rgba(0,255,115,0.2);
-            color:var(--green); font-size:0.7rem; font-weight:700; letter-spacing:1.5px;
-            padding:6px 16px; border-radius:50px; margin-bottom:24px;
-            text-transform:uppercase;
-        }
-        .welcome-badge .dot { width:6px; height:6px; border-radius:50%; background:var(--green); animation:pulse 1.5s ease infinite; }
-        .welcome-logo { font-size:4rem; font-weight:800; letter-spacing:-3px; line-height:1; margin-bottom:6px; }
-        .welcome-logo span { color:var(--green); text-shadow:0 0 30px var(--green-glow); }
-        .welcome-sub { font-size:0.75rem; color:var(--muted2); font-weight:500; letter-spacing:2px; text-transform:uppercase; margin-bottom:8px; }
-        .welcome-tagline { font-size:1rem; color:rgba(255,255,255,0.55); font-weight:400; margin-bottom:32px; line-height:1.6; }
+/* STEP INDICATOR */
+.step-indicator{width:100%;max-width:460px;padding:0 20px 20px;display:flex;align-items:center}
+.si-item{display:flex;align-items:center;flex:1}
+.si-dot{width:32px;height:32px;border-radius:50%;border:2px solid var(--border-light);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;color:var(--muted);flex-shrink:0;transition:.4s ease}
+.si-dot.done{background:var(--green);border-color:var(--green);color:#000}
+.si-dot.active{border-color:var(--green);color:var(--green);box-shadow:0 0 0 4px var(--green-dim)}
+.si-line{flex:1;height:1px;background:var(--border);margin:0 6px;transition:.4s ease}.si-line.done{background:var(--green)}
+.si-label{font-size:.6rem;font-weight:700;color:var(--muted);margin-top:4px;text-align:center;white-space:nowrap}
+.step-labels{width:100%;max-width:460px;padding:0 20px 24px;display:flex;justify-content:space-between}
+.sl{font-size:.6rem;font-weight:700;color:var(--muted);text-align:center;text-transform:uppercase;letter-spacing:.5px;transition:.3s}.sl.active{color:var(--green)}
 
-        .welcome-stats { display:flex; gap:24px; justify-content:center; margin-bottom:36px; }
-        .ws { text-align:center; }
-        .ws-val { font-size:1.4rem; font-weight:800; color:var(--green); }
-        .ws-label { font-size:0.65rem; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-top:2px; }
+/* CONTAINER */
+.container{width:100%;max-width:460px;padding:0 20px 160px;flex:1}
 
-        .btn-start {
-            padding:18px 52px; border-radius:50px; border:none;
-            background:#fff; color:#000; font-weight:800; cursor:pointer;
-            font-size:0.95rem; letter-spacing:0.3px;
-            transition:0.3s ease;
-            box-shadow:0 0 0 0 rgba(255,255,255,0);
-        }
-        .btn-start:hover { transform:scale(1.04); box-shadow:0 12px 30px rgba(255,255,255,0.15); }
-        .btn-start:active { transform:scale(0.97); }
+/* SCRATCH TRIGGER BUTTON */
+.se-trigger-btn{width:100%;padding:17px 20px;border-radius:20px;background:linear-gradient(135deg,#1a0e3a,#271756);border:1.5px solid rgba(153,102,255,.4);color:#fff;cursor:pointer;transition:.3s;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.se-trigger-btn:hover{border-color:rgba(153,102,255,.7);transform:translateY(-1px);box-shadow:0 8px 25px rgba(153,102,255,.15)}
+.se-tl{display:flex;align-items:center;gap:12px}
+.se-ti{font-size:1.8rem;line-height:1}
+.se-tt{font-size:.88rem;font-weight:800;color:#c084fc}
+.se-ts{font-size:.68rem;color:rgba(192,132,252,.6);margin-top:2px;font-weight:500}
 
-        /* ─── PROGRESS BAR ─── */
-        #progress-bar-wrap { position:fixed; top:0; left:0; right:0; height:3px; background:rgba(255,255,255,0.05); z-index:2001; }
-        #progress { height:100%; background:var(--green); width:0%; transition:width 0.5s cubic-bezier(0.4,0,0.2,1); box-shadow:0 0 12px var(--green); }
+/* HELP CARD */
+.help-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:0;margin-bottom:20px;overflow:hidden}
+.help-card summary{list-style:none;font-size:.8rem;font-weight:700;padding:16px 18px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;color:var(--muted2)}
+.help-card summary .arrow{transition:transform .3s;font-size:.7rem}
+.help-card[open] summary .arrow{transform:rotate(180deg);color:var(--green)}
+.help-inner{padding:0 18px 18px}
+.help-step{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)}
+.help-step:last-child{border-bottom:none}
+.help-num{width:22px;height:22px;border-radius:50%;background:var(--green-dim);color:var(--green);font-size:.65rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.help-text{font-size:.8rem;color:#aaa;line-height:1.6}.help-text strong{color:#ddd}
 
-        /* ─── HEADER ─── */
-        header {
-            width:100%; max-width:460px; padding:28px 20px 16px;
-            display:flex; justify-content:space-between; align-items:center;
-        }
-        .logo { font-weight:800; font-size:1.35rem; letter-spacing:-1px; }
-        .logo span { color:var(--green); }
+/* MAIN CARD */
+.card{background:var(--card);backdrop-filter:blur(30px);border:1px solid var(--border);border-radius:28px;padding:26px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.label-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+label{font-size:.68rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;display:block}
+.label-hint{font-size:.65rem;color:var(--muted);font-weight:500}
+.input-wrapper{position:relative;margin-bottom:14px}
+.input-icon{position:absolute;left:18px;top:50%;transform:translateY(-50%);font-size:1rem;pointer-events:none}
+input[type=text],input[type=number]{width:100%;padding:18px 18px 18px 48px;border-radius:18px;border:1.5px solid var(--border);background:rgba(255,255,255,.02);color:#fff;font-size:.95rem;font-weight:600;outline:none;transition:.3s}
+input[type=text]:focus,input[type=number]:focus{border-color:var(--green);background:rgba(0,255,115,.02);box-shadow:0 0 0 4px var(--green-dim)}
+input::placeholder{color:var(--muted);font-weight:400}
+input[type=number]{-moz-appearance:textfield}
+input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
+.btn-verify{width:100%;padding:16px;background:#fff;color:#000;border:none;border-radius:16px;font-weight:800;font-size:.85rem;cursor:pointer;transition:.3s;margin-bottom:18px;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-verify:hover{background:var(--green);transform:translateY(-1px)}
+.profile-box{display:none;align-items:center;gap:14px;background:rgba(255,255,255,.02);border:1.5px solid var(--border);padding:14px;border-radius:18px;margin-bottom:20px;animation:fadeIn .4s ease}
+.profile-box.success{border-color:rgba(0,255,115,.4);background:rgba(0,255,115,.04)}
+.profile-box.error{border-color:rgba(255,69,69,.4);background:rgba(255,69,69,.04)}
+.avatar{width:48px;height:48px;border-radius:50%;background:#1a1a1a;object-fit:cover;flex-shrink:0}
+.profile-box.success .avatar{box-shadow:0 0 0 2px var(--green),0 0 12px var(--green-glow)}
+.profile-name{font-size:.9rem;font-weight:800;color:var(--green);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.badge-valid{font-size:.6rem;background:rgba(0,255,115,.15);color:var(--green);padding:2px 7px;border-radius:5px;font-weight:700;flex-shrink:0}
+.profile-sub{font-size:.72rem;color:var(--muted2);margin-top:3px}
 
-        .header-right { display:flex; align-items:center; gap:8px; }
-        .live-chip {
-            font-size:0.62rem; font-weight:700; letter-spacing:1px;
-            background:var(--green-dim); color:var(--green);
-            border:1px solid rgba(0,255,115,0.25);
-            padding:5px 12px; border-radius:50px;
-            display:flex; align-items:center; gap:5px;
-        }
-        .live-chip .dot { width:5px; height:5px; border-radius:50%; background:var(--green); animation:pulse 1.2s ease infinite; }
+/* PACKAGES */
+.pkg-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.pkg-item{background:rgba(255,255,255,.02);border:1.5px solid var(--border);padding:18px 12px;border-radius:20px;text-align:center;cursor:pointer;transition:.25s;position:relative;overflow:hidden}
+.pkg-item:hover{border-color:var(--border-light);transform:translateY(-1px)}
+.pkg-item.active{border-color:var(--green);background:rgba(0,255,115,.06);transform:scale(1.02)}
+.pkg-popular{position:absolute;top:0;right:0;font-size:.55rem;font-weight:800;letter-spacing:.5px;background:var(--green);color:#000;padding:3px 8px;border-radius:0 18px 0 10px}
+.pkg-rbx{font-size:1.05rem;font-weight:800;margin-bottom:3px}
+.pkg-price{font-size:.72rem;color:var(--muted2)}
+.pkg-item.active .pkg-price{color:rgba(0,255,115,.7)}
+.pkg-save{font-size:.6rem;color:var(--green);font-weight:700;margin-top:4px;display:none}
+.pkg-item.active .pkg-save{display:block}
+.custom-section{margin-bottom:16px}.custom-section label{margin-bottom:8px}
+.price-box{background:linear-gradient(135deg,#fff 0%,#f0f0f0 100%);color:#000;border-radius:22px;padding:22px 24px;display:flex;justify-content:space-between;align-items:center;margin-top:14px}
+.price-label{font-size:.62rem;font-weight:800;color:#555;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.price-val{font-size:1.6rem;font-weight:800;letter-spacing:-.5px}
+.price-rate{font-size:.62rem;font-weight:700;color:#555}
+.price-rbx-info{font-size:.78rem;font-weight:700;color:#000;margin-top:3px}
 
-        /* ─── STEP INDICATOR ─── */
-        .step-indicator {
-            width:100%; max-width:460px; padding:0 20px 20px;
-            display:flex; align-items:center; gap:0;
-        }
-        .si-item { display:flex; align-items:center; flex:1; }
-        .si-dot {
-            width:32px; height:32px; border-radius:50%; border:2px solid var(--border-light);
-            display:flex; align-items:center; justify-content:center;
-            font-size:0.7rem; font-weight:800; color:var(--muted); flex-shrink:0;
-            transition:0.4s ease;
-        }
-        .si-dot.done { background:var(--green); border-color:var(--green); color:#000; }
-        .si-dot.active { border-color:var(--green); color:var(--green); box-shadow:0 0 0 4px var(--green-dim); }
-        .si-line { flex:1; height:1px; background:var(--border); margin:0 6px; transition:0.4s ease; }
-        .si-line.done { background:var(--green); }
-        .si-label { font-size:0.6rem; font-weight:700; color:var(--muted); margin-top:4px; text-align:center; white-space:nowrap; }
+/* STEP 2 */
+.step2-header{text-align:center;margin-bottom:22px}
+.step2-header h3{font-size:1.15rem;font-weight:800}
+.step2-header p{font-size:.78rem;color:var(--muted2);margin-top:5px;line-height:1.5}
+.btn-open-roblox{width:100%;background:linear-gradient(135deg,#0084ff,#0058b3);padding:18px;border-radius:18px;border:none;color:#fff;font-weight:800;font-size:.9rem;cursor:pointer;transition:.3s;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:20px;box-shadow:0 8px 25px rgba(0,132,255,.25)}
+.btn-open-roblox:hover{transform:translateY(-1px)}
+.gp-box{background:rgba(0,0,0,.5);border:1.5px solid rgba(0,255,115,.2);border-radius:24px;padding:30px 20px;text-align:center;margin-bottom:16px;position:relative;overflow:hidden}
+.gp-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(0,255,115,.06) 0%,transparent 70%);pointer-events:none}
+.gp-label{font-size:.68rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px}
+.gp-val{font-size:3.8rem;font-weight:800;color:var(--green);line-height:1;text-shadow:0 0 30px var(--green-glow);letter-spacing:-2px}
+.gp-unit{font-size:.75rem;color:var(--muted2);margin-top:6px}
+.gp-actions{display:flex;gap:10px;justify-content:center;margin-top:20px}
+.btn-copy{padding:12px 28px;background:var(--green);color:#000;border:none;font-weight:800;border-radius:14px;cursor:pointer;font-size:.82rem;transition:.3s;display:flex;align-items:center;gap:7px}
+.btn-copy:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,255,115,.3)}
+.guide-steps{display:flex;flex-direction:column;gap:10px}
+.guide-item{display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:16px;padding:14px}
+.guide-num{width:26px;height:26px;border-radius:50%;background:rgba(0,255,115,.1);border:1px solid rgba(0,255,115,.2);color:var(--green);font-size:.68rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.guide-text{font-size:.8rem;color:#bbb;line-height:1.5}.guide-text strong{color:#eee}
 
-        .step-labels { width:100%; max-width:460px; padding:0 20px 24px; display:flex; justify-content:space-between; }
-        .sl { font-size:0.6rem; font-weight:700; color:var(--muted); text-align:center; text-transform:uppercase; letter-spacing:0.5px; transition:0.3s; }
-        .sl.active { color:var(--green); }
+/* STEP 3 */
+.confirm-header{text-align:center;margin-bottom:24px}
+.confirm-icon{font-size:3.5rem;margin-bottom:12px;display:block}
+.confirm-title{font-size:1.3rem;font-weight:800;letter-spacing:-.5px}
+.confirm-sub{font-size:.82rem;color:var(--muted2);margin-top:6px;line-height:1.6}
+.invoice-card{background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:22px;padding:20px;margin-bottom:16px}
+.invoice-title{font-size:.62rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px}
+.invoice-row{display:flex;justify-content:space-between;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)}
+.invoice-row:last-child{border-bottom:none}
+.inv-key{font-size:.75rem;color:var(--muted2)}
+.inv-val{font-size:.8rem;font-weight:700;color:#eee;text-align:right;max-width:55%}
+.inv-val.green{color:var(--green)}.inv-val.big{font-size:1rem;font-weight:800}
+.trust-row{display:flex;gap:8px;margin-bottom:16px}
+.trust-badge{flex:1;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:14px;padding:12px 8px;text-align:center}
+.trust-icon{font-size:1.1rem;margin-bottom:4px}
+.trust-text{font-size:.62rem;color:var(--muted2);font-weight:600;line-height:1.3}
+.btn-wa{width:100%;padding:20px;background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;border:none;border-radius:20px;font-weight:800;font-size:1rem;cursor:pointer;transition:.3s;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 10px 30px rgba(37,211,102,.25)}
+.btn-wa:hover{transform:translateY(-2px)}
+.eta-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(255,179,0,.08);border:1px solid rgba(255,179,0,.2);color:var(--warn);font-size:.7rem;font-weight:700;padding:6px 14px;border-radius:50px;margin-bottom:16px}
 
-        /* ─── CONTAINER ─── */
-        .container { width:100%; max-width:460px; padding:0 20px 160px; flex:1; }
+/* FOOTER */
+.footer{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:460px;padding:20px 20px 30px;background:linear-gradient(to top,rgba(6,6,6,1) 60%,transparent);display:flex;gap:12px;z-index:1000}
+.btn{padding:20px;border-radius:20px;border:none;font-weight:800;font-size:.9rem;cursor:pointer;transition:.3s}
+.btn-back{background:#141414;color:#fff;flex:1;display:none;border:1.5px solid var(--border);font-size:.85rem}
+.btn-back:hover{background:#1f1f1f}
+.btn-next{background:var(--green);color:#000;flex:2;box-shadow:0 8px 25px rgba(0,255,115,.2);opacity:.3;pointer-events:none;transition:.4s ease}
+.btn-next.enabled{opacity:1;pointer-events:auto}
+.btn-next:hover{transform:translateY(-1px)}.btn-next:active{transform:scale(.98)}
 
-        /* ─── HELP CARD ─── */
-        .help-card {
-            background:var(--card); border:1px solid var(--border);
-            border-radius:20px; padding:0; margin-bottom:20px; overflow:hidden;
-        }
-        .help-card summary {
-            list-style:none; font-size:0.8rem; font-weight:700; padding:16px 18px;
-            display:flex; justify-content:space-between; align-items:center; cursor:pointer;
-            color:var(--muted2);
-        }
-        .help-card summary .arrow { transition:transform 0.3s; font-size:0.7rem; }
-        .help-card[open] summary .arrow { transform:rotate(180deg); color:var(--green); }
-        .help-inner { padding:0 18px 18px; }
-        .help-step { display:flex; gap:12px; align-items:flex-start; padding:10px 0; border-bottom:1px solid var(--border); }
-        .help-step:last-child { border-bottom:none; }
-        .help-num { width:22px; height:22px; border-radius:50%; background:var(--green-dim); color:var(--green); font-size:0.65rem; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; }
-        .help-text { font-size:0.8rem; color:#aaa; line-height:1.6; }
-        .help-text strong { color:#ddd; }
+/* STEPS */
+.step{display:none}.step.active{display:block;animation:slideUp .4s cubic-bezier(.4,0,.2,1) forwards}
 
-        /* ─── CARD ─── */
-        .card {
-            background:var(--card); backdrop-filter:blur(30px);
-            border:1px solid var(--border); border-radius:28px;
-            padding:26px; box-shadow:0 20px 60px rgba(0,0,0,0.5);
-        }
+/* TOAST */
+#toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);background:#1a1a1a;border:1px solid var(--border);color:#fff;font-size:.8rem;font-weight:700;padding:12px 22px;border-radius:50px;z-index:3000;opacity:0;transition:.3s ease;white-space:nowrap}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.spinner{width:18px;height:18px;border:2.5px solid rgba(255,255,255,.1);border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0}
+.divider{height:1px;background:var(--border);margin:18px 0}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 
-        /* ─── LABELS ─── */
-        .label-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
-        label { font-size:0.68rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:1px; display:block; }
-        .label-hint { font-size:0.65rem; color:var(--muted); font-weight:500; }
+/* ══════════════════════════════════════════════════════
+   SCRATCH EDITOR STYLES
+══════════════════════════════════════════════════════ */
+#se-modal{display:none;position:fixed;inset:0;z-index:9000;flex-direction:column;background:#f9f9f9;font-family:sans-serif}
+#se-modal.open{display:flex}
 
-        /* ─── INPUT ─── */
-        .input-wrapper { position:relative; margin-bottom:14px; }
-        .input-icon { position:absolute; left:18px; top:50%; transform:translateY(-50%); font-size:1rem; pointer-events:none; }
-        input[type="text"], input[type="number"] {
-            width:100%; padding:18px 18px 18px 48px; border-radius:18px;
-            border:1.5px solid var(--border); background:rgba(255,255,255,0.02);
-            color:white; font-size:0.95rem; font-weight:600; outline:none; transition:0.3s;
-        }
-        input[type="text"]:focus, input[type="number"]:focus {
-            border-color:var(--green); background:rgba(0,255,115,0.02);
-            box-shadow:0 0 0 4px var(--green-dim);
-        }
-        input::placeholder { color:var(--muted); font-weight:400; }
-        input[type="number"] { -moz-appearance:textfield; }
-        input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button { -webkit-appearance:none; }
+/* Header */
+.se-header{background:linear-gradient(180deg,#9966FF 0%,#7a52e0 100%);height:44px;padding:0 10px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.se-logo{font-size:1.15rem;font-weight:900;letter-spacing:-0.5px;color:#fff;text-shadow:1px 1px 0 rgba(0,0,0,.3)}
+.se-logo-o{color:#ff8c1a}.se-logo-c{color:#ffab19}
+.se-menu{display:flex;gap:2px}
+.se-mi{font-size:.68rem;font-weight:700;color:rgba(255,255,255,.9);display:flex;align-items:center;gap:3px;cursor:pointer;padding:5px 8px;border-radius:6px;transition:.2s;white-space:nowrap}
+.se-mi:hover{background:rgba(255,255,255,.15)}
+.se-close-btn{background:rgba(0,0,0,.25);border:none;color:#fff;padding:6px 11px;border-radius:7px;font-size:.72rem;font-weight:800;cursor:pointer;transition:.2s;white-space:nowrap}
+.se-close-btn:hover{background:rgba(0,0,0,.5)}
 
-        /* ─── VERIFY BUTTON ─── */
-        .btn-verify {
-            width:100%; padding:16px; background:#fff; color:#000;
-            border:none; border-radius:16px; font-weight:800;
-            font-size:0.85rem; cursor:pointer; transition:0.3s; margin-bottom:18px;
-            display:flex; align-items:center; justify-content:center; gap:8px;
-        }
-        .btn-verify:hover { background:var(--green); transform:translateY(-1px); box-shadow:0 8px 20px rgba(0,255,115,0.2); }
-        .btn-verify:active { transform:translateY(0); }
+/* Tabs */
+.se-tabs{background:#E6E0F2;display:flex;padding:6px 8px 0;gap:2px;flex-shrink:0;border-bottom:2px solid #d0c8e8}
+.se-tab{padding:7px 14px;border-radius:6px 6px 0 0;font-size:.72rem;font-weight:700;cursor:pointer;border:1px solid transparent;color:#575E75;display:flex;align-items:center;gap:5px;transition:.2s}
+.se-tab.active{background:#fff;border-color:#c4b8de;border-bottom-color:#fff;margin-bottom:-2px;color:#333}
+.se-tab:not(.active):hover{background:rgba(255,255,255,.5)}
 
-        /* ─── PROFILE BOX ─── */
-        .profile-box {
-            display:none; align-items:center; gap:14px;
-            background:rgba(255,255,255,0.02); border:1.5px solid var(--border);
-            padding:14px; border-radius:18px; margin-bottom:20px;
-            animation:fadeIn 0.4s ease;
-        }
-        .profile-box.success { border-color:rgba(0,255,115,0.4); background:rgba(0,255,115,0.04); }
-        .profile-box.error { border-color:rgba(255,69,69,0.4); background:rgba(255,69,69,0.04); }
-        .avatar { width:48px; height:48px; border-radius:50%; background:#1a1a1a; object-fit:cover; flex-shrink:0; }
-        .profile-box.success .avatar { box-shadow:0 0 0 2px var(--green), 0 0 12px var(--green-glow); }
-        .profile-info { flex:1; min-width:0; }
-        .profile-name { font-size:0.9rem; font-weight:800; color:var(--green); display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
-        .badge-valid { font-size:0.6rem; background:rgba(0,255,115,0.15); color:var(--green); padding:2px 7px; border-radius:5px; font-weight:700; flex-shrink:0; }
-        .profile-sub { font-size:0.72rem; color:var(--muted2); margin-top:3px; }
+/* Body */
+.se-body{display:flex;flex:1;overflow:hidden;min-height:0}
 
-        /* ─── PACKAGES ─── */
-        .pkg-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:16px; }
-        .pkg-item {
-            background:rgba(255,255,255,0.02); border:1.5px solid var(--border);
-            padding:18px 12px; border-radius:20px; text-align:center; cursor:pointer;
-            transition:0.25s; position:relative; overflow:hidden;
-        }
-        .pkg-item:hover { border-color:var(--border-light); background:var(--card-hover); transform:translateY(-1px); }
-        .pkg-item.active { border-color:var(--green); background:rgba(0,255,115,0.06); transform:scale(1.02); }
-        .pkg-popular {
-            position:absolute; top:0; right:0;
-            font-size:0.55rem; font-weight:800; letter-spacing:0.5px;
-            background:var(--green); color:#000;
-            padding:3px 8px; border-radius:0 18px 0 10px;
-        }
-        .pkg-rbx { font-size:1.05rem; font-weight:800; margin-bottom:3px; }
-        .pkg-price { font-size:0.72rem; color:var(--muted2); }
-        .pkg-item.active .pkg-price { color:rgba(0,255,115,0.7); }
-        .pkg-save { font-size:0.6rem; color:var(--green); font-weight:700; margin-top:4px; display:none; }
-        .pkg-item.active .pkg-save { display:block; }
+/* Category sidebar */
+.se-cats{width:60px;background:#F2F2F2;border-right:1px solid #ddd;display:flex;flex-direction:column;align-items:center;padding:6px 0;gap:1px;overflow-y:auto;flex-shrink:0}
+.se-cat{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 4px;border-radius:8px;cursor:pointer;transition:.2s;width:56px}
+.se-cat:hover{background:rgba(0,0,0,.06)}
+.se-cat.active{background:rgba(0,0,0,.1)}
+.se-cat-dot{width:26px;height:26px;border-radius:50%;flex-shrink:0;box-shadow:0 2px 5px rgba(0,0,0,.3)}
+.se-cat-lbl{font-size:.5rem;font-weight:700;color:#575E75;text-align:center;line-height:1.2}
 
-        /* ─── CUSTOM INPUT ─── */
-        .custom-section { margin-bottom:16px; }
-        .custom-section label { margin-bottom:8px; }
+/* Palette */
+.se-palette{width:182px;background:#fff;border-right:1px solid #ddd;overflow-y:auto;padding:8px 6px 20px;flex-shrink:0}
+.se-palette-hdr{font-size:.72rem;font-weight:800;color:#575E75;padding:4px 4px 10px;letter-spacing:.2px}
 
-        /* ─── PRICE BOX ─── */
-        .price-box {
-            background:linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
-            color:#000; border-radius:22px; padding:22px 24px;
-            display:flex; justify-content:space-between; align-items:center;
-            margin-top:14px;
-        }
-        .price-label { font-size:0.62rem; font-weight:800; color:#555; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
-        .price-val { font-size:1.6rem; font-weight:800; letter-spacing:-0.5px; }
-        .price-meta { text-align:right; }
-        .price-rate { font-size:0.62rem; font-weight:700; color:#555; }
-        .price-rbx-info { font-size:0.78rem; font-weight:700; color:#000; margin-top:3px; }
+.se-block-slot{margin-bottom:5px;cursor:grab;display:block;user-select:none}
+.se-block-slot:active{cursor:grabbing}
+.se-block-slot svg{display:block;overflow:visible}
 
-        /* ─── STEP 2: GAMEPASS ─── */
-        .step2-header { text-align:center; margin-bottom:22px; }
-        .step2-header h3 { font-size:1.15rem; font-weight:800; }
-        .step2-header p { font-size:0.78rem; color:var(--muted2); margin-top:5px; line-height:1.5; }
+/* Workspace */
+.se-workspace{flex:1;background:#F9F9F9;background-image:radial-gradient(circle,#d8d8d8 1px,transparent 1px);background-size:24px 24px;overflow:hidden;position:relative;min-width:0}
+.se-ws-inner{position:absolute;inset:0;overflow:hidden}
 
-        .btn-open-roblox {
-            width:100%; background:linear-gradient(135deg,#0084ff,#0058b3);
-            padding:18px; border-radius:18px; border:none; color:white;
-            font-weight:800; font-size:0.9rem; cursor:pointer; transition:0.3s;
-            display:flex; align-items:center; justify-content:center; gap:10px;
-            margin-bottom:20px; box-shadow:0 8px 25px rgba(0,132,255,0.25);
-        }
-        .btn-open-roblox:hover { transform:translateY(-1px); box-shadow:0 12px 30px rgba(0,132,255,0.35); }
+/* Placed blocks in workspace */
+.se-placed{position:absolute;cursor:grab;user-select:none;filter:drop-shadow(0 2px 4px rgba(0,0,0,.25))}
+.se-placed:active{cursor:grabbing;filter:drop-shadow(0 5px 12px rgba(0,0,0,.35))}
+.se-placed svg{display:block;overflow:visible}
 
-        .gp-box {
-            background:rgba(0,0,0,0.5); border:1.5px solid rgba(0,255,115,0.2);
-            border-radius:24px; padding:30px 20px; text-align:center; margin-bottom:16px;
-            position:relative; overflow:hidden;
-        }
-        .gp-box::before {
-            content:''; position:absolute; inset:0;
-            background:radial-gradient(ellipse at 50% 0%, rgba(0,255,115,0.06) 0%, transparent 70%);
-            pointer-events:none;
-        }
-        .gp-label { font-size:0.68rem; font-weight:800; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:14px; }
-        .gp-val { font-size:3.8rem; font-weight:800; color:var(--green); line-height:1; text-shadow:0 0 30px var(--green-glow); letter-spacing:-2px; }
-        .gp-unit { font-size:0.75rem; color:var(--muted2); margin-top:6px; }
-        .gp-actions { display:flex; gap:10px; justify-content:center; margin-top:20px; }
+/* Drag clone */
+.se-drag{position:fixed;pointer-events:none;z-index:99999;opacity:.9;filter:drop-shadow(0 8px 20px rgba(0,0,0,.4));transition:none}
+.se-drag svg{display:block;overflow:visible}
 
-        .btn-copy {
-            padding:12px 28px; background:var(--green); color:#000;
-            border:none; font-weight:800; border-radius:14px; cursor:pointer;
-            font-size:0.82rem; transition:0.3s; display:flex; align-items:center; gap:7px;
-        }
-        .btn-copy:hover { transform:translateY(-1px); box-shadow:0 6px 16px rgba(0,255,115,0.3); }
-        .btn-copy:active { transform:scale(0.97); }
+/* Stage panel */
+.se-stage-wrap{width:230px;background:#fff;border-left:1px solid #ddd;display:flex;flex-direction:column;flex-shrink:0}
+.se-stage-top{display:flex;align-items:center;justify-content:center;gap:10px;padding:6px;background:#F2F2F2;border-bottom:1px solid #ddd;flex-shrink:0}
+.se-btn-flag{width:38px;height:38px;border-radius:50%;border:2px solid #4CAF50;background:rgba(76,175,80,.1);cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+.se-btn-flag:hover{background:rgba(76,175,80,.2)}
+.se-btn-stop{width:38px;height:38px;border-radius:50%;border:2px solid #f44;background:rgba(255,68,68,.1);cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;font-size:1rem}
+.se-btn-stop:hover{background:rgba(255,68,68,.2)}
+#se-stage{width:100%;aspect-ratio:4/3;display:block;background:#fff;border-bottom:1px solid #ddd}
 
-        .guide-steps { display:flex; flex-direction:column; gap:10px; }
-        .guide-item {
-            display:flex; gap:12px; align-items:flex-start;
-            background:rgba(255,255,255,0.02); border:1px solid var(--border);
-            border-radius:16px; padding:14px;
-        }
-        .guide-num { width:26px; height:26px; border-radius:50%; background:rgba(0,255,115,0.1); border:1px solid rgba(0,255,115,0.2); color:var(--green); font-size:0.68rem; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
-        .guide-text { font-size:0.8rem; color:#bbb; line-height:1.5; }
-        .guide-text strong { color:#eee; }
+/* Sprite panel */
+.se-sprite-panel{flex:1;padding:8px;overflow-y:auto}
+.se-sprite-label{font-size:.58rem;font-weight:800;color:#575E75;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+.se-sprite-row{display:flex;gap:6px;flex-wrap:wrap}
+.se-sprite-card{width:64px;border-radius:8px;border:2px solid #4C97FF;background:#E9F1FC;padding:4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:.2s}
+.se-sprite-card:hover{transform:scale(1.05)}
+.se-sprite-emoji{font-size:1.6rem;line-height:1}
+.se-sprite-nm{font-size:.52rem;font-weight:700;color:#575E75}
+.se-sprite-props{margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.se-prop{font-size:.6rem;color:#575E75}
+.se-prop span{font-weight:700;color:#333}
 
-        /* ─── STEP 3: CONFIRM ─── */
-        .confirm-header { text-align:center; margin-bottom:24px; }
-        .confirm-icon { font-size:3.5rem; margin-bottom:12px; display:block; }
-        .confirm-title { font-size:1.3rem; font-weight:800; letter-spacing:-0.5px; }
-        .confirm-sub { font-size:0.82rem; color:var(--muted2); margin-top:6px; line-height:1.6; }
+/* Speech bubble on stage */
+.se-bubble{position:absolute;background:#fff;border:2px solid #555;border-radius:12px;padding:6px 10px;font-size:11px;font-family:sans-serif;max-width:120px;white-space:pre-wrap;pointer-events:none;display:none}
 
-        .invoice-card {
-            background:rgba(0,0,0,0.4); border:1px solid var(--border);
-            border-radius:22px; padding:20px; margin-bottom:16px;
-        }
-        .invoice-title { font-size:0.62rem; font-weight:800; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:16px; }
-        .invoice-row { display:flex; justify-content:space-between; align-items:flex-start; padding:10px 0; border-bottom:1px solid var(--border); }
-        .invoice-row:last-child { border-bottom:none; }
-        .inv-key { font-size:0.75rem; color:var(--muted2); }
-        .inv-val { font-size:0.8rem; font-weight:700; color:#eee; text-align:right; max-width:55%; }
-        .inv-val.green { color:var(--green); }
-        .inv-val.big { font-size:1rem; font-weight:800; }
+/* Running indicator */
+.se-running-dot{width:10px;height:10px;border-radius:50%;background:#4CAF50;margin-right:4px;animation:pulse .8s ease infinite;display:none}
 
-        .trust-row { display:flex; gap:8px; margin-bottom:16px; }
-        .trust-badge {
-            flex:1; background:rgba(255,255,255,0.02); border:1px solid var(--border);
-            border-radius:14px; padding:12px 8px; text-align:center;
-        }
-        .trust-icon { font-size:1.1rem; margin-bottom:4px; }
-        .trust-text { font-size:0.62rem; color:var(--muted2); font-weight:600; line-height:1.3; }
-
-        .btn-wa {
-            width:100%; padding:20px; background:linear-gradient(135deg,#25D366,#128C7E);
-            color:#fff; border:none; border-radius:20px; font-weight:800;
-            font-size:1rem; cursor:pointer; transition:0.3s;
-            display:flex; align-items:center; justify-content:center; gap:10px;
-            box-shadow:0 10px 30px rgba(37,211,102,0.25);
-        }
-        .btn-wa:hover { transform:translateY(-2px); box-shadow:0 16px 35px rgba(37,211,102,0.35); }
-        .btn-wa:active { transform:scale(0.98); }
-
-        /* ─── FOOTER NAV ─── */
-        .footer {
-            position:fixed; bottom:0; left:50%; transform:translateX(-50%);
-            width:100%; max-width:460px; padding:20px 20px 30px;
-            background:linear-gradient(to top, rgba(6,6,6,1) 60%, transparent);
-            display:flex; gap:12px; z-index:1000;
-        }
-        .btn { padding:20px; border-radius:20px; border:none; font-weight:800; font-size:0.9rem; cursor:pointer; transition:0.3s; }
-        .btn-back {
-            background:#141414; color:#fff; flex:1; display:none;
-            border:1.5px solid var(--border); font-size:0.85rem;
-        }
-        .btn-back:hover { background:#1f1f1f; }
-        .btn-next {
-            background:var(--green); color:#000; flex:2;
-            box-shadow:0 8px 25px rgba(0,255,115,0.2);
-            opacity:0.3; pointer-events:none; transition:0.4s ease;
-        }
-        .btn-next.enabled { opacity:1; pointer-events:auto; }
-        .btn-next:hover { transform:translateY(-1px); box-shadow:0 12px 30px rgba(0,255,115,0.3); }
-        .btn-next:active { transform:scale(0.98); }
-
-        /* ─── STEPS ─── */
-        .step { display:none; }
-        .step.active { display:block; animation:slideUp 0.4s cubic-bezier(0.4,0,0.2,1) forwards; }
-
-        /* ─── TOAST ─── */
-        #toast {
-            position:fixed; bottom:100px; left:50%; transform:translateX(-50%) translateY(20px);
-            background:#1a1a1a; border:1px solid var(--border);
-            color:#fff; font-size:0.8rem; font-weight:700;
-            padding:12px 22px; border-radius:50px;
-            z-index:3000; opacity:0; transition:0.3s ease;
-            white-space:nowrap;
-        }
-        #toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
-
-        /* ─── SPINNER ─── */
-        .spinner {
-            width:18px; height:18px; border:2.5px solid rgba(255,255,255,0.1);
-            border-top-color:var(--green); border-radius:50%;
-            animation:spin 0.8s linear infinite; flex-shrink:0;
-        }
-
-        /* ─── TIMER CHIP ─── */
-        .eta-chip {
-            display:inline-flex; align-items:center; gap:6px;
-            background:rgba(255,179,0,0.08); border:1px solid rgba(255,179,0,0.2);
-            color:var(--warn); font-size:0.7rem; font-weight:700;
-            padding:6px 14px; border-radius:50px; margin-bottom:16px;
-        }
-
-        /* ─── ANIMATIONS ─── */
-        @keyframes spin { to { transform:rotate(360deg); } }
-        @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
-        @keyframes fadeIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
-        @keyframes slideUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
-
-        /* ─── MISC ─── */
-        .divider { height:1px; background:var(--border); margin:18px 0; }
-        .section-title { font-size:0.9rem; font-weight:800; margin-bottom:14px; }
-
-        @media (prefers-reduced-motion:reduce) {
-            *, *::before, *::after { animation-duration:0.01ms !important; transition-duration:0.01ms !important; }
-        }
-    </style>
+/* Responsive */
+@media(max-width:500px){
+  .se-stage-wrap{display:none}
+  .se-cats{width:48px}
+  .se-palette{width:160px}
+}
+</style>
 </head>
 <body>
 
 <!-- WELCOME -->
 <div id="welcome">
-    <canvas id="welcome-canvas"></canvas>
-    <div class="welcome-inner">
-        <div class="welcome-badge"><span class="dot"></span>SISTEM AKTIF & ONLINE</div>
-        <div class="welcome-logo">ROMA<span>BUX</span></div>
-        <p class="welcome-sub">V.40 LUXURY PRO SYSTEM</p>
-        <p class="welcome-tagline">Top-up Robux otomatis via Gamepass.<br>Proses instan, aman, & terpercaya.</p>
-        <div class="welcome-stats">
-            <div class="ws"><div class="ws-val">2.4K+</div><div class="ws-label">Pesanan</div></div>
-            <div class="ws"><div class="ws-val">⚡ ~5m</div><div class="ws-label">Proses</div></div>
-            <div class="ws"><div class="ws-val">4.9★</div><div class="ws-label">Rating</div></div>
-        </div>
-        <button class="btn-start" onclick="closeWelcome()">Mulai Order Sekarang</button>
+  <canvas id="welcome-canvas"></canvas>
+  <div class="welcome-inner">
+    <div class="welcome-badge"><span class="dot"></span>SISTEM AKTIF & ONLINE</div>
+    <div class="welcome-logo">ROMA<span>BUX</span></div>
+    <p class="welcome-sub">V.40 LUXURY PRO SYSTEM</p>
+    <p class="welcome-tagline">Top-up Robux otomatis via Gamepass.<br>Proses instan, aman, & terpercaya.</p>
+    <div class="welcome-stats">
+      <div class="ws"><div class="ws-val">2.4K+</div><div class="ws-label">Pesanan</div></div>
+      <div class="ws"><div class="ws-val">⚡ ~5m</div><div class="ws-label">Proses</div></div>
+      <div class="ws"><div class="ws-val">4.9★</div><div class="ws-label">Rating</div></div>
     </div>
+    <button class="btn-start" onclick="closeWelcome()">Mulai Order Sekarang</button>
+  </div>
 </div>
 
 <div id="toast"></div>
-
 <div id="progress-bar-wrap"><div id="progress"></div></div>
 
 <header>
-    <div class="logo">ROMA<span>BUX</span></div>
-    <div class="header-right">
-        <div class="live-chip"><span class="dot"></span>LIVE</div>
-    </div>
+  <div class="logo">ROMA<span>BUX</span></div>
+  <div class="live-chip"><span class="dot"></span>LIVE</div>
 </header>
 
-<!-- STEP INDICATORS -->
 <div class="step-indicator" id="stepIndicator">
-    <div class="si-item">
-        <div style="display:flex;flex-direction:column;align-items:center;">
-            <div class="si-dot active" id="si1">1</div>
-            <div class="si-label" id="sl1">Akun & Paket</div>
-        </div>
-        <div class="si-line" id="line1"></div>
+  <div class="si-item">
+    <div style="display:flex;flex-direction:column;align-items:center">
+      <div class="si-dot active" id="si1">1</div>
+      <div class="si-label" id="sl1">Akun & Paket</div>
     </div>
-    <div class="si-item">
-        <div style="display:flex;flex-direction:column;align-items:center;">
-            <div class="si-dot" id="si2">2</div>
-            <div class="si-label" id="sl2">Gamepass</div>
-        </div>
-        <div class="si-line" id="line2"></div>
+    <div class="si-line" id="line1"></div>
+  </div>
+  <div class="si-item">
+    <div style="display:flex;flex-direction:column;align-items:center">
+      <div class="si-dot" id="si2">2</div>
+      <div class="si-label" id="sl2">Gamepass</div>
     </div>
-    <div class="si-item">
-        <div style="display:flex;flex-direction:column;align-items:center;">
-            <div class="si-dot" id="si3">3</div>
-            <div class="si-label" id="sl3">Konfirmasi</div>
-        </div>
+    <div class="si-line" id="line2"></div>
+  </div>
+  <div class="si-item">
+    <div style="display:flex;flex-direction:column;align-items:center">
+      <div class="si-dot" id="si3">3</div>
+      <div class="si-label" id="sl3">Konfirmasi</div>
     </div>
+  </div>
 </div>
 
 <div class="container">
 
-    <!-- HELP -->
-    <details class="help-card">
-        <summary>📖 Panduan Order <span class="arrow">▼</span></summary>
-        <div class="help-inner">
-            <div class="help-step">
-                <div class="help-num">1</div>
-                <div class="help-text"><strong>Masukkan Username Roblox</strong> — ketik persis sesuai akun Anda, lalu klik <em>Validasi Akun</em>.</div>
-            </div>
-            <div class="help-step">
-                <div class="help-num">2</div>
-                <div class="help-text"><strong>Pilih paket atau kustom</strong> — klik nominal yang diinginkan atau isi sendiri (min. 50 RBX).</div>
-            </div>
-            <div class="help-step">
-                <div class="help-num">3</div>
-                <div class="help-text"><strong>Buat Gamepass di Roblox Create</strong> — atur harga sesuai angka yang ditampilkan, <em>sama persis</em>.</div>
-            </div>
-            <div class="help-step">
-                <div class="help-num">4</div>
-                <div class="help-text"><strong>Kirim invoice ke WhatsApp Admin</strong> — admin akan memproses pesanan Anda secara otomatis.</div>
-            </div>
-        </div>
-    </details>
-
-    <div class="card">
-
-        <!-- STEP 1 -->
-        <div id="step1" class="step active">
-            <div class="label-row">
-                <label>Username Roblox</label>
-                <span class="label-hint">Case sensitive</span>
-            </div>
-            <div class="input-wrapper">
-                <span class="input-icon">👤</span>
-                <input type="text" id="usn" placeholder="Contoh: Titan_Gamer" oninput="onUsnChange()" autocomplete="off" spellcheck="false">
-            </div>
-            <button class="btn-verify" id="btn-verify" onclick="validateRoblox()">
-                <span>🔍</span><span id="verify-text">VALIDASI AKUN</span>
-            </button>
-
-            <div class="profile-box" id="profile-box"></div>
-
-            <div class="divider"></div>
-
-            <div class="label-row" style="margin-bottom:12px;">
-                <label>Pilih Paket Robux</label>
-            </div>
-            <div class="pkg-grid">
-                <div class="pkg-item" onclick="selectPkg(80, 11000, this)">
-                    <div class="pkg-rbx">80 RBX</div>
-                    <div class="pkg-price">Rp 11.000</div>
-                    <div class="pkg-save">Hemat 5%</div>
-                </div>
-                <div class="pkg-item" onclick="selectPkg(200, 27000, this)">
-                    <div class="pkg-popular">POPULER</div>
-                    <div class="pkg-rbx">200 RBX</div>
-                    <div class="pkg-price">Rp 27.000</div>
-                    <div class="pkg-save">Hemat 8%</div>
-                </div>
-                <div class="pkg-item" onclick="selectPkg(500, 68000, this)">
-                    <div class="pkg-rbx">500 RBX</div>
-                    <div class="pkg-price">Rp 68.000</div>
-                    <div class="pkg-save">Hemat 10%</div>
-                </div>
-                <div class="pkg-item" onclick="selectPkg(1000, 137000, this)">
-                    <div class="pkg-rbx">1000 RBX</div>
-                    <div class="pkg-price">Rp 137.000</div>
-                    <div class="pkg-save">Hemat 12%</div>
-                </div>
-            </div>
-
-            <div class="custom-section">
-                <label>Nominal Kustom (Min. 50 RBX)</label>
-                <div class="input-wrapper">
-                    <span class="input-icon">💎</span>
-                    <input type="number" id="custom-rbx" placeholder="Masukkan jumlah Robux..." oninput="calcCustom(this)">
-                </div>
-            </div>
-
-            <div class="price-box">
-                <div>
-                    <div class="price-label">Total Bayar</div>
-                    <div class="price-val" id="price-ui">Rp 0</div>
-                </div>
-                <div class="price-meta">
-                    <div class="price-rate">Rp 137/RBX</div>
-                    <div class="price-rbx-info" id="rbx-summary">— RBX</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- STEP 2 -->
-        <div id="step2" class="step">
-            <div class="step2-header">
-                <h3>Konfigurasi Gamepass</h3>
-                <p>Buka Roblox Creator Hub, buat Gamepass baru, dan atur harganya ke angka berikut.</p>
-            </div>
-
-            <button class="btn-open-roblox" onclick="window.open('https://create.roblox.com/creations','_blank')">
-                🔗 Buka Roblox Creator Hub
-            </button>
-
-            <div class="gp-box">
-                <div class="gp-label">Set Harga Gamepass Kamu Ke:</div>
-                <div class="gp-val" id="gp-price">0</div>
-                <div class="gp-unit">Robux</div>
-                <div class="gp-actions">
-                    <button class="btn-copy" onclick="copyGP()">
-                        📋 Salin Angka
-                    </button>
-                </div>
-            </div>
-
-            <div class="guide-steps">
-                <div class="guide-item">
-                    <div class="guide-num">1</div>
-                    <div class="guide-text">Masuk ke <strong>Creator Hub → Create → Game Passes</strong></div>
-                </div>
-                <div class="guide-item">
-                    <div class="guide-num">2</div>
-                    <div class="guide-text">Klik <strong>Create a Game Pass</strong>, beri nama bebas</div>
-                </div>
-                <div class="guide-item">
-                    <div class="guide-num">3</div>
-                    <div class="guide-text">Set harga ke angka <strong id="gp-guide-val" style="color:var(--green)">0</strong> Robux — harus <em>sama persis</em></div>
-                </div>
-                <div class="guide-item">
-                    <div class="guide-num">4</div>
-                    <div class="guide-text"><strong>Publish</strong> Gamepass, lalu kembali ke sini dan tekan tombol di bawah</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- STEP 3 -->
-        <div id="step3" class="step">
-            <div class="confirm-header">
-                <span class="confirm-icon">🔒</span>
-                <div class="confirm-title">Pesanan Dikunci!</div>
-                <div class="confirm-sub">Periksa detail pesanan Anda, lalu kirim invoice ke WhatsApp Admin untuk diproses.</div>
-            </div>
-
-            <div class="eta-chip">⏱ Estimasi proses: 3–10 menit</div>
-
-            <div class="invoice-card">
-                <div class="invoice-title">📄 Detail Invoice</div>
-                <div class="invoice-row">
-                    <span class="inv-key">Display Name</span>
-                    <span class="inv-val" id="inv-display">—</span>
-                </div>
-                <div class="invoice-row">
-                    <span class="inv-key">Username</span>
-                    <span class="inv-val" id="inv-usn">—</span>
-                </div>
-                <div class="invoice-row">
-                    <span class="inv-key">Roblox ID</span>
-                    <span class="inv-val" id="inv-id">—</span>
-                </div>
-                <div class="invoice-row">
-                    <span class="inv-key">Jumlah Robux</span>
-                    <span class="inv-val green" id="inv-rbx">— RBX</span>
-                </div>
-                <div class="invoice-row">
-                    <span class="inv-key">Harga Gamepass</span>
-                    <span class="inv-val green" id="inv-gp">—</span>
-                </div>
-                <div class="invoice-row">
-                    <span class="inv-key">Total Bayar</span>
-                    <span class="inv-val big green" id="inv-total">Rp —</span>
-                </div>
-            </div>
-
-            <div class="trust-row">
-                <div class="trust-badge"><div class="trust-icon">🔐</div><div class="trust-text">End-to-end Aman</div></div>
-                <div class="trust-badge"><div class="trust-icon">⚡</div><div class="trust-text">Proses Instan</div></div>
-                <div class="trust-badge"><div class="trust-icon">✅</div><div class="trust-text">Ribuan Terlayani</div></div>
-            </div>
-
-            <button class="btn-wa" onclick="sendWA()">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                Kirim Invoice ke WhatsApp Admin
-            </button>
-        </div>
-
+  <!-- SCRATCH EDITOR TRIGGER -->
+  <button class="se-trigger-btn" onclick="openSE()">
+    <div class="se-tl">
+      <div class="se-ti">🟦</div>
+      <div>
+        <div class="se-tt">Editor Scratch — Block Coding</div>
+        <div class="se-ts">Buat program visual dengan puzzle blocks!</div>
+      </div>
     </div>
+    <span style="font-size:.8rem;color:rgba(192,132,252,.5)">▶</span>
+  </button>
+
+  <!-- HELP -->
+  <details class="help-card">
+    <summary>📖 Panduan Order <span class="arrow">▼</span></summary>
+    <div class="help-inner">
+      <div class="help-step"><div class="help-num">1</div><div class="help-text"><strong>Masukkan Username Roblox</strong> — ketik persis, lalu klik Validasi Akun.</div></div>
+      <div class="help-step"><div class="help-num">2</div><div class="help-text"><strong>Pilih paket atau kustom</strong> — klik nominal yang diinginkan (min. 50 RBX).</div></div>
+      <div class="help-step"><div class="help-num">3</div><div class="help-text"><strong>Buat Gamepass di Roblox Create</strong> — atur harga sesuai angka yang ditampilkan, sama persis.</div></div>
+      <div class="help-step"><div class="help-num">4</div><div class="help-text"><strong>Kirim invoice ke WhatsApp Admin</strong> — admin akan memproses pesanan Anda.</div></div>
+    </div>
+  </details>
+
+  <div class="card">
+
+    <!-- STEP 1 -->
+    <div id="step1" class="step active">
+      <div class="label-row"><label>Username Roblox</label><span class="label-hint">Case sensitive</span></div>
+      <div class="input-wrapper">
+        <span class="input-icon">👤</span>
+        <input type="text" id="usn" placeholder="Contoh: Titan_Gamer" oninput="onUsnChange()" autocomplete="off" spellcheck="false">
+      </div>
+      <button class="btn-verify" id="btn-verify" onclick="validateRoblox()">
+        <span>🔍</span><span id="verify-text">VALIDASI AKUN</span>
+      </button>
+      <div class="profile-box" id="profile-box"></div>
+      <div class="divider"></div>
+      <div class="label-row" style="margin-bottom:12px"><label>Pilih Paket Robux</label></div>
+      <div class="pkg-grid">
+        <div class="pkg-item" onclick="selectPkg(80,11000,this)"><div class="pkg-rbx">80 RBX</div><div class="pkg-price">Rp 11.000</div><div class="pkg-save">Hemat 5%</div></div>
+        <div class="pkg-item" onclick="selectPkg(200,27000,this)"><div class="pkg-popular">POPULER</div><div class="pkg-rbx">200 RBX</div><div class="pkg-price">Rp 27.000</div><div class="pkg-save">Hemat 8%</div></div>
+        <div class="pkg-item" onclick="selectPkg(500,68000,this)"><div class="pkg-rbx">500 RBX</div><div class="pkg-price">Rp 68.000</div><div class="pkg-save">Hemat 10%</div></div>
+        <div class="pkg-item" onclick="selectPkg(1000,137000,this)"><div class="pkg-rbx">1000 RBX</div><div class="pkg-price">Rp 137.000</div><div class="pkg-save">Hemat 12%</div></div>
+      </div>
+      <div class="custom-section"><label>Nominal Kustom (Min. 50 RBX)</label>
+        <div class="input-wrapper"><span class="input-icon">💎</span><input type="number" id="custom-rbx" placeholder="Masukkan jumlah Robux..." oninput="calcCustom(this)"></div>
+      </div>
+      <div class="price-box">
+        <div><div class="price-label">Total Bayar</div><div class="price-val" id="price-ui">Rp 0</div></div>
+        <div style="text-align:right"><div class="price-rate">Rp 137/RBX</div><div class="price-rbx-info" id="rbx-summary">— RBX</div></div>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div id="step2" class="step">
+      <div class="step2-header"><h3>Konfigurasi Gamepass</h3><p>Buka Roblox Creator Hub, buat Gamepass baru, dan atur harganya ke angka berikut.</p></div>
+      <button class="btn-open-roblox" onclick="window.open('https://create.roblox.com/creations','_blank')">🔗 Buka Roblox Creator Hub</button>
+      <div class="gp-box">
+        <div class="gp-label">Set Harga Gamepass Kamu Ke:</div>
+        <div class="gp-val" id="gp-price">0</div>
+        <div class="gp-unit">Robux</div>
+        <div class="gp-actions"><button class="btn-copy" onclick="copyGP()">📋 Salin Angka</button></div>
+      </div>
+      <div class="guide-steps">
+        <div class="guide-item"><div class="guide-num">1</div><div class="guide-text">Masuk ke <strong>Creator Hub → Create → Game Passes</strong></div></div>
+        <div class="guide-item"><div class="guide-num">2</div><div class="guide-text">Klik <strong>Create a Game Pass</strong>, beri nama bebas</div></div>
+        <div class="guide-item"><div class="guide-num">3</div><div class="guide-text">Set harga ke <strong id="gp-guide-val" style="color:var(--green)">0</strong> Robux — harus <em>sama persis</em></div></div>
+        <div class="guide-item"><div class="guide-num">4</div><div class="guide-text"><strong>Publish</strong> Gamepass, lalu kembali ke sini</div></div>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div id="step3" class="step">
+      <div class="confirm-header">
+        <span class="confirm-icon">🔒</span>
+        <div class="confirm-title">Pesanan Dikunci!</div>
+        <div class="confirm-sub">Periksa detail pesanan, lalu kirim invoice ke WhatsApp Admin.</div>
+      </div>
+      <div class="eta-chip">⏱ Estimasi proses: 3–10 menit</div>
+      <div class="invoice-card">
+        <div class="invoice-title">📄 Detail Invoice</div>
+        <div class="invoice-row"><span class="inv-key">Display Name</span><span class="inv-val" id="inv-display">—</span></div>
+        <div class="invoice-row"><span class="inv-key">Username</span><span class="inv-val" id="inv-usn">—</span></div>
+        <div class="invoice-row"><span class="inv-key">Roblox ID</span><span class="inv-val" id="inv-id">—</span></div>
+        <div class="invoice-row"><span class="inv-key">Jumlah Robux</span><span class="inv-val green" id="inv-rbx">— RBX</span></div>
+        <div class="invoice-row"><span class="inv-key">Harga Gamepass</span><span class="inv-val green" id="inv-gp">—</span></div>
+        <div class="invoice-row"><span class="inv-key">Total Bayar</span><span class="inv-val big green" id="inv-total">Rp —</span></div>
+      </div>
+      <div class="trust-row">
+        <div class="trust-badge"><div class="trust-icon">🔐</div><div class="trust-text">End-to-end Aman</div></div>
+        <div class="trust-badge"><div class="trust-icon">⚡</div><div class="trust-text">Proses Instan</div></div>
+        <div class="trust-badge"><div class="trust-icon">✅</div><div class="trust-text">Ribuan Terlayani</div></div>
+      </div>
+      <button class="btn-wa" onclick="sendWA()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Kirim Invoice ke WhatsApp Admin
+      </button>
+    </div>
+
+  </div>
 </div>
 
-<!-- FOOTER NAV -->
+<!-- FOOTER -->
 <div class="footer">
-    <button class="btn btn-back" id="btnBack" onclick="prevStep()">← Kembali</button>
-    <button class="btn btn-next" id="btnNext" onclick="nextStep()">Lanjutkan →</button>
+  <button class="btn btn-back" id="btnBack" onclick="prevStep()">← Kembali</button>
+  <button class="btn btn-next" id="btnNext" onclick="nextStep()">Lanjutkan →</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SCRATCH EDITOR MODAL
+═══════════════════════════════════════════════════ -->
+<div id="se-modal">
+
+  <!-- Header bar -->
+  <div class="se-header">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="se-logo"><span class="se-logo-o">S</span><span class="se-logo-c">C</span><span style="color:#ff8c1a">R</span><span style="color:#ffab19">A</span><span style="color:#ff8c1a">T</span><span style="color:#ffab19">C</span><span style="color:#ff8c1a">H</span></div>
+      <div class="se-menu">
+        <div class="se-mi">⚙️ Settings</div>
+        <div class="se-mi">📁 File</div>
+        <div class="se-mi">✏️ Edit</div>
+        <div class="se-mi" style="display:none">💡 Tutorials</div>
+        <div class="se-mi" style="display:none">🐛 Debug</div>
+      </div>
+    </div>
+    <button class="se-close-btn" onclick="closeSE()">✕ Keluar</button>
+  </div>
+
+  <!-- Tabs -->
+  <div class="se-tabs">
+    <div class="se-tab active">≡ Code</div>
+    <div class="se-tab">✂️ Costumes</div>
+    <div class="se-tab">🔊 Sounds</div>
+  </div>
+
+  <!-- Body -->
+  <div class="se-body">
+
+    <!-- Category sidebar -->
+    <div class="se-cats" id="se-cats"></div>
+
+    <!-- Block palette -->
+    <div class="se-palette" id="se-palette">
+      <div class="se-palette-hdr" id="se-pal-title">Motion</div>
+    </div>
+
+    <!-- Script workspace -->
+    <div class="se-workspace" id="se-workspace">
+      <div class="se-ws-inner" id="se-ws-inner"></div>
+      <div style="position:absolute;bottom:8px;right:8px;display:flex;flex-direction:column;gap:6px">
+        <button onclick="seZoomIn()" style="width:30px;height:30px;border-radius:50%;border:1px solid #ddd;background:#fff;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center">+</button>
+        <button onclick="seZoomOut()" style="width:30px;height:30px;border-radius:50%;border:1px solid #ddd;background:#fff;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center">−</button>
+      </div>
+    </div>
+
+    <!-- Stage panel -->
+    <div class="se-stage-wrap">
+      <div class="se-stage-top">
+        <div class="se-running-dot" id="se-run-dot"></div>
+        <button class="se-btn-flag" onclick="seRunScript()" title="Green Flag">🚩</button>
+        <button class="se-btn-stop" onclick="seStopScript()" title="Stop">🛑</button>
+      </div>
+      <div style="position:relative">
+        <canvas id="se-stage" width="460" height="345"></canvas>
+        <div class="se-bubble" id="se-bubble"></div>
+      </div>
+      <div class="se-sprite-panel">
+        <div class="se-sprite-label">Sprites</div>
+        <div class="se-sprite-row" id="se-sprite-row">
+          <div class="se-sprite-card">
+            <div class="se-sprite-emoji">🐱</div>
+            <div class="se-sprite-nm">Sprite1</div>
+          </div>
+        </div>
+        <div class="se-sprite-props" style="margin-top:10px">
+          <div class="se-prop">Sprite <span id="sp-name">Sprite1</span></div>
+          <div class="se-prop">x: <span id="sp-x">0</span></div>
+          <div class="se-prop">y: <span id="sp-y">0</span></div>
+          <div class="se-prop">Size: <span id="sp-size">100</span></div>
+          <div class="se-prop">Dir: <span id="sp-dir">90</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 <script>
-    // ─── CONFIG ───
-    const PROXY_WORKER = "Https://autumn-sky-f02a.hrkdakwah.workers.dev";
-    const RATE = 137;
-    const WA_NUMBER = "6285716075774";
+// ═══════════════════════════════════════════════════
+// ROMABUX MAIN APP
+// ═══════════════════════════════════════════════════
+const PROXY_WORKER = "Https://autumn-sky-f02a.hrkdakwah.workers.dev";
+const RATE = 137;
+const WA_NUMBER = "6285716075774";
 
-    // ─── STATE ───
-    let currentStep = 1;
-    let isVerified = false;
-    let data = { usn:"", displayName:"", id:"", rbx:0, total:0, gp:0 };
+let currentStep = 1;
+let isVerified = false;
+let data = { usn:"", displayName:"", id:"", rbx:0, total:0, gp:0 };
 
-    // ─── WELCOME SCREEN PARTICLES ───
-    (function initParticles() {
-        const canvas = document.getElementById('welcome-canvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
+// Welcome particles
+(function(){
+  const canvas = document.getElementById('welcome-canvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  function resize(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  resize(); window.addEventListener('resize', resize);
+  for(let i=0;i<60;i++) particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*1.5+.3,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,o:Math.random()*.5+.1});
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach(p=>{
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0)p.x=canvas.width; if(p.x>canvas.width)p.x=0;
+      if(p.y<0)p.y=canvas.height; if(p.y>canvas.height)p.y=0;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(0,255,115,${p.o})`; ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
 
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resize();
-        window.addEventListener('resize', resize);
+function closeWelcome(){ document.getElementById('welcome').classList.add('hidden'); setTimeout(()=>document.getElementById('welcome').style.display='none',700); updateUI(); }
 
-        for (let i = 0; i < 60; i++) {
-            particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                r: Math.random() * 1.5 + 0.3,
-                vx: (Math.random() - 0.5) * 0.3,
-                vy: (Math.random() - 0.5) * 0.3,
-                o: Math.random() * 0.5 + 0.1
-            });
-        }
+function showToast(msg, d=2200){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),d); }
 
-        function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.x += p.vx; p.y += p.vy;
-                if (p.x < 0) p.x = canvas.width;
-                if (p.x > canvas.width) p.x = 0;
-                if (p.y < 0) p.y = canvas.height;
-                if (p.y > canvas.height) p.y = 0;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(0, 255, 115, ${p.o})`;
-                ctx.fill();
-            });
-            requestAnimationFrame(draw);
-        }
-        draw();
-    })();
+function onUsnChange(){ isVerified=false; checkNext(); const p=document.getElementById('profile-box'); p.style.display='none'; p.className='profile-box'; }
 
-    function closeWelcome() {
-        document.getElementById('welcome').classList.add('hidden');
-        setTimeout(() => { document.getElementById('welcome').style.display = 'none'; }, 700);
-        updateUI();
+async function fetchWithTimeout(url,{timeout=3500}={}){
+  const ctrl=new AbortController(); const id=setTimeout(()=>ctrl.abort(),timeout);
+  try{ const r=await fetch(url,{signal:ctrl.signal}); clearTimeout(id); return r; }catch(e){ clearTimeout(id); throw e; }
+}
+
+async function validateRoblox(){
+  const u=document.getElementById('usn').value.trim();
+  if(!u){ showToast('⚠️ Ketik username Roblox dulu!'); return; }
+  vibrate(15);
+  const pBox=document.getElementById('profile-box');
+  const vBtn=document.getElementById('btn-verify');
+  const vText=document.getElementById('verify-text');
+  pBox.style.display='flex'; pBox.className='profile-box';
+  pBox.innerHTML=`<div class="spinner"></div><span style="font-size:.82rem;color:#aaa">Memverifikasi akun Roblox...</span>`;
+  vText.textContent='Memverifikasi...'; vBtn.disabled=true; isVerified=false; checkNext();
+  const searchUrl=`https://users.roblox.com/v1/users/search?keyword=${encodeURIComponent(u)}&limit=10&_=${Date.now()}`;
+  const proxies=[
+    u2=>`${PROXY_WORKER.replace(/\/$/,'')}/?url=${encodeURIComponent(u2)}`,
+    u2=>`https://corsproxy.io/?url=${encodeURIComponent(u2)}`,
+    u2=>`https://api.allorigins.win/raw?url=${encodeURIComponent(u2)}`,
+  ];
+  let result=null, si=-1;
+  for(let i=0;i<proxies.length;i++){
+    try{ const r=await fetchWithTimeout(proxies[i](searchUrl),{timeout:3500}); if(!r.ok) continue; const j=await r.json(); if(j?.data&&Array.isArray(j.data)){result=j;si=i;break;} }catch{}
+  }
+  vText.textContent='VALIDASI AKUN'; vBtn.disabled=false;
+  if(!result){ pBox.className='profile-box error'; pBox.innerHTML=`<span style="font-size:1.2rem">❌</span><div><div class="profile-name" style="color:var(--danger)">Gagal Terhubung</div><div class="profile-sub">Coba lagi dalam beberapa detik.</div></div>`; return; }
+  const user=result.data.find(x=>x.name.toLowerCase()===u.toLowerCase());
+  if(!user){ pBox.className='profile-box error'; pBox.innerHTML=`<span style="font-size:1.2rem">❌</span><div><div class="profile-name" style="color:var(--danger)">Tidak Ditemukan</div><div class="profile-sub">Cek ejaan username kamu.</div></div>`; return; }
+  data.id=user.id; data.usn=user.name; data.displayName=user.displayName;
+  let avatarUrl='https://tr.rbxcdn.com/30d25c1c53884e4e3b15e1cb59190bbf/150/150/AvatarHeadshot/Png';
+  try{
+    const tu=`https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${data.id}&size=150x150&format=Png&isCircular=true`;
+    const tr=await fetchWithTimeout(proxies[si](tu),{timeout:2500}); if(tr.ok){const tj=await tr.json();if(tj.data?.[0]?.imageUrl)avatarUrl=tj.data[0].imageUrl;}
+  }catch{}
+  pBox.className='profile-box success';
+  pBox.innerHTML=`<img class="avatar" src="${avatarUrl}" onerror="this.src='https://tr.rbxcdn.com/30d25c1c53884e4e3b15e1cb59190bbf/150/150/AvatarHeadshot/Png'" alt="Avatar"><div class="profile-info"><div class="profile-name">${data.displayName}<span class="badge-valid">✅ VALID</span></div><div class="profile-sub">@${data.usn} · ID: ${data.id}</div></div>`;
+  isVerified=true; checkNext(); showToast('✅ Akun berhasil diverifikasi!'); vibrate([10,50,10]);
+}
+
+function selectPkg(rbx,price,el){ document.querySelectorAll('.pkg-item').forEach(p=>p.classList.remove('active')); document.getElementById('custom-rbx').value=''; el.classList.add('active'); setRbx(rbx,price); vibrate(10); }
+function calcCustom(inp){ document.querySelectorAll('.pkg-item').forEach(p=>p.classList.remove('active')); const val=parseInt(inp.value); if(!val||val<50){setRbx(0,0);return;} setRbx(val,val*RATE); }
+function setRbx(rbx,price){ data.rbx=rbx; data.total=price; data.gp=rbx>0?Math.ceil(rbx/.7):0; document.getElementById('price-ui').textContent=rbx>0?'Rp '+price.toLocaleString('id-ID'):'Rp 0'; document.getElementById('rbx-summary').textContent=rbx>0?`${rbx} RBX`:'— RBX'; document.getElementById('gp-price').textContent=data.gp; document.getElementById('gp-guide-val').textContent=data.gp; checkNext(); }
+
+function checkNext(){ const btn=document.getElementById('btnNext'); (currentStep===1?(isVerified&&data.rbx>=50):true)?btn.classList.add('enabled'):btn.classList.remove('enabled'); }
+
+function nextStep(){ if(currentStep===1){if(!isVerified){showToast('⚠️ Validasi akun dulu!');return;} if(data.rbx<50){showToast('⚠️ Pilih paket min. 50 RBX!');return;} currentStep=2;} else if(currentStep===2){currentStep=3;fillInvoice();confetti({particleCount:120,spread:65,origin:{y:.6},colors:['#00ff73','#00cc5a','#fff']});} else{sendWA();return;} updateUI();vibrate(15); }
+function prevStep(){ if(currentStep>1){currentStep--;updateUI();vibrate(10);} }
+
+function updateUI(){
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('step'+currentStep).classList.add('active');
+  document.getElementById('progress').style.width=(currentStep/3*100)+'%';
+  for(let i=1;i<=3;i++){
+    const dot=document.getElementById('si'+i); const lbl=document.getElementById('sl'+i);
+    dot.className='si-dot';
+    if(i<currentStep){dot.classList.add('done');dot.textContent='✓';} else if(i===currentStep){dot.classList.add('active');dot.textContent=i;lbl.className='si-label active';} else{dot.textContent=i;lbl.className='si-label';}
+    if(i<3){const line=document.getElementById('line'+i);line.className='si-line'+(i<currentStep?' done':'');}
+  }
+  document.getElementById('btnBack').style.display=currentStep>1?'block':'none';
+  const labels=['Lanjutkan →','Saya Sudah Set Gamepass →','📲 Kirim Invoice ke WhatsApp'];
+  document.getElementById('btnNext').textContent=labels[currentStep-1];
+  checkNext();
+}
+
+function fillInvoice(){ document.getElementById('inv-display').textContent=data.displayName; document.getElementById('inv-usn').textContent='@'+data.usn; document.getElementById('inv-id').textContent=data.id; document.getElementById('inv-rbx').textContent=data.rbx+' RBX'; document.getElementById('inv-gp').textContent=data.gp+' Robux'; document.getElementById('inv-total').textContent='Rp '+data.total.toLocaleString('id-ID'); }
+
+function copyGP(){ const v=data.gp.toString(); if(navigator.clipboard)navigator.clipboard.writeText(v).then(()=>showToast('📋 Angka gamepass disalin!')); else{const t=document.createElement('textarea');document.body.appendChild(t);t.value=v;t.select();document.execCommand('copy');document.body.removeChild(t);showToast('📋 Disalin!');} vibrate(20); }
+
+function sendWA(){
+  const msg=`*📦 INVOICE ORDER ROMABUX V.40 LUXURY*\n━━━━━━━━━━━━━━━━━━━━━━━━\n👤 *Display Name* : ${data.displayName}\n🆔 *Username*     : @${data.usn}\n📌 *Roblox ID*    : ${data.id}\n━━━━━━━━━━━━━━━━━━━━━━━━\n💎 *Jumlah Robux* : ${data.rbx} RBX\n⚙️ *Harga Gamepass* : ${data.gp} Robux\n━━━━━━━━━━━━━━━━━━━━━━━━\n💵 *TOTAL BAYAR*  : Rp ${data.total.toLocaleString('id-ID')}\n━━━━━━━━━━━━━━━━━━━━━━━━\n_Mohon diproses via gamepass, min! Terima kasih_ 🙏`;
+  window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`,'_blank');
+}
+
+function vibrate(ms){ if(navigator.vibrate) navigator.vibrate(ms); }
+
+
+
+// ═══════════════════════════════════════════════════
+// SCRATCH EDITOR ENGINE
+// ═══════════════════════════════════════════════════
+
+// ── Block category definitions ──
+const SE_CATS = [
+  {id:'motion',    label:'Motion',    color:'#4C97FF', shadow:'#3373CC'},
+  {id:'looks',     label:'Looks',     color:'#9966FF', shadow:'#6a46d4'},
+  {id:'sound',     label:'Sound',     color:'#CF63CF', shadow:'#a640a6'},
+  {id:'events',    label:'Events',    color:'#FFAB19', shadow:'#cf8b17'},
+  {id:'control',   label:'Control',   color:'#FFAB19', shadow:'#cf6e00'},
+  {id:'sensing',   label:'Sensing',   color:'#5CB1D6', shadow:'#2f89b9'},
+  {id:'operators', label:'Operators', color:'#59C059', shadow:'#389438'},
+  {id:'variables', label:'Variables', color:'#FF8C1A', shadow:'#DB6E00'},
+  {id:'myblocks',  label:'My Blocks', color:'#FF6680', shadow:'#CF2F50'},
+];
+
+// ── Block definitions per category ──
+const SE_BLOCKS = {
+  motion:[
+    {op:'move',       shape:'cmd', label:'move {steps|10} steps'},
+    {op:'turn_cw',    shape:'cmd', label:'turn ↻ {degrees|15} degrees'},
+    {op:'turn_ccw',   shape:'cmd', label:'turn ↺ {degrees|15} degrees'},
+    {op:'goto_rand',  shape:'cmd', label:'go to random position'},
+    {op:'goto_xy',    shape:'cmd', label:'go to x: {x|0} y: {y|0}'},
+    {op:'glide_rand', shape:'cmd', label:'glide {secs|1} secs to random position'},
+    {op:'glide_xy',   shape:'cmd', label:'glide {secs|1} secs to x: {x|0} y: {y|0}'},
+    {op:'point_dir',  shape:'cmd', label:'point in direction {dir|90}'},
+    {op:'point_mouse',shape:'cmd', label:'point towards mouse-pointer ▾'},
+    {op:'change_x',   shape:'cmd', label:'change x by {dx|10}'},
+    {op:'set_x',      shape:'cmd', label:'set x to {x|0}'},
+    {op:'change_y',   shape:'cmd', label:'change y by {dy|10}'},
+    {op:'set_y',      shape:'cmd', label:'set y to {y|0}'},
+    {op:'bounce',     shape:'cmd', label:'if on edge, bounce'},
+    {op:'set_rot',    shape:'cmd', label:'set rotation style left-right ▾'},
+  ],
+  looks:[
+    {op:'say_for',    shape:'cmd', label:'say {msg|Hello!} for {secs|2} seconds'},
+    {op:'say',        shape:'cmd', label:'say {msg|Hello!}'},
+    {op:'think_for',  shape:'cmd', label:'think {msg|Hmm...} for {secs|2} seconds'},
+    {op:'think',      shape:'cmd', label:'think {msg|Hmm...}'},
+    {op:'show',       shape:'cmd', label:'show'},
+    {op:'hide',       shape:'cmd', label:'hide'},
+    {op:'change_size',shape:'cmd', label:'change size by {amt|10}'},
+    {op:'set_size',   shape:'cmd', label:'set size to {pct|100} %'},
+    {op:'clear_fx',   shape:'cmd', label:'clear graphic effects'},
+    {op:'goto_front', shape:'cmd', label:'go to front layer'},
+    {op:'go_layers',  shape:'cmd', label:'go {dir|forward ▾} {n|1} layers'},
+  ],
+  sound:[
+    {op:'play_until', shape:'cmd', label:'play sound Meow ▾ until done'},
+    {op:'play',       shape:'cmd', label:'start sound Meow ▾'},
+    {op:'stop_snds',  shape:'cmd', label:'stop all sounds'},
+    {op:'change_vol', shape:'cmd', label:'change volume by {amt|-10}'},
+    {op:'set_vol',    shape:'cmd', label:'set volume to {pct|100} %'},
+  ],
+  events:[
+    {op:'flag',       shape:'hat', label:'when 🚩 clicked'},
+    {op:'key_press',  shape:'hat', label:'when space ▾ key pressed'},
+    {op:'sprite_click',shape:'hat',label:'when this sprite clicked'},
+    {op:'backdrop',   shape:'hat', label:'when backdrop switches to backdrop1 ▾'},
+    {op:'when_gt',    shape:'hat', label:'when loudness ▾ > {n|10}'},
+    {op:'broadcast',  shape:'cmd', label:'broadcast message1 ▾'},
+    {op:'bcast_wait', shape:'cmd', label:'broadcast message1 ▾ and wait'},
+  ],
+  control:[
+    {op:'wait',       shape:'cmd', label:'wait {secs|1} seconds'},
+    {op:'repeat',     shape:'cmd', label:'repeat {times|10}', cBlock:true},
+    {op:'forever',    shape:'cmd', label:'forever', cBlock:true},
+    {op:'if',         shape:'cmd', label:'if < > then', cBlock:true},
+    {op:'if_else',    shape:'cmd', label:'if < > then', cBlock:true, hasElse:true},
+    {op:'wait_until', shape:'cmd', label:'wait until < >'},
+    {op:'repeat_until',shape:'cmd',label:'repeat until < >', cBlock:true},
+    {op:'stop',       shape:'cap', label:'stop all ▾'},
+    {op:'clone_start',shape:'hat', label:'when I start as a clone'},
+    {op:'create_clone',shape:'cmd',label:'create clone of myself ▾'},
+    {op:'del_clone',  shape:'cap', label:'delete this clone'},
+  ],
+  sensing:[
+    {op:'ask',        shape:'cmd', label:'ask {q|What is your name?} and wait'},
+    {op:'reset_timer',shape:'cmd', label:'reset timer'},
+    {op:'set_drag',   shape:'cmd', label:'set drag mode draggable ▾'},
+  ],
+  operators:[
+    {op:'add',        shape:'cmd', label:'({a|} + {b|})'},
+    {op:'sub',        shape:'cmd', label:'({a|} - {b|})'},
+    {op:'mul',        shape:'cmd', label:'({a|} * {b|})'},
+    {op:'div',        shape:'cmd', label:'({a|} / {b|})'},
+    {op:'pick_rand',  shape:'cmd', label:'pick random {a|1} to {b|10}'},
+    {op:'gt',         shape:'cmd', label:'({a|} > {b|50})'},
+    {op:'lt',         shape:'cmd', label:'({a|} < {b|50})'},
+    {op:'eq',         shape:'cmd', label:'({a|} = {b|50})'},
+    {op:'join',       shape:'cmd', label:'join {a|hello } {b|world}'},
+    {op:'round',      shape:'cmd', label:'round {n|}'},
+  ],
+  variables:[
+    {op:'set_var',    shape:'cmd', label:'set my variable ▾ to {val|0}'},
+    {op:'change_var', shape:'cmd', label:'change my variable ▾ by {amt|1}'},
+    {op:'show_var',   shape:'cmd', label:'show variable my variable ▾'},
+    {op:'hide_var',   shape:'cmd', label:'hide variable my variable ▾'},
+  ],
+  myblocks:[
+    {op:'make_block', shape:'hat', label:'Define my block'},
+  ],
+};
+
+// ── Geometry constants ──
+const BH=38, NH=5, NW=15, NX=16, BR=4, C_INNER=26;
+let seZoom = 1;
+
+// Build puzzle-piece SVG path
+function sePath(shape, w, h){
+  const r=BR,nw=NW,nh=NH,nx=NX;
+  if(shape==='hat'){
+    // Rounded hat top (no socket), bottom plug
+    return `M 0,16 C 0,8 8,0 16,0 L ${w-r},0 Q ${w},0 ${w},${r} L ${w},${h} L ${nx+nw},${h} L ${nx+nw},${h+nh} L ${nx},${h+nh} L ${nx},${h} L ${r},${h} Q 0,${h} 0,${h-r} Z`;
+  }
+  if(shape==='cap'){
+    // Top socket, flat bottom (terminal)
+    return `M ${r},0 L ${nx},0 L ${nx},-${nh} L ${nx+nw},-${nh} L ${nx+nw},0 L ${w-r},0 Q ${w},0 ${w},${r} L ${w},${h-r} Q ${w},${h} ${w-r},${h} L ${r},${h} Q 0,${h} 0,${h-r} L 0,${r} Q 0,0 ${r},0 Z`;
+  }
+  // cmd: top socket + bottom plug
+  return `M ${r},0 L ${nx},0 L ${nx},-${nh} L ${nx+nw},-${nh} L ${nx+nw},0 L ${w-r},0 Q ${w},0 ${w},${r} L ${w},${h-r} Q ${w},${h} ${w-r},${h} L ${nx+nw},${h} L ${nx+nw},${h+nh} L ${nx},${h+nh} L ${nx},${h} L ${r},${h} Q 0,${h} 0,${h-r} L 0,${r} Q 0,0 ${r},0 Z`;
+}
+
+// C-block (has an inner cavity)
+function seCPath(w, h, innerH){
+  const r=BR,nw=NW,nh=NH,nx=NX,arm=24;
+  const topSocket = shape==='hat' ? '' :
+    `L ${nx},0 L ${nx},-${nh} L ${nx+nw},-${nh} L ${nx+nw},0 `;
+  const ih = innerH || C_INNER;
+  const bodyH = h;
+  // Outer shell, with inner notch carved out
+  return `M ${r},0 L ${nx},0 L ${nx},-${nh} L ${nx+nw},-${nh} L ${nx+nw},0 L ${w-r},0 Q ${w},0 ${w},${r} L ${w},${bodyH-r} Q ${w},${bodyH} ${w-r},${bodyH} L ${arm+nw+4},${bodyH} L ${arm+nw+4},${bodyH+nh} L ${arm+4},${bodyH+nh} L ${arm+4},${bodyH} L ${r},${bodyH} Q 0,${bodyH} 0,${bodyH-r} L 0,${ih+bodyH} L ${arm},${ih+bodyH} L ${arm},${ih+bodyH-r} Q ${arm},${ih+bodyH-${r}} ${arm+r},${ih+bodyH-${r}+r}` 
+  // This is too complex — simplify below
+  ;
+}
+
+// Simplified SVG block renderer
+function seBlockSVG(def, color, shadow, forPalette=true){
+  const label = def.label;
+  const parts = label.split(/\{([^}|]+)\|([^}]*)\}/g);
+  // parts[0]=text, parts[1]=name, parts[2]=defaultVal, parts[3]=text...
+  const BH_USE = def.shape==='hat' ? 44 : BH;
+  const PADD = 10;
+
+  // Measure width
+  let width = PADD * 2;
+  for(let i=0;i<parts.length;i++){
+    if(i%3===0){ // text segment
+      width += Math.max(0, parts[i].trim().length) * 6.8;
+    } else if(i%3===1){ // key (skip)
+    } else { // default value → input field
+      const val = parts[i];
+      const isStr = isNaN(parseFloat(val)) && val.length > 2;
+      width += (isStr ? Math.max(44, val.length*7) : 32) + 8;
     }
+  }
+  if(def.cBlock) width = Math.max(width, 120);
+  width = Math.max(80, Math.ceil(width));
 
-    // ─── TOAST ───
-    function showToast(msg, duration = 2200) {
-        const t = document.getElementById('toast');
-        t.textContent = msg;
-        t.classList.add('show');
-        clearTimeout(t._timer);
-        t._timer = setTimeout(() => t.classList.remove('show'), duration);
+  const isCBlock = def.cBlock;
+  const cHeight = isCBlock ? BH_USE + 26 : 0;
+  const totalH = isCBlock ? BH_USE + cHeight + BH_USE : BH_USE;
+  const svgH_cmd = BH_USE + NH*2 + (isCBlock ? cHeight + BH_USE : 0);
+
+  // Build SVG inner elements
+  let elems = '';
+  let x = PADD;
+  const midY = def.shape==='hat' ? BH_USE/2+4 : BH_USE/2;
+
+  for(let i=0;i<parts.length;i++){
+    if(i%3===0){
+      const txt = parts[i].trim();
+      if(txt){
+        elems += `<text x="${x}" y="${midY}" dominant-baseline="middle" fill="white" font-size="11.5" font-weight="700" font-family="'Helvetica Neue',sans-serif" style="pointer-events:none">${escHtml(txt)}</text>`;
+        x += txt.length * 6.8;
+        if(i<parts.length-1) x += 4;
+      }
+    } else if(i%3===1){
+      // key name — skip display
+    } else {
+      const val = parts[i];
+      if(val===undefined) continue;
+      const isStr = isNaN(parseFloat(val)) && val.length > 2;
+      const fw = isStr ? Math.max(44, val.length*7) : 32;
+      const fh = 22;
+      const fy = midY - fh/2;
+      const fr = isStr ? 4 : fh/2;
+      elems += `<rect x="${x}" y="${fy}" width="${fw}" height="${fh}" rx="${fr}" ry="${fr}" fill="rgba(255,255,255,0.35)" stroke="rgba(255,255,255,0.5)" stroke-width="1" style="pointer-events:none"/>`;
+      elems += `<text x="${x+fw/2}" y="${midY}" dominant-baseline="middle" text-anchor="middle" fill="white" font-size="10.5" font-weight="600" font-family="'Helvetica Neue',sans-serif" style="pointer-events:none">${escHtml(val)}</text>`;
+      x += fw + 8;
     }
+  }
 
-    // ─── INPUT HANDLER ───
-    function onUsnChange() {
-        isVerified = false;
-        checkNext();
-        const pBox = document.getElementById('profile-box');
-        pBox.style.display = 'none';
-        pBox.className = 'profile-box';
+  // Build path
+  let pathD, vbH, svgHfinal;
+  if(def.shape==='hat'){
+    pathD = sePath('hat', width, BH_USE);
+    vbH = BH_USE + NH;
+    svgHfinal = BH_USE + NH;
+  } else if(def.shape==='cap'){
+    pathD = sePath('cap', width, BH_USE);
+    vbH = BH_USE + NH;
+    svgHfinal = BH_USE + NH;
+  } else if(isCBlock){
+    // C block — outer frame + inner notch
+    const arm = 24;
+    const totalCH = BH_USE + C_INNER + BH_USE;
+    pathD = `M ${BR},0 L ${NX},0 L ${NX},-${NH} L ${NX+NW},-${NH} L ${NX+NW},0 L ${width-BR},0 Q ${width},0 ${width},${BR} L ${width},${BH_USE-BR} Q ${width},${BH_USE} ${width-BR},${BH_USE} L ${arm+NW+2},${BH_USE} L ${arm+NW+2},${BH_USE+NH} L ${arm+2},${BH_USE+NH} L ${arm+2},${BH_USE} L ${BR},${BH_USE} Q 0,${BH_USE} 0,${BH_USE+BR} L 0,${BH_USE+C_INNER} L ${arm},${BH_USE+C_INNER} L ${arm},${BH_USE+C_INNER-BR} Q ${arm},${BH_USE+C_INNER} ${arm+BR},${BH_USE+C_INNER} L ${width-BR},${BH_USE+C_INNER} Q ${width},${BH_USE+C_INNER} ${width},${BH_USE+C_INNER+BR} L ${width},${totalCH-BR} Q ${width},${totalCH} ${width-BR},${totalCH} L ${NX+NW},${totalCH} L ${NX+NW},${totalCH+NH} L ${NX},${totalCH+NH} L ${NX},${totalCH} L ${BR},${totalCH} Q 0,${totalCH} 0,${totalCH-BR} Z`;
+    vbH = totalCH + NH * 2;
+    svgHfinal = totalCH + NH * 2;
+    width = Math.max(width, 120);
+  } else {
+    pathD = sePath('cmd', width, BH_USE);
+    vbH = BH_USE + NH * 2;
+    svgHfinal = BH_USE + NH * 2;
+  }
+
+  const vbY = def.shape==='hat' ? 0 : -NH;
+
+  return `<svg viewBox="0 ${vbY} ${width} ${vbH}" width="${width}" height="${svgHfinal}" overflow="visible">
+    <path d="${pathD}" fill="${color}" stroke="${shadow}" stroke-width="1.5" stroke-linejoin="round" style="pointer-events:none"/>
+    ${elems}
+  </svg>`;
+}
+
+function escHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// ── Init categories sidebar ──
+function seInitCats(){
+  const el = document.getElementById('se-cats');
+  el.innerHTML='';
+  SE_CATS.forEach((cat,i)=>{
+    const d = document.createElement('div');
+    d.className = 'se-cat' + (i===0?' active':'');
+    d.innerHTML = `<div class="se-cat-dot" style="background:${cat.color}"></div><div class="se-cat-lbl">${cat.label}</div>`;
+    d.addEventListener('click',()=>seSelectCat(cat.id,d));
+    el.appendChild(d);
+  });
+}
+
+let seActiveCat = 'motion';
+function seSelectCat(id, el){
+  seActiveCat = id;
+  document.querySelectorAll('.se-cat').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  seRenderPalette(id);
+}
+
+// ── Render palette ──
+function seRenderPalette(catId){
+  const cat = SE_CATS.find(c=>c.id===catId);
+  const blocks = SE_BLOCKS[catId] || [];
+  const pal = document.getElementById('se-palette');
+  const hdr = document.getElementById('se-pal-title');
+  hdr.textContent = cat ? cat.label : catId;
+  // Remove old block slots
+  pal.querySelectorAll('.se-block-slot').forEach(b=>b.remove());
+
+  blocks.forEach(def=>{
+    const cat2 = SE_CATS.find(c=>c.id===catId);
+    const color = cat2?.color || '#aaa';
+    const shadow = cat2?.shadow || '#888';
+    const slot = document.createElement('div');
+    slot.className = 'se-block-slot';
+    slot.innerHTML = seBlockSVG(def, color, shadow, true);
+    slot.dataset.op = def.op;
+    slot.dataset.cat = catId;
+    // Drag from palette
+    slot.addEventListener('mousedown', e=>seDragFromPalette(e, def, catId));
+    slot.addEventListener('touchstart', e=>seDragFromPalette(e, def, catId), {passive:false});
+    pal.appendChild(slot);
+  });
+}
+
+// ── Drag system ──
+let seDragging = null; // {clone, def, catId, offsetX, offsetY}
+let seBlocks = [];     // [{def, catId, x, y, el, id}]
+let seBlockIdCounter = 0;
+
+function seDragFromPalette(e, def, catId){
+  e.preventDefault();
+  const cat = SE_CATS.find(c=>c.id===catId);
+  const clone = document.createElement('div');
+  clone.className = 'se-drag';
+  clone.innerHTML = seBlockSVG(def, cat.color, cat.shadow, false);
+  document.body.appendChild(clone);
+  const pos = e.touches ? e.touches[0] : e;
+  clone.style.left = (pos.clientX - 30)+'px';
+  clone.style.top  = (pos.clientY - 15)+'px';
+  seDragging = {clone, def, catId, ox:30, oy:15, fromPalette:true};
+  document.addEventListener('mousemove', seOnDragMove);
+  document.addEventListener('mouseup', seOnDragEnd);
+  document.addEventListener('touchmove', seOnDragMove, {passive:false});
+  document.addEventListener('touchend', seOnDragEnd);
+}
+
+function seDragFromWorkspace(e, blockObj){
+  e.preventDefault(); e.stopPropagation();
+  const cat = SE_CATS.find(c=>c.id===blockObj.catId);
+  const rect = blockObj.el.getBoundingClientRect();
+  const pos = e.touches ? e.touches[0] : e;
+  const ox = pos.clientX - rect.left;
+  const oy = pos.clientY - rect.top;
+  // Detach from workspace visually
+  blockObj.el.style.opacity = '0.3';
+  const clone = document.createElement('div');
+  clone.className = 'se-drag';
+  clone.innerHTML = seBlockSVG(blockObj.def, cat.color, cat.shadow, false);
+  document.body.appendChild(clone);
+  clone.style.left = (pos.clientX - ox)+'px';
+  clone.style.top  = (pos.clientY - oy)+'px';
+  seDragging = {clone, def:blockObj.def, catId:blockObj.catId, ox, oy, fromPalette:false, blockObj};
+  document.addEventListener('mousemove', seOnDragMove);
+  document.addEventListener('mouseup', seOnDragEnd);
+  document.addEventListener('touchmove', seOnDragMove, {passive:false});
+  document.addEventListener('touchend', seOnDragEnd);
+}
+
+function seOnDragMove(e){
+  if(!seDragging) return;
+  e.preventDefault();
+  const pos = e.touches ? e.touches[0] : e;
+  seDragging.clone.style.left = (pos.clientX - seDragging.ox)+'px';
+  seDragging.clone.style.top  = (pos.clientY - seDragging.oy)+'px';
+}
+
+function seOnDragEnd(e){
+  if(!seDragging) return;
+  const pos = e.changedTouches ? e.changedTouches[0] : e;
+  const ws = document.getElementById('se-workspace');
+  const wsRect = ws.getBoundingClientRect();
+
+  // If dropped in workspace
+  if(pos.clientX > wsRect.left && pos.clientX < wsRect.right &&
+     pos.clientY > wsRect.top  && pos.clientY < wsRect.bottom){
+    const x = (pos.clientX - wsRect.left - seDragging.ox) / seZoom;
+    const y = (pos.clientY - wsRect.top  - seDragging.oy) / seZoom + NH;
+    if(seDragging.fromPalette){
+      seAddBlock(seDragging.def, seDragging.catId, x, y);
+    } else {
+      // Move existing block
+      seDragging.blockObj.x = x;
+      seDragging.blockObj.y = y;
+      seDragging.blockObj.el.style.left = x+'px';
+      seDragging.blockObj.el.style.top  = y+'px';
+      seDragging.blockObj.el.style.opacity = '1';
+      seCheckSnap(seDragging.blockObj);
     }
+  } else if(!seDragging.fromPalette) {
+    // Dropped outside → restore
+    seDragging.blockObj.el.style.opacity = '1';
+  }
 
-    // ─── FETCH WITH TIMEOUT ───
-    async function fetchWithTimeout(resource, { timeout = 3500 } = {}) {
-        const ctrl = new AbortController();
-        const id = setTimeout(() => ctrl.abort(), timeout);
-        try {
-            const res = await fetch(resource, { signal: ctrl.signal });
-            clearTimeout(id); return res;
-        } catch (e) { clearTimeout(id); throw e; }
+  seDragging.clone.remove();
+  seDragging = null;
+  document.removeEventListener('mousemove', seOnDragMove);
+  document.removeEventListener('mouseup', seOnDragEnd);
+  document.removeEventListener('touchmove', seOnDragMove);
+  document.removeEventListener('touchend', seOnDragEnd);
+}
+
+function seAddBlock(def, catId, x, y){
+  const cat = SE_CATS.find(c=>c.id===catId);
+  const el = document.createElement('div');
+  el.className = 'se-placed';
+  el.innerHTML = seBlockSVG(def, cat.color, cat.shadow, false);
+  el.style.left = x+'px';
+  el.style.top  = (y)+'px';
+  const ws = document.getElementById('se-ws-inner');
+  ws.appendChild(el);
+  const blockH = def.shape==='hat'?(BH+NH):(def.cBlock?(BH*2+C_INNER+NH*2):(BH+NH*2));
+  const obj = {id: ++seBlockIdCounter, def, catId, x, y, el, attachedTo:null, blockH};
+  seBlocks.push(obj);
+  el.addEventListener('mousedown', e=>seDragFromWorkspace(e,obj));
+  el.addEventListener('touchstart', e=>seDragFromWorkspace(e,obj),{passive:false});
+  // Right-click to delete
+  el.addEventListener('contextmenu', e=>{e.preventDefault(); seDeleteBlock(obj);});
+  seCheckSnap(obj);
+  return obj;
+}
+
+// Snap blocks together
+function seCheckSnap(obj){
+  const BH_USE = obj.def.shape==='hat' ? BH+4 : BH;
+  const snapDist = 20;
+  let snapped = false;
+  for(const other of seBlocks){
+    if(other.id === obj.id) continue;
+    if(other.def.shape==='cap') continue; // cap blocks don't accept below
+    // Snap: place obj below other
+    const otherBottomY = other.y + (other.def.shape==='hat'?(BH+4):(other.def.cBlock?(BH*2+C_INNER):(BH))) + NH;
+    const otherX = other.x;
+    if(Math.abs(obj.x - otherX) < snapDist && Math.abs(obj.y - otherBottomY) < snapDist){
+      obj.x = otherX;
+      obj.y = otherBottomY - NH;
+      obj.el.style.left = obj.x+'px';
+      obj.el.style.top  = obj.y+'px';
+      obj.attachedTo = other.id;
+      snapped = true;
+      break;
     }
+  }
+  return snapped;
+}
 
-    // ─── VALIDATE ROBLOX ───
-    async function validateRoblox() {
-        const u = document.getElementById('usn').value.trim();
-        if (!u) { showToast('⚠️ Ketik username Roblox dulu!'); return; }
+function seDeleteBlock(obj){
+  obj.el.remove();
+  seBlocks = seBlocks.filter(b=>b.id!==obj.id);
+  // Detach children
+  seBlocks.forEach(b=>{ if(b.attachedTo===obj.id) b.attachedTo=null; });
+}
 
-        vibrate(15);
-        const pBox = document.getElementById('profile-box');
-        const vBtn = document.getElementById('btn-verify');
-        const vText = document.getElementById('verify-text');
+function seZoomIn(){ seZoom = Math.min(2, seZoom+0.1); applyZoom(); }
+function seZoomOut(){ seZoom = Math.max(0.4, seZoom-0.1); applyZoom(); }
+function applyZoom(){
+  const inner = document.getElementById('se-ws-inner');
+  inner.style.transform = `scale(${seZoom})`;
+  inner.style.transformOrigin = '0 0';
+}
 
-        pBox.style.display = 'flex';
-        pBox.className = 'profile-box';
-        pBox.innerHTML = `<div class="spinner"></div><span style="font-size:0.82rem;color:#aaa;">Memverifikasi akun Roblox...</span>`;
-        vText.textContent = 'Memverifikasi...';
-        vBtn.disabled = true;
-        isVerified = false;
-        checkNext();
+// ── Sprite / Stage ──
+const sprite = { x:0, y:0, dir:90, size:100, visible:true, saying:'', sayTimer:null };
+let seRunning = false;
+let seStopFlag = false;
 
-        const searchUrl = `https://users.roblox.com/v1/users/search?keyword=${encodeURIComponent(u)}&limit=10&_=${Date.now()}`;
+function seDrawStage(){
+  const canvas = document.getElementById('se-stage');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  // White background
+  ctx.fillStyle = '#fff'; ctx.fillRect(0,0,W,H);
+  // Grid (subtle)
+  ctx.strokeStyle = '#f0f0f0'; ctx.lineWidth = 1;
+  for(let gx=0;gx<W;gx+=24){ ctx.beginPath(); ctx.moveTo(gx,0); ctx.lineTo(gx,H); ctx.stroke(); }
+  for(let gy=0;gy<H;gy+=24){ ctx.beginPath(); ctx.moveTo(0,gy); ctx.lineTo(W,gy); ctx.stroke(); }
+  if(!sprite.visible) return;
+  // Sprite position (Scratch coords: 0,0=center, y up)
+  const sx = W/2 + sprite.x * (W/480);
+  const sy = H/2 - sprite.y * (H/360);
+  const scale = sprite.size/100;
+  // Draw a cat emoji
+  ctx.save();
+  ctx.translate(sx, sy);
+  ctx.rotate((sprite.dir - 90) * Math.PI / 180);
+  ctx.scale(scale, scale);
+  ctx.font = '32px serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('🐱', 0, 0);
+  ctx.restore();
+  // Speech bubble
+  const bubble = document.getElementById('se-bubble');
+  if(sprite.saying){
+    bubble.style.display='block';
+    bubble.textContent = sprite.saying;
+    bubble.style.left = Math.max(2, Math.min(canvas.offsetWidth-130, sx-10))+'px';
+    bubble.style.top = Math.max(2, sy - 60)+'px';
+  } else {
+    bubble.style.display='none';
+  }
+  // Update props
+  document.getElementById('sp-x').textContent = Math.round(sprite.x);
+  document.getElementById('sp-y').textContent = Math.round(sprite.y);
+  document.getElementById('sp-size').textContent = sprite.size;
+  document.getElementById('sp-dir').textContent = sprite.dir;
+}
 
-        let proxies = [];
-        if (PROXY_WORKER && !PROXY_WORKER.includes('PASTE')) {
-            proxies.push(url => `${PROXY_WORKER.replace(/\/$/, '')}/?url=${encodeURIComponent(url)}`);
-        }
-        proxies.push(
-            url => `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
-            url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-            url => `https://api.codetabs.com/v1/proxy/?quest=${encodeURIComponent(url)}`
-        );
+async function seRunScript(){
+  if(seRunning) return;
+  seStopFlag = false;
+  // Find hat block "when flag clicked"
+  const hatBlocks = seBlocks.filter(b=>b.def.op==='flag' && b.def.shape==='hat');
+  if(!hatBlocks.length){ showToast('❌ Drag blok "when 🚩 clicked" dulu!'); return; }
+  seRunning = true;
+  document.getElementById('se-run-dot').style.display='block';
+  // Stage border = green when running
+  document.getElementById('se-stage').style.outline='3px solid #4CAF50';
+  // Execute stack from hat
+  for(const hat of hatBlocks){
+    await seExecStack(hat);
+  }
+  seRunning = false;
+  document.getElementById('se-run-dot').style.display='none';
+  document.getElementById('se-stage').style.outline='none';
+}
 
-        let result = null, successIdx = -1;
-        for (let i = 0; i < proxies.length; i++) {
-            try {
-                const res = await fetchWithTimeout(proxies[i](searchUrl), { timeout: 3500 });
-                if (!res.ok) continue;
-                const json = await res.json();
-                if (json?.data && Array.isArray(json.data)) { result = json; successIdx = i; break; }
-            } catch { /* try next */ }
-        }
+function seStopScript(){
+  seStopFlag = true; seRunning = false;
+  document.getElementById('se-run-dot').style.display='none';
+  document.getElementById('se-stage').style.outline='none';
+  sprite.saying=''; seDrawStage();
+}
 
-        vText.textContent = 'VALIDASI AKUN';
-        vBtn.disabled = false;
+function seGetInputVal(def, key){
+  // Parse the label to find the default value for a key
+  const parts = def.label.split(/\{([^}|]+)\|([^}]*)\}/g);
+  for(let i=1;i<parts.length;i+=3){
+    if(parts[i]===key) return parts[i+1];
+  }
+  return '0';
+}
 
-        if (!result) {
-            pBox.className = 'profile-box error';
-            pBox.innerHTML = `<span style="font-size:1.2rem;">❌</span><div class="profile-info"><div class="profile-name" style="color:var(--danger)">Gagal Terhubung</div><div class="profile-sub">Jalur API sibuk. Coba lagi dalam beberapa detik.</div></div>`;
-            return;
-        }
+function seN(def, key){ return parseFloat(seGetInputVal(def,key)) || 0; }
+function seS(def, key){ return seGetInputVal(def,key) || ''; }
 
-        const user = result.data.find(x => x.name.toLowerCase() === u.toLowerCase());
-        if (!user) {
-            pBox.className = 'profile-box error';
-            pBox.innerHTML = `<span style="font-size:1.2rem;">❌</span><div class="profile-info"><div class="profile-name" style="color:var(--danger)">Username Tidak Ditemukan</div><div class="profile-sub">Cek ejaan. Username Roblox bersifat case-sensitive.</div></div>`;
-            return;
-        }
+function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
 
-        data.id = user.id; data.usn = user.name; data.displayName = user.displayName;
+async function seExecStack(startBlock){
+  // Collect ordered stack
+  const stack = [];
+  let cur = startBlock;
+  while(cur){
+    stack.push(cur);
+    // Find next block attached below
+    const next = seBlocks.find(b=>b.attachedTo===cur.id);
+    cur = next || null;
+    if(cur && cur.id === startBlock.id) break; // safety
+  }
+  for(const blk of stack){
+    if(seStopFlag) break;
+    await seExecBlock(blk);
+    seDrawStage();
+  }
+}
 
-        // Load avatar
-        let avatarUrl = "https://tr.rbxcdn.com/30d25c1c53884e4e3b15e1cb59190bbf/150/150/AvatarHeadshot/Png";
-        try {
-            const thumbUrl = `https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${data.id}&size=150x150&format=Png&isCircular=true`;
-            const tRes = await fetchWithTimeout(proxies[successIdx](thumbUrl), { timeout: 2500 });
-            if (tRes.ok) { const tJson = await tRes.json(); if (tJson.data?.[0]?.imageUrl) avatarUrl = tJson.data[0].imageUrl; }
-        } catch { /* use default */ }
+async function seExecBlock(blk){
+  if(seStopFlag) return;
+  const {def} = blk;
+  const op = def.op;
+  switch(op){
+    // Motion
+    case 'move':{
+      const steps = seN(def,'steps');
+      sprite.x += steps * Math.cos((sprite.dir-90)*Math.PI/180);
+      sprite.y += steps * Math.sin(-(sprite.dir-90)*Math.PI/180);
+      break;}
+    case 'turn_cw':  sprite.dir = (sprite.dir + seN(def,'degrees')) % 360; break;
+    case 'turn_ccw': sprite.dir = ((sprite.dir - seN(def,'degrees')) + 360) % 360; break;
+    case 'goto_rand': sprite.x=(Math.random()-0.5)*440; sprite.y=(Math.random()-0.5)*320; break;
+    case 'goto_xy':   sprite.x=seN(def,'x'); sprite.y=seN(def,'y'); break;
+    case 'glide_rand':{
+      const tx=(Math.random()-0.5)*440; const ty=(Math.random()-0.5)*320;
+      await seGlide(sprite.x,sprite.y,tx,ty,seN(def,'secs'));break;}
+    case 'glide_xy':{
+      await seGlide(sprite.x,sprite.y,seN(def,'x'),seN(def,'y'),seN(def,'secs'));break;}
+    case 'point_dir': sprite.dir = seN(def,'dir'); break;
+    case 'point_mouse': sprite.dir = 90; break; // simplified
+    case 'change_x': sprite.x += seN(def,'dx'); break;
+    case 'set_x':    sprite.x = seN(def,'x'); break;
+    case 'change_y': sprite.y += seN(def,'dy'); break;
+    case 'set_y':    sprite.y = seN(def,'y'); break;
+    case 'bounce':
+      if(sprite.x>220||sprite.x<-220) sprite.dir = (540-sprite.dir)%360;
+      if(sprite.y>160||sprite.y<-160) sprite.dir = (-sprite.dir+360)%360;
+      break;
+    // Looks
+    case 'say_for':
+      sprite.saying = seS(def,'msg');
+      seDrawStage();
+      await sleep(seN(def,'secs')*1000);
+      sprite.saying = '';
+      break;
+    case 'say':      sprite.saying = seS(def,'msg'); break;
+    case 'think_for':
+      sprite.saying = '💭 '+seS(def,'msg');
+      seDrawStage();
+      await sleep(seN(def,'secs')*1000);
+      sprite.saying = '';
+      break;
+    case 'think':    sprite.saying = '💭 '+seS(def,'msg'); break;
+    case 'show':     sprite.visible=true; break;
+    case 'hide':     sprite.visible=false; break;
+    case 'change_size': sprite.size=Math.max(1,sprite.size+seN(def,'amt')); break;
+    case 'set_size':    sprite.size=Math.max(1,seN(def,'pct')); break;
+    case 'clear_fx': break; // no effects in our stage
+    case 'goto_front': break;
+    // Control
+    case 'wait':   await sleep(seN(def,'secs')*1000); break;
+    case 'repeat':{
+      const times = seN(def,'times');
+      const innerBlocks = seBlocks.filter(b=>b.attachedTo===blk.id);
+      for(let i=0;i<times&&!seStopFlag;i++){
+        for(const ib of innerBlocks){ await seExecBlock(ib); seDrawStage(); }
+      }
+      break;}
+    case 'forever':{
+      const innerBlocks = seBlocks.filter(b=>b.attachedTo===blk.id);
+      while(!seStopFlag){
+        for(const ib of innerBlocks){ if(seStopFlag)break; await seExecBlock(ib); seDrawStage(); }
+        await sleep(50);
+      }
+      break;}
+    case 'stop': seStopFlag=true; break;
+    // Sound (no actual audio)
+    case 'play_until': case 'play': case 'stop_snds': break;
+    case 'change_vol': case 'set_vol': break;
+    // Operators (no full evaluator, just no-op)
+    default: break;
+  }
+}
 
-        pBox.className = 'profile-box success';
-        pBox.innerHTML = `
-            <img class="avatar" src="${avatarUrl}" onerror="this.src='https://tr.rbxcdn.com/30d25c1c53884e4e3b15e1cb59190bbf/150/150/AvatarHeadshot/Png'" alt="Avatar">
-            <div class="profile-info">
-                <div class="profile-name">${data.displayName} <span class="badge-valid">✅ VALID</span></div>
-                <div class="profile-sub">@${data.usn} · ID: ${data.id}</div>
-            </div>
-        `;
+async function seGlide(x0,y0,x1,y1,secs){
+  const steps = Math.max(1, Math.round(secs*30));
+  for(let i=0;i<=steps&&!seStopFlag;i++){
+    sprite.x = x0 + (x1-x0)*(i/steps);
+    sprite.y = y0 + (y1-y0)*(i/steps);
+    seDrawStage();
+    await sleep(secs*1000/steps);
+  }
+}
 
-        isVerified = true;
-        checkNext();
-        showToast('✅ Akun berhasil diverifikasi!');
-        vibrate([10, 50, 10]);
-    }
-
-    // ─── PACKAGE SELECTION ───
-    function selectPkg(rbx, price, el) {
-        document.querySelectorAll('.pkg-item').forEach(p => p.classList.remove('active'));
-        document.getElementById('custom-rbx').value = '';
-        el.classList.add('active');
-        setRbx(rbx, price);
-        vibrate(10);
-    }
-
-    function calcCustom(inp) {
-        document.querySelectorAll('.pkg-item').forEach(p => p.classList.remove('active'));
-        const val = parseInt(inp.value);
-        if (!val || val < 50) { setRbx(0, 0); return; }
-        setRbx(val, val * RATE);
-    }
-
-    function setRbx(rbx, price) {
-        data.rbx = rbx; data.total = price; data.gp = rbx > 0 ? Math.ceil(rbx / 0.7) : 0;
-        document.getElementById('price-ui').textContent = rbx > 0 ? 'Rp ' + price.toLocaleString('id-ID') : 'Rp 0';
-        document.getElementById('rbx-summary').textContent = rbx > 0 ? `${rbx} RBX` : '— RBX';
-        document.getElementById('gp-price').textContent = data.gp;
-        document.getElementById('gp-guide-val').textContent = data.gp;
-        checkNext();
-    }
-
-    // ─── NAVIGATION ───
-    function checkNext() {
-        const btn = document.getElementById('btnNext');
-        if (currentStep === 1) {
-            (isVerified && data.rbx >= 50) ? btn.classList.add('enabled') : btn.classList.remove('enabled');
-        } else {
-            btn.classList.add('enabled');
-        }
-    }
-
-    function nextStep() {
-        if (currentStep === 1) {
-            if (!isVerified) { showToast('⚠️ Validasi akun dulu!'); return; }
-            if (data.rbx < 50) { showToast('⚠️ Pilih paket atau isi kustom min. 50 RBX!'); return; }
-            currentStep = 2;
-        } else if (currentStep === 2) {
-            currentStep = 3;
-            fillInvoice();
-            confetti({ particleCount: 120, spread: 65, origin: { y: 0.6 }, colors: ['#00ff73','#00cc5a','#ffffff'] });
-        } else {
-            sendWA(); return;
-        }
-        updateUI(); vibrate(15);
-    }
-
-    function prevStep() {
-        if (currentStep > 1) { currentStep--; updateUI(); vibrate(10); }
-    }
-
-    function updateUI() {
-        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-        document.getElementById('step' + currentStep).classList.add('active');
-        document.getElementById('progress').style.width = (currentStep / 3 * 100) + '%';
-
-        // Step indicator
-        for (let i = 1; i <= 3; i++) {
-            const dot = document.getElementById('si' + i);
-            const label = document.getElementById('sl' + i);
-            dot.className = 'si-dot';
-            label.className = 'si-label';
-            if (i < currentStep) { dot.classList.add('done'); dot.textContent = '✓'; }
-            else if (i === currentStep) { dot.classList.add('active'); dot.textContent = i; label.classList.add('active'); }
-            else { dot.textContent = i; }
-            if (i < 3) { const line = document.getElementById('line' + i); line.className = 'si-line' + (i < currentStep ? ' done' : ''); }
-        }
-
-        document.getElementById('btnBack').style.display = currentStep > 1 ? 'block' : 'none';
-        const btn = document.getElementById('btnNext');
-        const labels = ['Lanjutkan →', 'Saya Sudah Set Gamepass →', '📲 Kirim Invoice ke WhatsApp'];
-        btn.textContent = labels[currentStep - 1];
-        checkNext();
-    }
-
-    function fillInvoice() {
-        document.getElementById('inv-display').textContent = data.displayName;
-        document.getElementById('inv-usn').textContent = '@' + data.usn;
-        document.getElementById('inv-id').textContent = data.id;
-        document.getElementById('inv-rbx').textContent = data.rbx + ' RBX';
-        document.getElementById('inv-gp').textContent = data.gp + ' Robux';
-        document.getElementById('inv-total').textContent = 'Rp ' + data.total.toLocaleString('id-ID');
-    }
-
-    // ─── COPY GAMEPASS ───
-    function copyGP() {
-        const val = data.gp.toString();
-        if (navigator.clipboard) {
-            navigator.clipboard.writeText(val).then(() => showToast('📋 Angka gamepass disalin!'));
-        } else {
-            const t = document.createElement('textarea'); document.body.appendChild(t);
-            t.value = val; t.select(); document.execCommand('copy'); document.body.removeChild(t);
-            showToast('📋 Angka gamepass disalin!');
-        }
-        vibrate(20);
-    }
-
-    // ─── SEND WHATSAPP ───
-    function sendWA() {
-        const msg =
-`*📦 INVOICE ORDER ROMABUX V.40 LUXURY*
-━━━━━━━━━━━━━━━━━━━━━━━━
-👤 *Display Name* : ${data.displayName}
-🆔 *Username*     : @${data.usn}
-📌 *Roblox ID*    : ${data.id}
-━━━━━━━━━━━━━━━━━━━━━━━━
-💎 *Jumlah Robux* : ${data.rbx} RBX
-⚙️ *Harga Gamepass* : ${data.gp} Robux
-━━━━━━━━━━━━━━━━━━━━━━━━
-💵 *TOTAL BAYAR*  : Rp ${data.total.toLocaleString('id-ID')}
-━━━━━━━━━━━━━━━━━━━━━━━━
-_Mohon diproses via gamepass, min! Terima kasih_ 🙏`;
-        window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
-    }
-
-    // ─── UTILS ───
-    function vibrate(ms) { if (navigator.vibrate) navigator.vibrate(ms); }
+// Open / close
+function openSE(){
+  document.getElementById('se-modal').classList.add('open');
+  seInitCats();
+  seRenderPalette('motion');
+  requestAnimationFrame(seDrawStage);
+}
+function closeSE(){
+  seStopScript();
+  document.getElementById('se-modal').classList.remove('open');
+}
 </script>
 </body>
 </html>
