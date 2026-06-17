@@ -744,17 +744,7 @@ function sePath(shape, w, h){
 }
 
 // C-block (has an inner cavity)
-function seCPath(w, h, innerH){
-  const r=BR,nw=NW,nh=NH,nx=NX,arm=24;
-  const topSocket = shape==='hat' ? '' :
-    `L ${nx},0 L ${nx},-${nh} L ${nx+nw},-${nh} L ${nx+nw},0 `;
-  const ih = innerH || C_INNER;
-  const bodyH = h;
-  // Outer shell, with inner notch carved out
-  return `M ${r},0 L ${nx},0 L ${nx},-${nh} L ${nx+nw},-${nh} L ${nx+nw},0 L ${w-r},0 Q ${w},0 ${w},${r} L ${w},${bodyH-r} Q ${w},${bodyH} ${w-r},${bodyH} L ${arm+nw+4},${bodyH} L ${arm+nw+4},${bodyH+nh} L ${arm+4},${bodyH+nh} L ${arm+4},${bodyH} L ${r},${bodyH} Q 0,${bodyH} 0,${bodyH-r} L 0,${ih+bodyH} L ${arm},${ih+bodyH} L ${arm},${ih+bodyH-r} Q ${arm},${ih+bodyH-${r}} ${arm+r},${ih+bodyH-${r}+r}` 
-  // This is too complex — simplify below
-  ;
-}
+// (seCPath removed — C-block path is built inline in seBlockSVG)
 
 // Simplified SVG block renderer
 function seBlockSVG(def, color, shadow, forPalette=true){
