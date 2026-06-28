@@ -3,59 +3,204 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Link Downloader</title>
+<title>Direct Video Downloader</title>
 <script src="https://cdn.tailwindcss.com"></script>
+<style>
+  @keyframes meshMove {
+    0%   { background-position: 0% 0%, 100% 0%, 50% 100%, 0% 100%; }
+    50%  { background-position: 100% 50%, 0% 100%, 100% 0%, 50% 50%; }
+    100% { background-position: 0% 0%, 100% 0%, 50% 100%, 0% 100%; }
+  }
+  body{
+    background-color:#0b0a14;
+    background-image:
+      radial-gradient(at 20% 20%, #7c3aed 0px, transparent 50%),
+      radial-gradient(at 80% 10%, #06b6d4 0px, transparent 50%),
+      radial-gradient(at 50% 90%, #ec4899 0px, transparent 50%),
+      radial-gradient(at 0% 100%, #4f46e5 0px, transparent 50%);
+    background-size: 200% 200%;
+    animation: meshMove 18s ease-in-out infinite;
+  }
+  .glass{
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    border: 1px solid rgba(255,255,255,0.14);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.45);
+  }
+  .glass-input{
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .glass-input:focus{
+    border-color: rgba(255,255,255,0.4);
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.08);
+  }
+  .spinner{
+    border: 3px solid rgba(255,255,255,0.15);
+    border-top-color: #fff;
+    border-radius: 50%;
+    width: 22px; height: 22px;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .bar-fill{
+    transition: width 0.15s ease-out;
+    background: linear-gradient(90deg,#7c3aed,#06b6d4,#ec4899);
+  }
+</style>
 </head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
-  <div class="bg-white shadow-lg rounded-xl p-6 w-full max-w-md">
-    <h1 class="text-xl font-bold mb-4 text-gray-800">Link Downloader</h1>
+<body class="min-h-screen flex items-center justify-center p-5 text-white font-sans">
 
-    <input id="urlInput" type="text" placeholder="Masukkan URL..."
-      class="w-full border border-gray-300 rounded-lg px-3 py-2 mb-3 focus:outline-none focus:ring-2 focus:ring-blue-400">
+  <div class="glass w-full max-w-md rounded-3xl p-7">
+    <h1 class="text-2xl font-bold mb-1 tracking-tight">Direct Video Downloader</h1>
+    <p class="text-white/50 text-sm mb-6">Tempel link video .mp4, unduh langsung ke perangkatmu.</p>
 
-    <button id="downloadBtn"
-      class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition">
-      Download
-    </button>
+    <div class="space-y-3">
+      <input id="videoUrl" type="text" placeholder="https://contoh.com/video.mp4"
+        class="glass-input w-full rounded-xl px-4 py-3 text-sm outline-none placeholder:text-white/30 transition" />
 
-    <div id="result" class="mt-4 text-sm text-gray-700"></div>
+      <button id="downloadBtn"
+        class="w-full bg-white text-gray-900 font-semibold py-3 rounded-xl hover:bg-white/90 active:scale-[0.98] transition flex items-center justify-center gap-2">
+        <span id="btnText">Download Video</span>
+      </button>
+    </div>
+
+    <p id="errorMsg" class="text-pink-400 text-xs mt-3 hidden"></p>
+
+    <div id="progressBox" class="mt-5 hidden">
+      <div class="flex items-center justify-between text-xs text-white/60 mb-2">
+        <span id="statusText">Menghubungkan...</span>
+        <span id="percentText">0%</span>
+      </div>
+      <div class="w-full h-2 rounded-full bg-white/10 overflow-hidden">
+        <div id="barFill" class="bar-fill h-full rounded-full" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div id="successBox" class="mt-5 hidden glass rounded-xl p-4 flex items-center gap-3">
+      <div class="spinner hidden"></div>
+      <div class="w-10 h-10 rounded-lg bg-emerald-400/15 border border-emerald-400/40 flex items-center justify-center">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div class="flex-1">
+        <p class="text-sm font-medium">Video berhasil diunduh</p>
+        <p id="fileSizeText" class="text-xs text-white/50"></p>
+      </div>
+      <a id="manualLink" href="#" class="text-xs underline text-white/70 hover:text-white">Unduh ulang</a>
+    </div>
   </div>
 
 <script>
-const input = document.getElementById('urlInput');
-const btn = document.getElementById('downloadBtn');
-const result = document.getElementById('result');
+const urlInput     = document.getElementById('videoUrl');
+const downloadBtn  = document.getElementById('downloadBtn');
+const btnText      = document.getElementById('btnText');
+const errorMsg     = document.getElementById('errorMsg');
+const progressBox  = document.getElementById('progressBox');
+const statusText   = document.getElementById('statusText');
+const percentText  = document.getElementById('percentText');
+const barFill      = document.getElementById('barFill');
+const successBox   = document.getElementById('successBox');
+const fileSizeText = document.getElementById('fileSizeText');
+const manualLink   = document.getElementById('manualLink');
 
-btn.addEventListener('click', () => {
-  const url = input.value.trim();
-  result.innerHTML = '';
+function showError(msg){
+  errorMsg.textContent = msg;
+  errorMsg.classList.remove('hidden');
+}
+function resetUI(){
+  errorMsg.classList.add('hidden');
+  successBox.classList.add('hidden');
+  progressBox.classList.remove('hidden');
+  barFill.style.width = '0%';
+  percentText.textContent = '0%';
+  statusText.textContent = 'Menghubungkan...';
+}
+function formatBytes(bytes){
+  if(!bytes) return '';
+  const mb = bytes / (1024*1024);
+  return mb.toFixed(2) + ' MB';
+}
 
-  if (!url) {
-    result.innerHTML = '<p class="text-red-500">⚠️ URL tidak boleh kosong!</p>';
+downloadBtn.addEventListener('click', async () => {
+  const url = urlInput.value.trim();
+  errorMsg.classList.add('hidden');
+  successBox.classList.add('hidden');
+
+  if(!url){
+    showError('⚠ Masukkan URL video .mp4 terlebih dahulu.');
     return;
   }
 
-  btn.disabled = true;
-  btn.textContent = 'Memproses...';
-  result.innerHTML = '<p class="text-gray-500 animate-pulse">Sedang memproses link, harap tunggu...</p>';
+  downloadBtn.disabled = true;
+  btnText.textContent = 'Mengunduh...';
+  resetUI();
 
-  setTimeout(() => {
-    btn.disabled = false;
-    btn.textContent = 'Download';
+  try{
+    const response = await fetch(url);
+    if(!response.ok) throw new Error('Gagal mengambil video (status ' + response.status + ')');
 
-    const fileContent = `File hasil unduhan simulasi\nSumber URL: ${url}\nWaktu: ${new Date().toLocaleString()}`;
-    const blob = new Blob([fileContent], { type: 'text/plain' });
+    const contentLength = response.headers.get('Content-Length');
+    const total = contentLength ? parseInt(contentLength, 10) : 0;
+    let loaded = 0;
+
+    let blob;
+
+    if(response.body && response.body.getReader){
+      const reader = response.body.getReader();
+      const chunks = [];
+
+      while(true){
+        const { done, value } = await reader.read();
+        if(done) break;
+        chunks.push(value);
+        loaded += value.length;
+
+        if(total){
+          const pct = Math.min(100, Math.round((loaded/total)*100));
+          barFill.style.width = pct + '%';
+          percentText.textContent = pct + '%';
+          statusText.textContent = 'Mengunduh data video...';
+        } else {
+          statusText.textContent = 'Mengunduh... (' + formatBytes(loaded) + ')';
+          percentText.textContent = formatBytes(loaded);
+        }
+      }
+      blob = new Blob(chunks, { type: response.headers.get('Content-Type') || 'video/mp4' });
+    } else {
+      statusText.textContent = 'Mengunduh data video...';
+      blob = await response.blob();
+    }
+
+    barFill.style.width = '100%';
+    percentText.textContent = '100%';
+    statusText.textContent = 'Menyimpan file...';
+
     const blobUrl = URL.createObjectURL(blob);
 
-    result.innerHTML = `
-      <p class="text-green-600 font-medium mb-2">✅ File siap diunduh</p>
-      <a href="${blobUrl}" download="hasil-download.txt"
-         class="inline-block bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">
-         Unduh File
-      </a>
-    `;
-  }, 2000);
+    const a = document.createElement('a');
+    a.href = blobUrl;
+    a.download = 'video.mp4';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    progressBox.classList.add('hidden');
+    successBox.classList.remove('hidden');
+    fileSizeText.textContent = formatBytes(blob.size) || 'Ukuran tidak diketahui';
+    manualLink.href = blobUrl;
+    manualLink.download = 'video.mp4';
+
+  }catch(err){
+    progressBox.classList.add('hidden');
+    showError('⚠ Gagal mengunduh: ' + err.message + ' (kemungkinan dibatasi CORS oleh server video).');
+  }finally{
+    downloadBtn.disabled = false;
+    btnText.textContent = 'Download Video';
+  }
 });
+
+urlInput.addEventListener('keydown', (e) => { if(e.key === 'Enter') downloadBtn.click(); });
 </script>
 </body>
 </html>
